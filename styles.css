@@ -113,6 +113,10 @@ nav a {
   width: 24px;
   filter: invert(40%);
 }
+.profile-icon {
+  width: 24px;
+  height: 24px;
+}
 
 nav a:hover {
   background-color: #555;
@@ -173,5 +177,5 @@ main {
 }
 .footer-date {
   font-size: 1rem;
-  color: #999;
+  color: #ffffff;
 }
