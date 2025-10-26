@@ -114,7 +114,7 @@
           <h2 class="calendar-title">Kalenderansicht</h2>
           <div class="calendar-nav">
             <button class="nav-btn" id="prevMonth">&lt;</button>
-            <span class="current-month" id="currentMonth"></span>
+            <span class="current-month title" id="currentMonth"></span>
             <button class="nav-btn" id="nextMonth">&gt;</button>
           </div>
         </div>
@@ -127,7 +127,7 @@
           <div class="calendar-notes" id="calendarNotes">
             <h3>Notizen an diesem Tag:</h3>
             <div class="selected-date-notes" id="selectedDateNotes">
-              <p class="no-notes">Válassz egy napot a naptárból</p>
+              <p class="no-notes">Keine Notizen für dieses Datum</p>
             </div>
           </div>
         </div>
@@ -630,10 +630,31 @@
           </div>
 
           <div class="settings-actions">
-            <button type="button" class="btn-cancel-settings">Schließen</button>
             <button type="button" class="btn-reset-settings">
               Zurücksetzen
             </button>
+            <button type="button" class="btn-cancel-settings">Schließen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Delete Modal -->
+    <div id="deleteNoteModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Notiz löschen</h2>
+          <span class="close-delete-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Sind Sie sicher, dass Sie diese Notiz löschen möchten?</p>
+          <p class="delete-warning">
+            Diese Aktion kann nicht rückgängig gemacht werden.
+          </p>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel-delete">Abbrechen</button>
+            <button type="button" class="btn-confirm-delete">Löschen</button>
           </div>
         </div>
       </div>

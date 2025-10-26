@@ -339,7 +339,10 @@ main {
   font-size: 1.5rem;
 }
 
-.close-modal {
+.close-modal,
+.close-edit-modal,
+.close-settings-modal,
+.close-delete-modal {
   font-size: 28px;
   font-weight: bold;
   color: #666;
@@ -435,7 +438,9 @@ main {
 }
 
 .btn-cancel,
-.btn-save {
+.btn-save,
+.btn-save-edit,
+.btn-cancel-edit {
   padding: 12px 25px;
   border: none;
   border-radius: 8px;
@@ -446,32 +451,81 @@ main {
   font-family: "Source Sans 3", sans-serif;
 }
 
-.btn-cancel {
+.btn-cancel,
+.btn-cancel-edit {
   background-color: #f5f5f5;
   color: #666;
 }
 
-.btn-cancel:hover {
+.btn-cancel:hover,
+.btn-cancel-edit:hover {
   background-color: #e5e5e5;
 }
 
-.btn-save {
+.btn-save,
+.btn-save-edit {
   background-color: #333;
   color: #fff;
 }
 
-.btn-save:hover {
+.btn-save:hover,
+.btn-save-edit:hover {
   background-color: #555;
+}
+
+/* Delete Modal Specific Styles */
+.btn-confirm-delete {
+  padding: 12px 25px;
+
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Source Sans 3", sans-serif;
+  background-color: #e11d44;
+  color: #fff;
+}
+
+.btn-confirm-delete:hover {
+  background-color: #c41e3a;
+}
+
+.btn-cancel-delete {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Source Sans 3", sans-serif;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.btn-cancel-delete:hover {
+  background-color: #e5e5e5;
+}
+
+.delete-warning {
+  color: #e11d44;
+  font-size: 0.9rem;
+  margin: 10px 0;
+  font-style: italic;
 }
 
 /* Calendar Styles */
 #calendar-section {
   padding: 20px;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .calendar-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -521,6 +575,8 @@ main {
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-height: 70vh;
+  overflow: hidden;
 }
 
 .calendar-grid {
@@ -530,10 +586,11 @@ main {
   background: #f5f5f5;
   border-radius: 8px;
   padding: 10px;
+  max-height: 60vh;
+  aspect-ratio: 7/6;
 }
 
 .calendar-day {
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -543,6 +600,8 @@ main {
   transition: all 0.3s ease;
   position: relative;
   font-weight: 500;
+  min-height: 45px;
+  max-height: 80px;
 }
 
 .calendar-day:hover {
@@ -586,14 +645,14 @@ main {
 
 .note-count {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 5px;
+  right: 5px;
   background: #e11d44;
   color: #fff;
   border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  font-size: 10px;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -604,6 +663,10 @@ main {
   background: #f8f9fa;
   border-radius: 10px;
   padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 20px;
 }
 
 .calendar-notes h3 {
@@ -613,7 +676,7 @@ main {
 }
 
 .selected-date-notes {
-  max-height: 400px;
+  max-height: max-content;
   overflow-y: auto;
 }
 
@@ -805,8 +868,9 @@ input:checked + .toggle-slider:before {
 }
 
 /* Dark Mode Styles */
+
 body.dark-mode {
-  background-color: #1a1a1a;
+  background-color: #2d2d2d;
   color: #e0e0e0;
 }
 
@@ -849,9 +913,20 @@ body.dark-mode .note-card p {
 body.dark-mode .footer-date {
   color: #888;
 }
+body.dark-mode .note-card.colorful p {
+  color: #f0f0f0;
+}
+
+body.dark-mode .footer-date.colorful {
+  color: #f0f0f0;
+}
 
 body.dark-mode .note-card:hover {
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+body.dark-mode .color-options input[type="radio"]:checked + .color-option {
+  border-color: #ccc;
+  transform: scale(1.1);
 }
 
 body.dark-mode .modal-content {
@@ -869,13 +944,15 @@ body.dark-mode .modal-header h2 {
 
 body.dark-mode .close-modal,
 body.dark-mode .close-edit-modal,
-body.dark-mode .close-settings-modal {
+body.dark-mode .close-settings-modal,
+body.dark-mode .close-delete-modal {
   color: #b0b0b0;
 }
 
 body.dark-mode .close-modal:hover,
 body.dark-mode .close-edit-modal:hover,
-body.dark-mode .close-settings-modal:hover {
+body.dark-mode .close-settings-modal:hover,
+body.dark-mode .close-delete-modal:hover {
   color: #e0e0e0;
 }
 
@@ -948,6 +1025,12 @@ body.dark-mode .calendar-day-header {
   background: #333 !important;
   color: #b0b0b0;
 }
+body.dark-mode .calendar-title {
+  color: #e0e0e0;
+}
+body.dark-mode .current-month {
+  color: #e0e0e0;
+}
 
 body.dark-mode .calendar-notes {
   background: #333;
@@ -990,4 +1073,88 @@ body.compact-mode .note-card p {
 
 body.compact-mode #note-section {
   gap: 10px;
+}
+
+/* Responsive Calendar Styles */
+@media (max-width: 1200px) {
+  .calendar-container {
+    grid-template-columns: 1fr;
+    max-height: 80vh;
+  }
+
+  .calendar-grid {
+    max-height: 50vh;
+    aspect-ratio: 7/5;
+  }
+
+  .calendar-day {
+    min-height: 40px;
+    max-height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 15px;
+    max-height: 85vh;
+  }
+
+  .calendar-grid {
+    max-height: 45vh;
+    aspect-ratio: 7/4;
+    padding: 8px;
+  }
+
+  .calendar-day {
+    min-height: 35px;
+    max-height: 55px;
+    font-size: 0.9rem;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .calendar-nav {
+    gap: 15px;
+  }
+}
+
+@media (min-width: 1920px) {
+  /* Ultra-wide monitor support */
+  .calendar-container {
+    max-height: 65vh;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .calendar-grid {
+    max-height: 55vh;
+    aspect-ratio: 7/5.5;
+  }
+
+  .calendar-day {
+    min-height: 50px;
+    max-height: 85px;
+  }
+}
+
+@media (min-width: 2560px) {
+  /* Extra wide monitors */
+  .calendar-container {
+    max-height: 60vh;
+    max-width: 1600px;
+  }
+
+  .calendar-grid {
+    max-height: 50vh;
+    aspect-ratio: 7/5;
+  }
+
+  .calendar-day {
+    min-height: 55px;
+    max-height: 90px;
+  }
 }

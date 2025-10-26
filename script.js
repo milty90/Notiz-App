@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Close search when clicking outside
   document.addEventListener("click", function (event) {
     if (!event.target.closest(".search-container") && isSearchOpen) {
       isSearchOpen = false;
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Close search on Escape key
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" && isSearchOpen) {
       isSearchOpen = false;
@@ -96,15 +94,19 @@ function initModal() {
   const addNoteBtn = document.querySelector(".add-note-btn");
   const addModal = document.getElementById("addNoteModal");
   const editModal = document.getElementById("editNoteModal");
+  const deleteModal = document.getElementById("deleteNoteModal");
 
   const closeAddModal = document.querySelector(".close-modal");
   const closeEditModal = document.querySelector(".close-edit-modal");
+  const closeDeleteModal = document.querySelector(".close-delete-modal");
 
   const cancelAddBtn = document.querySelector(".btn-cancel");
   const cancelEditBtn = document.querySelector(".btn-cancel-edit");
+  const cancelDeleteBtn = document.querySelector(".btn-cancel-delete");
 
   const addNoteForm = document.getElementById("addNoteForm");
   const editNoteForm = document.getElementById("editNoteForm");
+  const deleteNoteForm = document.getElementById("deleteNoteForm");
 
   // Open ADD modal when add button clicked
   addNoteBtn.addEventListener("click", function () {
@@ -125,6 +127,11 @@ function initModal() {
     editNoteForm.reset();
   }
 
+  function closeDeleteModalWindow() {
+    deleteModal.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+
   // Close ADD modal events
   closeAddModal.addEventListener("click", closeAddModalWindow);
   cancelAddBtn.addEventListener("click", closeAddModalWindow);
@@ -133,6 +140,10 @@ function initModal() {
   closeEditModal.addEventListener("click", closeEditModalWindow);
   cancelEditBtn.addEventListener("click", closeEditModalWindow);
 
+  // Close DELETE modal events
+  closeDeleteModal.addEventListener("click", closeDeleteModalWindow);
+  cancelDeleteBtn.addEventListener("click", closeDeleteModalWindow);
+
   // Close modals when clicking outside
   window.addEventListener("click", function (event) {
     if (event.target === addModal) {
@@ -140,6 +151,9 @@ function initModal() {
     }
     if (event.target === editModal) {
       closeEditModalWindow();
+    }
+    if (event.target === deleteModal) {
+      closeDeleteModalWindow();
     }
   });
 
@@ -151,6 +165,9 @@ function initModal() {
       }
       if (editModal.style.display === "block") {
         closeEditModalWindow();
+      }
+      if (deleteModal.style.display === "block") {
+        closeDeleteModalWindow();
       }
     }
   });
@@ -484,7 +501,7 @@ function generateCalendar(year, month) {
   ];
 
   // Day names in German
-  const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+  const dayNames = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
   // Update month display
   currentMonthSpan.textContent = `${monthNames[month]} ${year}`;
@@ -501,8 +518,8 @@ function generateCalendar(year, month) {
   });
 
   // Get first day of month and number of days
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
+  const firstDay = new Date(year, month, 0);
+  const lastDay = new Date(year, month, 0);
   const daysInMonth = lastDay.getDate();
   const startDay = firstDay.getDay();
 
@@ -514,7 +531,7 @@ function generateCalendar(year, month) {
     const emptyDay = document.createElement("div");
     emptyDay.className = "calendar-day other-month";
     const prevMonth = new Date(year, month, 0);
-    const prevDay = prevMonth.getDate() - startDay + i + 1;
+    const prevDay = prevMonth.getDate() - startDay;
     emptyDay.textContent = prevDay;
     calendarGrid.appendChild(emptyDay);
   }
@@ -738,7 +755,11 @@ function initSettings() {
 
   // Reset settings
   resetSettingsBtn.addEventListener("click", function () {
-    if (confirm("Biztosan visszaállítja az alapértelmezett beállításokat?")) {
+    if (
+      confirm(
+        "Möchten Sie die Einstellungen auf die Standardwerte zurücksetzen?"
+      )
+    ) {
       resetSettings();
     }
   });
@@ -828,13 +849,14 @@ function resetSettings() {
 }
 
 // Update delete function to respect confirm delete setting
+let noteToDelete = null; // Store reference to note being deleted
+
 function deleteNote(noteElement) {
   const confirmDelete = document.getElementById("confirmDeleteToggle").checked;
+  const deleteModal = document.getElementById("deleteNoteModal");
 
-  if (
-    !confirmDelete ||
-    confirm("Sind Sie sicher, dass Sie diese Notiz löschen möchten?")
-  ) {
+  if (!confirmDelete) {
+    // If confirmation is disabled, delete immediately
     noteElement.remove();
     console.log("Note deleted");
 
@@ -845,5 +867,39 @@ function deleteNote(noteElement) {
         currentCalendarDate.getMonth()
       );
     }
+  } else {
+    // Show confirmation modal
+    noteToDelete = noteElement;
+    deleteModal.style.display = "block";
+    document.body.style.overflow = "hidden";
   }
 }
+
+// Handle delete confirmation
+function confirmDelete() {
+  if (noteToDelete) {
+    noteToDelete.remove();
+    console.log("Note deleted");
+
+    // Update calendar if it's visible
+    if (document.getElementById("calendar-section").style.display !== "none") {
+      generateCalendar(
+        currentCalendarDate.getFullYear(),
+        currentCalendarDate.getMonth()
+      );
+    }
+
+    // Reset and close modal
+    noteToDelete = null;
+    document.getElementById("deleteNoteModal").style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+}
+
+// Initialize delete modal event listener
+document.addEventListener("DOMContentLoaded", function () {
+  const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", confirmDelete);
+  }
+});
