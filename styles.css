@@ -26,9 +26,9 @@ header {
 }
 
 .header-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: rgb(80, 80, 80);
+  color: #505050;
   margin: 0;
 }
 
@@ -136,6 +136,43 @@ main {
 }
 
 #note-section {
+  display: flex;
+  flex-direction: column;
+}
+.last-edited-title {
+  margin: 10px 0 20px 20px;
+  color: #505050;
+}
+.note-title {
+  color: #505050;
+  margin: 40px 0 5px 20px;
+}
+
+.note-filters {
+  display: flex;
+  flex-direction: row;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  gap: 35px;
+  margin: 0 0 10px 20px;
+  filter: invert(40%);
+  transition: all 0.3s ease;
+}
+.note-all:hover,
+.note-today:hover,
+.note-this-week:hover,
+.note-this-month:hover {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.last-edited-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
@@ -145,7 +182,7 @@ main {
   background: #fff;
   border: 1px solid #e9ecef;
   border-radius: 15px;
-  padding: 20px;
+  padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .note-card.colorful {
@@ -178,14 +215,23 @@ main {
 .note-card h2 {
   margin: 0;
   color: #333;
+  max-width: 135px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .note-card p {
   color: #666;
   line-height: 1;
   font-size: 1.1rem;
+  max-width: 255px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.note-card.note-card.colorful p {
+
+.note-card.colorful p {
   color: #323232;
   line-height: 1;
   font-size: 1.1rem;
