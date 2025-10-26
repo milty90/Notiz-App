@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let isSearchOpen = false;
 
-  // Toggle search bar on icon click
+  // Suchleiste bei Icon-Klick umschalten
   searchToggle.addEventListener("click", function () {
     isSearchOpen = !isSearchOpen;
 
@@ -42,26 +42,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Search functionality (you can extend this)
+  // Suchfunktion (kann erweitert werden)
   searchInput.addEventListener("input", function () {
     const searchTerm = this.value.toLowerCase();
-    console.log("Searching for:", searchTerm);
+    console.log("Suchbegriff:", searchTerm);
 
-    // Here you can add logic to filter notes
-    // For example, hide/show note cards based on search term
+    // Hier können Sie die Logik zum Filtern von Notizen hinzufügen
+    // Zum Beispiel: Notizkarten basierend auf dem Suchbegriff ein-/ausblenden
     filterNotes(searchTerm);
   });
 
-  // Modal functionality
   initModal();
 
-  // Initialize existing notes with edit/delete functionality
   initExistingNotes();
 
-  // Initialize calendar functionality
   initCalendar();
 
-  // Initialize settings functionality
   initSettings();
 });
 
@@ -110,26 +106,26 @@ function initModal() {
 
   // Open ADD modal when add button clicked
   addNoteBtn.addEventListener("click", function () {
-    addModal.style.display = "block";
-    document.body.style.overflow = "hidden";
+    addModal.classList.add("show");
+    document.body.classList.add("modal-open");
   });
 
   // Close modal functions
   function closeAddModalWindow() {
-    addModal.style.display = "none";
-    document.body.style.overflow = "auto";
+    addModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
     addNoteForm.reset();
   }
 
   function closeEditModalWindow() {
-    editModal.style.display = "none";
-    document.body.style.overflow = "auto";
+    editModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
     editNoteForm.reset();
   }
 
   function closeDeleteModalWindow() {
-    deleteModal.style.display = "none";
-    document.body.style.overflow = "auto";
+    deleteModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
   }
 
   // Close ADD modal events
@@ -160,13 +156,13 @@ function initModal() {
   // Close modals on Escape key
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
-      if (addModal.style.display === "block") {
+      if (addModal.classList.contains("show")) {
         closeAddModalWindow();
       }
-      if (editModal.style.display === "block") {
+      if (editModal.classList.contains("show")) {
         closeEditModalWindow();
       }
-      if (deleteModal.style.display === "block") {
+      if (deleteModal.classList.contains("show")) {
         closeDeleteModalWindow();
       }
     }
@@ -205,8 +201,8 @@ function initModal() {
     }
 
     // Close modal
-    editModal.style.display = "none";
-    document.body.style.overflow = "auto";
+    editModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
     editNoteForm.reset();
   });
 }
@@ -220,9 +216,16 @@ function filterNotes(searchTerm) {
     const content = card.querySelector("p").textContent.toLowerCase();
 
     if (title.includes(searchTerm) || content.includes(searchTerm)) {
-      card.style.display = "block";
+      card.classList.remove("hidden");
+      card.classList.add("visible");
     } else {
-      card.style.display = searchTerm === "" ? "block" : "none";
+      if (searchTerm === "") {
+        card.classList.remove("hidden");
+        card.classList.add("visible");
+      } else {
+        card.classList.remove("visible");
+        card.classList.add("hidden");
+      }
     }
   });
 }
@@ -276,7 +279,6 @@ function createNewNote(title, content, color, priority) {
       }">Zuletzt bearbeitet: ${currentDate}</span>
     </div>
   `;
-
   // Add to grid
   noteGrid.appendChild(noteCard);
 
@@ -291,10 +293,12 @@ function createNewNote(title, content, color, priority) {
     this.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
   });
 
-  console.log("New note created:", { title, content, color, priority });
+  console.log("Neue Notiz erstellt:", { title, content, color, priority });
 
-  // Update calendar if it's visible
-  if (document.getElementById("calendar-section").style.display !== "none") {
+  // Kalender aktualisieren, wenn sichtbar
+  if (
+    document.getElementById("calendar-section").classList.contains("visible")
+  ) {
     generateCalendar(
       currentCalendarDate.getFullYear(),
       currentCalendarDate.getMonth()
@@ -366,7 +370,9 @@ function updateNote(noteElement, title, content, color, priority) {
   console.log("Note updated:", { title, content, color, priority });
 
   // Update calendar if it's visible
-  if (document.getElementById("calendar-section").style.display !== "none") {
+  if (
+    document.getElementById("calendar-section").classList.contains("visible")
+  ) {
     generateCalendar(
       currentCalendarDate.getFullYear(),
       currentCalendarDate.getMonth()
@@ -421,8 +427,8 @@ function openEditModal(noteElement) {
   editModal.currentNoteElement = noteElement;
 
   // Show edit modal
-  editModal.style.display = "block";
-  document.body.style.overflow = "hidden";
+  editModal.classList.add("show");
+  document.body.classList.add("modal-open");
 }
 
 // Function to delete a note
@@ -441,18 +447,24 @@ function initCalendar() {
 
   // Toggle calendar view
   calendarBtn.addEventListener("click", function () {
-    const isCalendarVisible = calendarSection.style.display !== "none";
+    const isCalendarVisible = calendarSection.classList.contains("visible");
 
     if (isCalendarVisible) {
       // Hide calendar, show notes
-      calendarSection.style.display = "none";
-      noteSection.style.display = "block";
-      lastEditedSection.style.display = "block";
+      calendarSection.classList.remove("visible");
+      calendarSection.classList.add("section-hidden");
+      noteSection.classList.remove("section-hidden");
+      noteSection.classList.add("visible");
+      lastEditedSection.classList.remove("section-hidden");
+      lastEditedSection.classList.add("visible");
     } else {
       // Show calendar, hide notes
-      calendarSection.style.display = "block";
-      noteSection.style.display = "none";
-      lastEditedSection.style.display = "none";
+      calendarSection.classList.remove("section-hidden");
+      calendarSection.classList.add("visible");
+      noteSection.classList.remove("visible");
+      noteSection.classList.add("section-hidden");
+      lastEditedSection.classList.remove("visible");
+      lastEditedSection.classList.add("section-hidden");
 
       // Generate calendar for current month
       generateCalendar(
@@ -703,14 +715,14 @@ function initSettings() {
 
   // Open settings modal
   settingsBtn.addEventListener("click", function () {
-    settingsModal.style.display = "block";
-    document.body.style.overflow = "hidden";
+    settingsModal.classList.add("show");
+    document.body.classList.add("modal-open");
   });
 
   // Close settings modal functions
   function closeSettingsModalWindow() {
-    settingsModal.style.display = "none";
-    document.body.style.overflow = "auto";
+    settingsModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
   }
 
   // Close settings modal events
@@ -726,7 +738,7 @@ function initSettings() {
 
   // Close modal on Escape key
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && settingsModal.style.display === "block") {
+    if (event.key === "Escape" && settingsModal.classList.contains("show")) {
       closeSettingsModalWindow();
     }
   });
@@ -861,7 +873,9 @@ function deleteNote(noteElement) {
     console.log("Note deleted");
 
     // Update calendar if it's visible
-    if (document.getElementById("calendar-section").style.display !== "none") {
+    if (
+      document.getElementById("calendar-section").classList.contains("visible")
+    ) {
       generateCalendar(
         currentCalendarDate.getFullYear(),
         currentCalendarDate.getMonth()
@@ -870,8 +884,8 @@ function deleteNote(noteElement) {
   } else {
     // Show confirmation modal
     noteToDelete = noteElement;
-    deleteModal.style.display = "block";
-    document.body.style.overflow = "hidden";
+    deleteModal.classList.add("show");
+    document.body.classList.add("modal-open");
   }
 }
 
@@ -882,7 +896,9 @@ function confirmDelete() {
     console.log("Note deleted");
 
     // Update calendar if it's visible
-    if (document.getElementById("calendar-section").style.display !== "none") {
+    if (
+      document.getElementById("calendar-section").classList.contains("visible")
+    ) {
       generateCalendar(
         currentCalendarDate.getFullYear(),
         currentCalendarDate.getMonth()
@@ -891,8 +907,8 @@ function confirmDelete() {
 
     // Reset and close modal
     noteToDelete = null;
-    document.getElementById("deleteNoteModal").style.display = "none";
-    document.body.style.overflow = "auto";
+    document.getElementById("deleteNoteModal").classList.remove("show");
+    document.body.classList.remove("modal-open");
   }
 }
 

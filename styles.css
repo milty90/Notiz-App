@@ -303,6 +303,42 @@ main {
   backdrop-filter: blur(5px);
 }
 
+/* Modal megjelenítési állapotok */
+.modal.show {
+  display: block;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+/* Body állapotok modal-hoz */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Utility osztályok a megjelenítéshez */
+.show {
+  display: block !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+/* Section megjelenítési állapotok */
+.section-hidden {
+  display: none;
+}
+
+.section-visible {
+  display: block;
+}
+
 .modal-content {
   background-color: #fff;
   margin: 5% auto;
@@ -883,6 +919,11 @@ body.dark-mode .header-title {
   color: #e0e0e0;
 }
 
+body.dark-mode .search-input {
+  color: #e0e0e0;
+  border-bottom: 2px solid #666;
+}
+
 body.dark-mode nav {
   background: #2d2d2d;
   color: #e0e0e0;
@@ -1076,22 +1117,6 @@ body.compact-mode #note-section {
 }
 
 /* Responsive Calendar Styles */
-@media (max-width: 1200px) {
-  .calendar-container {
-    grid-template-columns: 1fr;
-    max-height: 80vh;
-  }
-
-  .calendar-grid {
-    max-height: 50vh;
-    aspect-ratio: 7/5;
-  }
-
-  .calendar-day {
-    min-height: 40px;
-    max-height: 70px;
-  }
-}
 
 @media (max-width: 768px) {
   .calendar-container {
@@ -1119,6 +1144,23 @@ body.compact-mode #note-section {
 
   .calendar-nav {
     gap: 15px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .calendar-container {
+    grid-template-columns: 1fr;
+    max-height: 80vh;
+  }
+
+  .calendar-grid {
+    max-height: 50vh;
+    aspect-ratio: 7/5;
+  }
+
+  .calendar-day {
+    min-height: 40px;
+    max-height: 70px;
   }
 }
 
