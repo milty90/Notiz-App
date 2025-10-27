@@ -496,7 +496,6 @@ function generateCalendar(year, month) {
   const calendarGrid = document.getElementById("calendarGrid");
   const currentMonthSpan = document.getElementById("currentMonth");
 
-  // Month names in German
   const monthNames = [
     "Januar",
     "Februar",

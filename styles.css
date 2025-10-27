@@ -119,10 +119,12 @@ nav a {
   padding: 15px 20px;
   border-bottom: 1px solid #444;
 }
+
 .nav-top {
   margin-bottom: auto;
   padding: 5px 0;
 }
+
 .nav-bottom {
   margin-top: auto;
   padding: 50px 0;
@@ -149,6 +151,7 @@ nav a {
   color: #666;
   transition: transform 0.3s ease;
 }
+
 .nav-icon.colorful {
   filter: invert(100%);
   width: 25px;
@@ -157,6 +160,7 @@ nav a {
 .nav-item .nav-icon {
   filter: invert(40%);
 }
+
 .nav-icon {
   width: 24px;
   filter: invert(40%);
@@ -165,17 +169,17 @@ nav a {
 main {
   display: flex;
   flex-direction: column;
-
   background-color: #f8f9fa; /* #e6e6e6; */
   min-height: calc(100vh - 70px);
   margin-top: 70px; /* Space for fixed header */
-
   padding: 20px;
   border-radius: 25px 0 0 0;
   margin-left: 60px;
   max-width: calc(100% - 60px);
   width: calc(100% - 60px);
   box-sizing: border-box;
+  box-shadow: rgb(230, 230, 230) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
 #note-section {
@@ -228,19 +232,23 @@ main {
   border: 1px solid #e9ecef;
   border-radius: 15px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
+    rgba(0, 0, 0, 0.2) 0px 10px 20px -5px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
 }
 .note-card.colorful {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
+    rgba(0, 0, 0, 0.2) 0px 10px 20px -3px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
 }
 
 .note-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-5px);
+  box-shadow: rgba(100, 100, 100, 0.4) 0px 2px 4px,
+    rgba(100, 100, 100, 0.3) 0px 7px 13px -3px,
+    rgba(100, 100, 100, 0.2) 0px -3px 0px inset;
+  transform: translateY(3px);
   transition: all 0.3s ease;
 }
 .card-header {
@@ -935,6 +943,8 @@ body.dark-mode .nav-item:hover {
 
 body.dark-mode main {
   background-color: #1e1e1e;
+  box-shadow: rgb(20, 20, 20) 3px 3px 6px 0px inset,
+    rgba(40, 40, 40, 0.5) -3px -3px 6px 1px inset;
 }
 
 body.dark-mode .note-card {
@@ -963,7 +973,8 @@ body.dark-mode .footer-date.colorful {
 }
 
 body.dark-mode .note-card:hover {
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  box-shadow: rgba(100, 100, 100, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 body.dark-mode .color-options input[type="radio"]:checked + .color-option {
   border-color: #ccc;
