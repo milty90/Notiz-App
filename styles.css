@@ -170,7 +170,7 @@ main {
   display: flex;
   flex-direction: column;
   background-color: #f8f9fa; /* #e6e6e6; */
-  min-height: calc(100vh - 70px);
+  height: calc(100vh - 70px);
   margin-top: 70px; /* Space for fixed header */
   padding: 20px;
   border-radius: 25px 0 0 0;
@@ -178,13 +178,14 @@ main {
   max-width: calc(100% - 60px);
   width: calc(100% - 60px);
   box-sizing: border-box;
-  box-shadow: rgb(230, 230, 230) 3px 3px 6px 0px inset,
-    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  box-shadow: rgb(230, 230, 230) 3px 3px 5px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 5px 1px inset;
 }
 
 #note-section {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .last-edited-title {
   margin: 10px 0 20px 20px;
@@ -192,7 +193,7 @@ main {
 }
 .note-title {
   color: #505050;
-  margin: 40px 0 5px 20px;
+  margin: 20px 0 5px 20px;
 }
 
 .note-filters {
@@ -218,13 +219,18 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  max-height: fit-content;
+  flex: 1;
+  padding-right: 10px;
+  margin-right: -10px;
 }
 .last-edited-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  max-height: fit-content;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 10px;
+  margin-right: -10px;
 }
 
 .note-card {
@@ -945,6 +951,22 @@ body.dark-mode main {
   background-color: #1e1e1e;
   box-shadow: rgb(20, 20, 20) 3px 3px 6px 0px inset,
     rgba(40, 40, 40, 0.5) -3px -3px 6px 1px inset;
+}
+
+/* Dark mode scrollbar stílusok */
+body.dark-mode .note-grid::-webkit-scrollbar-track,
+body.dark-mode .last-edited-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .note-grid::-webkit-scrollbar-thumb,
+body.dark-mode .last-edited-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .note-grid::-webkit-scrollbar-thumb:hover,
+body.dark-mode .last-edited-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 body.dark-mode .note-card {
