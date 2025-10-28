@@ -433,8 +433,8 @@ function openEditModal(noteElement) {
 
 // Function to delete a note
 // Calendar functionality
-let currentCalendarDate = new Date();
-let selectedDate = null;
+// let currentCalendarDate = new Date();
+// let selectedDate = null;
 
 function initCalendar() {
   const calendarBtn = document.querySelector(".calendar-btn");
@@ -492,209 +492,210 @@ function initCalendar() {
   });
 }
 
-function generateCalendar(year, month) {
-  const calendarGrid = document.getElementById("calendarGrid");
-  const currentMonthSpan = document.getElementById("currentMonth");
+// function generateCalendar(year, month) {
+//   const calendarGrid = document.getElementById("calendarGrid");
+//   const currentMonthSpan = document.getElementById("currentMonth");
 
-  const monthNames = [
-    "Januar",
-    "Februar",
-    "März",
-    "April",
-    "Mai",
-    "Juni",
-    "Juli",
-    "August",
-    "September",
-    "Oktober",
-    "November",
-    "Dezember",
-  ];
+//   const monthNames = [
+//     "Januar",
+//     "Februar",
+//     "März",
+//     "April",
+//     "Mai",
+//     "Juni",
+//     "Juli",
+//     "August",
+//     "September",
+//     "Oktober",
+//     "November",
+//     "Dezember",
+//   ];
 
-  // Day names in German
-  const dayNames = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+//   // Day names in German
+//   const dayNames = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
-  // Update month display
-  currentMonthSpan.textContent = `${monthNames[month]} ${year}`;
+//   // Update month display
+//   currentMonthSpan.textContent = `${monthNames[month]} ${year}`;
 
-  // Clear calendar
-  calendarGrid.innerHTML = "";
+//   // Clear calendar
+//   calendarGrid.innerHTML = "";
 
-  // Add day headers
-  dayNames.forEach((day) => {
-    const dayHeader = document.createElement("div");
-    dayHeader.className = "calendar-day calendar-day-header";
-    dayHeader.textContent = day;
-    calendarGrid.appendChild(dayHeader);
-  });
+//   // Add day headers
+//   dayNames.forEach((day) => {
+//     const dayHeader = document.createElement("div");
+//     dayHeader.className = "calendar-day calendar-day-header";
+//     dayHeader.textContent = day;
+//     calendarGrid.appendChild(dayHeader);
+//   });
 
-  // Get first day of month and number of days
-  const firstDay = new Date(year, month, 0);
-  const lastDay = new Date(year, month, 0);
-  const daysInMonth = lastDay.getDate();
-  const startDay = firstDay.getDay();
+//   // Get first day of month and number of days
+//   const firstDay = new Date(year, month, 0);
+//   const lastDay = new Date(year, month, 0);
+//   const daysInMonth = lastDay.getDate();
+//   const startDay = firstDay.getDay();
 
-  // Get notes data
-  const notesData = getNotesGroupedByDate();
+//   // Get notes data
+//   const notesData = getNotesGroupedByDate();
 
-  // Add empty cells for days before the first day of the month
-  for (let i = 0; i < startDay; i++) {
-    const emptyDay = document.createElement("div");
-    emptyDay.className = "calendar-day other-month";
-    const prevMonth = new Date(year, month, 0);
-    const prevDay = prevMonth.getDate() - startDay;
-    emptyDay.textContent = prevDay;
-    calendarGrid.appendChild(emptyDay);
-  }
+//   // Add empty cells for days before the first day of the month
+//   for (let i = 0; i < startDay; i++) {
+//     const emptyDay = document.createElement("div");
+//     emptyDay.className = "calendar-day other-month";
+//     const prevMonth = new Date(year, month, 0);
+//     const prevDay = prevMonth.getDate() - startDay;
+//     emptyDay.textContent = prevDay;
+//     calendarGrid.appendChild(emptyDay);
+//   }
 
-  // Add days of the month
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dayElement = document.createElement("div");
-    dayElement.className = "calendar-day";
-    dayElement.textContent = day;
+//   // Add days of the month
+//   for (let day = 1; day <= daysInMonth; day++) {
+//     const dayElement = document.createElement("div");
+//     dayElement.className = "calendar-day";
+//     dayElement.textContent = day;
 
-    const currentDate = new Date(year, month, day);
-    const dateKey = formatDateKey(currentDate);
-    const today = new Date();
+//     const currentDate = new Date(year, month, day);
+//     const dateKey = formatDateKey(currentDate);
+//     const today = new Date();
 
-    // Check if it's today
-    if (currentDate.toDateString() === today.toDateString()) {
-      dayElement.classList.add("today");
-    }
+//     // Check if it's today
+//     if (currentDate.toDateString() === today.toDateString()) {
+//       dayElement.classList.add("today");
+//     }
 
-    // Check if this day has notes
-    if (notesData[dateKey] && notesData[dateKey].length > 0) {
-      dayElement.classList.add("has-notes");
+//     // Check if this day has notes
+//     if (notesData[dateKey] && notesData[dateKey].length > 0) {
+//       dayElement.classList.add("has-notes");
 
-      // Add note count indicator
-      const noteCount = document.createElement("div");
-      noteCount.className = "note-count";
-      noteCount.textContent = notesData[dateKey].length;
-      dayElement.appendChild(noteCount);
-    }
+//       // Add note count indicator
+//       const noteCount = document.createElement("div");
+//       noteCount.className = "note-count";
+//       noteCount.textContent = notesData[dateKey].length;
+//       dayElement.appendChild(noteCount);
+//     }
 
-    // Add click event
-    dayElement.addEventListener("click", function () {
-      selectDate(currentDate);
-    });
+//     // Add click event
+//     dayElement.addEventListener("click", function () {
+//       selectDate(currentDate);
+//     });
 
-    calendarGrid.appendChild(dayElement);
-  }
+//     calendarGrid.appendChild(dayElement);
+//   }
 
-  // Add empty cells for days after the last day of the month
-  const remainingCells = 42 - (startDay + daysInMonth); // 6 rows * 7 days = 42
-  for (let i = 1; i <= remainingCells && i <= 14; i++) {
-    const emptyDay = document.createElement("div");
-    emptyDay.className = "calendar-day other-month";
-    emptyDay.textContent = i;
-    calendarGrid.appendChild(emptyDay);
-  }
-}
+//   // Add empty cells for days after the last day of the month
+//   const remainingCells = 42 - (startDay + daysInMonth); // 6 rows * 7 days = 42
+//   for (let i = 1; i <= remainingCells && i <= 14; i++) {
+//     const emptyDay = document.createElement("div");
+//     emptyDay.className = "calendar-day other-month";
+//     emptyDay.textContent = i;
+//     calendarGrid.appendChild(emptyDay);
+//   }
+// }
 
-function getNotesGroupedByDate() {
-  const notes = {};
-  const noteCards = document.querySelectorAll(".note-card");
+// function getNotesGroupedByDate() {
+//   const notes = {};
+//   const noteCards = document.querySelectorAll(".note-card");
 
-  noteCards.forEach((card) => {
-    const footerDate = card.querySelector(".footer-date");
-    if (footerDate) {
-      const dateText = footerDate.textContent;
-      const match = dateText.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+//   noteCards.forEach((card) => {
+//     const footerDate = card.querySelector(".footer-date");
+//     if (footerDate) {
+//       const dateText = footerDate.textContent;
+//       const match = dateText.match(/(\d{2})\.(\d{2})\.(\d{4})/);
 
-      if (match) {
-        const [, day, month, year] = match;
-        const noteDate = new Date(year, month - 1, day);
-        const dateKey = formatDateKey(noteDate);
+//       if (match) {
+//         const [, day, month, year] = match;
+//         const noteDate = new Date(year, month - 1, day);
+//         const dateKey = formatDateKey(noteDate);
 
-        if (!notes[dateKey]) {
-          notes[dateKey] = [];
-        }
+//         if (!notes[dateKey]) {
+//           notes[dateKey] = [];
+//         }
 
-        const title = card.querySelector("h2").textContent;
-        const content = card.querySelector("p").textContent;
-        const priorityIcon = card.querySelector(".priority-icon");
-        let priority = "none";
+//         const title = card.querySelector("h2").textContent;
+//         const content = card.querySelector("p").textContent;
+//         const priorityIcon = card.querySelector(".priority-icon");
+//         let priority = "none";
 
-        if (priorityIcon) {
-          const src = priorityIcon.src;
-          if (src.includes("red")) priority = "red";
-          else if (src.includes("yellow")) priority = "yellow";
-          else if (src.includes("green")) priority = "green";
-        }
+//         if (priorityIcon) {
+//           const src = priorityIcon.src;
+//           if (src.includes("red")) priority = "red";
+//           else if (src.includes("yellow")) priority = "yellow";
+//           else if (src.includes("green")) priority = "green";
+//         }
 
-        notes[dateKey].push({
-          title,
-          content,
-          priority,
-          element: card,
-        });
-      }
-    }
-  });
+//         notes[dateKey].push({
+//           title,
+//           content,
+//           priority,
+//           element: card,
+//         });
+//       }
+//     }
+//   });
 
-  return notes;
-}
+//   return notes;
+// }
 
-function formatDateKey(date) {
-  return `${date.getFullYear()}-${(date.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-}
+// function formatDateKey(date) {
+//   return `${date.getFullYear()}-${(date.getMonth() + 1)
+//     .toString()
+//     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+// }
 
-function selectDate(date) {
-  selectedDate = date;
+// function selectDate(date) {
+//   selectedDate = date;
 
-  // Update selected day styling
-  document.querySelectorAll(".calendar-day").forEach((day) => {
-    day.classList.remove("selected");
-  });
+//   // Update selected day styling
+//   document.querySelectorAll(".calendar-day").forEach((day) => {
+//     day.classList.remove("selected");
+//   });
 
-  const dayElements = document.querySelectorAll(".calendar-day");
-  dayElements.forEach((dayEl) => {
-    if (
-      dayEl.textContent == date.getDate() &&
-      !dayEl.classList.contains("other-month")
-    ) {
-      dayEl.classList.add("selected");
-    }
-  });
+//   const dayElements = document.querySelectorAll(".calendar-day");
+//   dayElements.forEach((dayEl) => {
+//     if (
+//       dayEl.textContent == date.getDate() &&
+//       !dayEl.classList.contains("other-month")
+//     ) {
+//       dayEl.classList.add("selected");
+//     }
+//   });
 
-  // Show notes for selected date
-  showNotesForDate(date);
-}
+//   // Show notes for selected date
+//   showNotesForDate(date);
+// }
 
-function showNotesForDate(date) {
-  const selectedNotesContainer = document.getElementById("selectedDateNotes");
-  const dateKey = formatDateKey(date);
-  const notesData = getNotesGroupedByDate();
-  const notesForDate = notesData[dateKey] || [];
+// function showNotesForDate(date) {
+//   const selectedNotesContainer = document.getElementById("selectedDateNotes");
+//   const dateKey = formatDateKey(date);
+//   const notesData = getNotesGroupedByDate();
+//   const notesForDate = notesData[dateKey] || [];
 
-  const dateString = date.toLocaleDateString("de-DE", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+//   const dateString = date.toLocaleDateString("de-DE", {
+//     weekday: "long",
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+//   });
 
-  if (notesForDate.length === 0) {
-    selectedNotesContainer.innerHTML = `
-      <p class="no-notes">Keine Notizen für ${dateString}</p>
-    `;
-  } else {
-    let notesHtml = `<h4 style="margin: 0 0 15px 0; color: #333;">${dateString}</h4>`;
+//   if (notesForDate.length === 0) {
+//     selectedNotesContainer.innerHTML = `
+//       <p class="no-notes">Keine Notizen für ${dateString}</p>
+//     `;
+//   } else {
+//     let notesHtml = `<h4 style="margin: 0 0 15px 0; color: #333;">${dateString}</h4>`;
 
-    notesForDate.forEach((note) => {
-      notesHtml += `
-        <div class="calendar-note-item priority-${note.priority}">
-          <div class="calendar-note-title">${note.title}</div>
-          <div class="calendar-note-content">${note.content}</div>
-        </div>
-      `;
-    });
+//     notesForDate.forEach((note) => {
+//       notesHtml += `
+//         <div class="calendar-note-item priority-${note.priority}">
+//           <div class="calendar-note-title">${note.title}</div>
+//           <div class="calendar-note-content">${note.content}</div>
+//         </div>
+//       `;
+//     });
 
-    selectedNotesContainer.innerHTML = notesHtml;
-  }
-}
+//     selectedNotesContainer.innerHTML = notesHtml;
+//   }
+// }
+// selectedNotesContainer.innerHTML = notesHtml;
 
 // Settings functionality
 function initSettings() {
@@ -797,7 +798,6 @@ function toggleCompactMode(enabled) {
     document.body.classList.remove("compact-mode");
     noteCards.forEach((card) => {
       card.style.padding = "20px";
-      card.style.marginBottom = "20px";
     });
   }
 }
