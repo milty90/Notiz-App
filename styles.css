@@ -7,6 +7,13 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 header {
@@ -171,7 +178,7 @@ main {
   flex-direction: column;
   background-color: #f8f9fa; /* #e6e6e6; */
   height: calc(100vh - 70px);
-  margin-top: 70px; /* Space for fixed header */
+  margin-top: 70px;
   padding: 20px;
   border-radius: 25px 0 0 0;
   margin-left: 60px;
@@ -180,6 +187,20 @@ main {
   box-sizing: border-box;
   box-shadow: rgb(230, 230, 230) 3px 3px 5px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 5px 1px inset;
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+main::-webkit-scrollbar {
+  display: none;
+}
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
 }
 
 #note-section {
@@ -188,12 +209,12 @@ main {
   height: 100%;
 }
 .last-edited-title {
-  margin: 10px 0 20px 20px;
+  margin: 10px 0 10px 25px;
   color: #505050;
 }
 .note-title {
   color: #505050;
-  margin: 20px 0 5px 20px;
+  margin: 5px 0 5px 25px;
 }
 
 .note-filters {
@@ -218,19 +239,75 @@ main {
 .note-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 200px;
   gap: 20px;
   flex: 1;
-  padding-right: 10px;
-  margin-right: -10px;
+  margin-right: 10px;
+  padding: 15px 15px 35px 15px;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
-.last-edited-list {
+
+.note-grid::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+
+.note-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.note-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.note-grid:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+.note-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.last-edited-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  overflow-y: auto;
+  overflow-y: overlay;
+  padding: 15px 15px 15px 15px;
+  margin-right: 15px;
   flex: 1;
-  padding-right: 10px;
-  margin-right: -10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+.last-edited-list::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+
+.last-edited-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.last-edited-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.last-edited-list:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+.last-edited-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .note-card {
@@ -1147,89 +1224,4 @@ body.compact-mode .note-card p {
 
 body.compact-mode #note-section {
   gap: 10px;
-}
-
-/* Responsive Calendar Styles */
-
-@media (max-width: 768px) {
-  .calendar-container {
-    padding: 15px;
-    max-height: 85vh;
-  }
-
-  .calendar-grid {
-    max-height: 45vh;
-    aspect-ratio: 7/4;
-    padding: 8px;
-  }
-
-  .calendar-day {
-    min-height: 35px;
-    max-height: 55px;
-    font-size: 0.9rem;
-  }
-
-  .calendar-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-
-  .calendar-nav {
-    gap: 15px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .calendar-container {
-    grid-template-columns: 1fr;
-    max-height: 80vh;
-  }
-
-  .calendar-grid {
-    max-height: 50vh;
-    aspect-ratio: 7/5;
-  }
-
-  .calendar-day {
-    min-height: 40px;
-    max-height: 70px;
-  }
-}
-
-@media (min-width: 1920px) {
-  /* Ultra-wide monitor support */
-  .calendar-container {
-    max-height: 65vh;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .calendar-grid {
-    max-height: 55vh;
-    aspect-ratio: 7/5.5;
-  }
-
-  .calendar-day {
-    min-height: 50px;
-    max-height: 85px;
-  }
-}
-
-@media (min-width: 2560px) {
-  /* Extra wide monitors */
-  .calendar-container {
-    max-height: 60vh;
-    max-width: 1600px;
-  }
-
-  .calendar-grid {
-    max-height: 50vh;
-    aspect-ratio: 7/5;
-  }
-
-  .calendar-day {
-    min-height: 55px;
-    max-height: 90px;
-  }
 }
