@@ -390,7 +390,7 @@ function updateNote(noteElement, title, content, color, priority) {
   footerDate.textContent = `Zuletzt aktualisiert: ${currentDate}`;
 
   // LOG für Debugging
-  console.log("Note updated:", { title, content, color, priority });
+  console.log("Notiz erstellt:", { title, content, color, priority });
 
   // Update calendar if it's visible
   // if (
