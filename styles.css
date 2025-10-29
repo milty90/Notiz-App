@@ -93,6 +93,10 @@ header {
   border-bottom-color: #333;
 }
 
+.search-icon.rotate {
+  transform: rotate(90deg);
+}
+
 nav {
   display: flex;
   flex-direction: column;
@@ -209,12 +213,12 @@ main::-webkit-scrollbar {
   height: 100%;
 }
 .last-edited-title {
-  margin: 10px 0 10px 25px;
+  margin: 10px 0 0 25px;
   color: #505050;
 }
 .note-title {
   color: #505050;
-  margin: 5px 0 5px 25px;
+  margin: 25px 0 5px 25px;
 }
 
 .note-filters {
@@ -314,16 +318,35 @@ main::-webkit-scrollbar {
   border: 1px solid #e9ecef;
   border-radius: 15px;
   padding: 16px;
+  max-height: 220px; /* Maximális magasság beállítása */
+  overflow: hidden; /* Túlcsordulás elrejtése */
+  transition: all 0.3s ease; /* Smooth hover animáció */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
     rgba(0, 0, 0, 0.2) 0px 10px 20px -5px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
 }
+
 .note-card.colorful {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 15px;
   padding: 20px;
+  max-height: 220px;
+  overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
     rgba(0, 0, 0, 0.2) 0px 10px 20px -3px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
+}
+
+/* Farbige Hintergründe */
+.note-card.color-green {
+  background-color: #83cc16d3 !important;
+}
+
+.note-card.color-yellow {
+  background-color: #facc15da !important;
+}
+
+.note-card.color-red {
+  background-color: #e11d44d2 !important;
 }
 
 .note-card:hover {
@@ -379,6 +402,14 @@ main::-webkit-scrollbar {
   font-size: 1rem;
   color: rgb(75, 75, 75);
 }
+.priority-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px 5px 0;
+}
+.hasColor .priority-icon {
+  filter: invert(100%);
+}
 
 /* Modal Styles */
 .modal {
@@ -393,7 +424,7 @@ main::-webkit-scrollbar {
   backdrop-filter: blur(5px);
 }
 
-/* Modal megjelenítési állapotok */
+/* Modal öffnen styles */
 .modal.show {
   display: block;
 }
@@ -402,12 +433,11 @@ main::-webkit-scrollbar {
   display: none;
 }
 
-/* Body állapotok modal-hoz */
 body.modal-open {
   overflow: hidden;
 }
 
-/* Utility osztályok a megjelenítéshez */
+/* Utility klassen für die Anzeige */
 .show {
   display: block !important;
 }
@@ -420,7 +450,7 @@ body.modal-open {
   display: block !important;
 }
 
-/* Section megjelenítési állapotok */
+/* Section */
 .section-hidden {
   display: none;
 }
@@ -532,6 +562,22 @@ body.modal-open {
   cursor: pointer;
   border: 3px solid transparent;
   transition: all 0.3s ease;
+}
+
+.color-red {
+  background-color: #e11d44 !important;
+}
+
+.color-green {
+  background-color: #83cc16;
+}
+
+.color-yellow {
+  background-color: #facc15 !important;
+}
+
+.color-default {
+  background-color: #fff !important;
 }
 
 .color-option.default {

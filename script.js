@@ -1,4 +1,4 @@
-// Search functionality
+// Sucheleisten Funktionalität
 document.addEventListener("DOMContentLoaded", function () {
   const searchToggle = document.querySelector(".search-toggle");
   const searchInput = document.querySelector(".search-input");
@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isSearchOpen) {
       searchInput.classList.add("active");
       searchInput.focus();
-      searchIcon.style.transform = "rotate(90deg)";
+      searchIcon.classList.toggle("rotate");
     } else {
       searchInput.classList.remove("active");
       searchInput.blur();
-      searchIcon.style.transform = "rotate(0deg)";
+      searchIcon.classList.remove("rotate");
       searchInput.value = "";
     }
   });
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
       isSearchOpen = false;
       searchInput.classList.remove("active");
       searchInput.blur();
-      searchIcon.style.transform = "rotate(0deg)";
+      searchIcon.classList.remove("rotate");
       searchInput.value = "";
     }
   });
@@ -37,18 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
       isSearchOpen = false;
       searchInput.classList.remove("active");
       searchInput.blur();
-      searchIcon.style.transform = "rotate(0deg)";
+      searchIcon.classList.remove("rotate");
       searchInput.value = "";
     }
   });
 
-  // Suchfunktion (kann erweitert werden)
   searchInput.addEventListener("input", function () {
     const searchTerm = this.value.toLowerCase();
     console.log("Suchbegriff:", searchTerm);
 
-    // Hier können Sie die Logik zum Filtern von Notizen hinzufügen
-    // Zum Beispiel: Notizkarten basierend auf dem Suchbegriff ein-/ausblenden
     filterNotes(searchTerm);
   });
 
@@ -61,15 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
   initSettings();
 });
 
-// Initialize existing notes with edit/delete functionality
+// Initialize vorhandene Notizen
 function initExistingNotes() {
   const existingNotes = document.querySelectorAll(".note-card");
 
   existingNotes.forEach((noteCard) => {
-    const editBtn = noteCard.querySelector('img[alt="Edit"]');
-    const deleteBtn = noteCard.querySelector(
-      'img[alt="Settings"], img[alt="Delete"]'
-    );
+    const editBtn = noteCard.querySelector("#editNote");
+    const deleteBtn = noteCard.querySelector("#deleteNote");
 
     if (editBtn && !editBtn.onclick) {
       editBtn.onclick = function () {
@@ -85,7 +80,7 @@ function initExistingNotes() {
   });
 }
 
-// Initialize modal functionality
+// Initialize modal Funktionalität
 function initModal() {
   const addNoteBtn = document.querySelector(".add-note-btn");
   const addModal = document.getElementById("addNoteModal");
@@ -104,13 +99,13 @@ function initModal() {
   const editNoteForm = document.getElementById("editNoteForm");
   const deleteNoteForm = document.getElementById("deleteNoteForm");
 
-  // Open ADD modal when add button clicked
+  // Öffne das ADD-Modal, wenn die Schaltfläche "Hinzufügen" geklickt wird
   addNoteBtn.addEventListener("click", function () {
     addModal.classList.add("show");
     document.body.classList.add("modal-open");
   });
 
-  // Close modal functions
+  // schließe Modal-Funktionen
   function closeAddModalWindow() {
     addModal.classList.remove("show");
     document.body.classList.remove("modal-open");
@@ -128,19 +123,19 @@ function initModal() {
     document.body.classList.remove("modal-open");
   }
 
-  // Close ADD modal events
+  // schließe ADD modal events
   closeAddModal.addEventListener("click", closeAddModalWindow);
   cancelAddBtn.addEventListener("click", closeAddModalWindow);
 
-  // Close EDIT modal events
+  // schließe EDIT modal events
   closeEditModal.addEventListener("click", closeEditModalWindow);
   cancelEditBtn.addEventListener("click", closeEditModalWindow);
 
-  // Close DELETE modal events
+  // schließe DELETE modal events
   closeDeleteModal.addEventListener("click", closeDeleteModalWindow);
   cancelDeleteBtn.addEventListener("click", closeDeleteModalWindow);
 
-  // Close modals when clicking outside
+  // schließe modals wenn außerhalb des Modals geklickt wird
   window.addEventListener("click", function (event) {
     if (event.target === addModal) {
       closeAddModalWindow();
@@ -153,7 +148,7 @@ function initModal() {
     }
   });
 
-  // Close modals on Escape key
+  // schließe modals bei Escape-Taste
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       if (addModal.classList.contains("show")) {
@@ -168,7 +163,6 @@ function initModal() {
     }
   });
 
-  // Handle ADD form submission
   addNoteForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -207,7 +201,7 @@ function initModal() {
   });
 }
 
-// Function to filter notes based on search term
+// Funktion zum Filtern von Notizen basierend auf dem Suchbegriff
 function filterNotes(searchTerm) {
   const noteCards = document.querySelectorAll(".note-card");
 
@@ -230,83 +224,102 @@ function filterNotes(searchTerm) {
   });
 }
 
-// Function to create new note
+// Funktion zum Erstellen einer neuen Notiz
 function createNewNote(title, content, color, priority) {
   const noteGrid = document.querySelector(".note-grid");
   const noteCard = document.createElement("div");
+  const priorityIcon = document.createElement("img");
 
-  // Add classes
+  // Klassen hinzufügen
   noteCard.classList.add("note-card");
+  // Hintergrundfarbe setzen
   if (color !== "default") {
     noteCard.classList.add("colorful");
-    noteCard.style.backgroundColor = color;
+    const colorMap = {
+      "#83cc16d3": "color-green",
+      "#facc15da": "color-yellow",
+      "#e11d44d2": "color-red",
+    };
+    if (colorMap[color]) {
+      noteCard.classList.add(colorMap[color]);
+    }
   }
 
-  // Create priority icon HTML
-  let priorityIcon = "";
+  // Prioritätsicon hinzufügen
   if (priority !== "none") {
-    priorityIcon = `
-      <img 
-        src="icons/circle-${priority}.svg" 
-        alt="Priority" 
-        class="priority-icon ${color !== "default" ? "colorful" : ""}"
-        style="width: 24px; height: 24px; margin: 0px 10px 5px 0px"
-      />
-    `;
+    priorityIcon.src = `icons/${priority}.svg`;
+    priorityIcon.alt = "Priority";
+    priorityIcon.classList.add("priority-icon");
   }
 
-  // Get current date
-  const currentDate = new Date().toLocaleDateString("de-DE");
+  // Aktuelles Datum abrufen
+  const currentDate = new Date().toLocaleString("de-DE");
 
-  // Create note HTML
-  noteCard.innerHTML = `
-    <div class="card-header">
-      <h2>${title}</h2>
-      <div class="card-header-icons">
-        ${priorityIcon}
-        <img src="icons/pencil.svg" alt="Edit" class="nav-icon ${
-          color !== "default" ? "colorful" : ""
-        }" onclick="openEditModal(this.closest('.note-card'))" />
-        <img src="icons/trash-repo.svg" alt="Delete" class="nav-icon ${
-          color !== "default" ? "colorful" : ""
-        }" onclick="deleteNote(this.closest('.note-card'))" />
-      </div>
-    </div>
-    <p>${content}</p>
-    <div class="card-footer">
-      <span class="footer-date ${
-        color !== "default" ? "colorful" : ""
-      }">Zuletzt bearbeitet: ${currentDate}</span>
-    </div>
-  `;
-  // Add to grid
+  // HTML für die Notiz erstellen
+  const header = document.createElement("div");
+  header.classList.add("card-header");
+
+  // Bezeichnung
+  const titleElem = document.createElement("h2");
+  titleElem.textContent = title;
+
+  // icon container
+  const iconsDiv = document.createElement("div");
+  iconsDiv.classList.add("card-header-icons");
+
+  // PRIORITY icon (wenn priority gesetzt ist)
+  if (priority !== "none") {
+    iconsDiv.appendChild(priorityIcon);
+  }
+
+  // EDIT icon
+  const editIcon = document.createElement("img");
+  editIcon.src = "icons/pencil.svg";
+  editIcon.alt = "Edit";
+  editIcon.classList.add("nav-icon");
+  if (color !== "default") editIcon.classList.add("colorful");
+  editIcon.addEventListener("click", () => {
+    openEditModal(noteCard);
+  });
+
+  // DELETE icon
+  const deleteIcon = document.createElement("img");
+  deleteIcon.src = "icons/trash-repo.svg";
+  deleteIcon.alt = "Delete";
+  deleteIcon.classList.add("nav-icon");
+  if (color !== "default") deleteIcon.classList.add("colorful");
+  deleteIcon.addEventListener("click", () => {
+    deleteNote(noteCard);
+  });
+
+  iconsDiv.append(editIcon, deleteIcon);
+
+  header.append(titleElem, iconsDiv);
+
+  // ---- INHALT ----
+  const contentElem = document.createElement("p");
+  contentElem.textContent = content;
+
+  // ---- FOOTER ----
+  const footer = document.createElement("div");
+  footer.classList.add("card-footer");
+
+  const dateElem = document.createElement("span");
+  dateElem.classList.add("footer-date");
+  if (color !== "default") dateElem.classList.add("colorful");
+  dateElem.textContent = `Erstellt am: ${currentDate}`;
+
+  footer.appendChild(dateElem);
+
+  // ---- Card zusammenfügen ----
+  noteCard.append(header, contentElem, footer);
+  // Notizkarte zum Grid hinzufügen
   noteGrid.appendChild(noteCard);
 
-  // Add hover effect
-  noteCard.addEventListener("mouseenter", function () {
-    this.style.transform = "translateY(-5px)";
-    this.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.15)";
-  });
-
-  noteCard.addEventListener("mouseleave", function () {
-    this.style.transform = "translateY(0)";
-    this.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
-  });
-
   console.log("Neue Notiz erstellt:", { title, content, color, priority });
-
-  // Kalender aktualisieren, wenn sichtbar
-  if (
-    document.getElementById("calendar-section").classList.contains("visible")
-  ) {
-    generateCalendar(
-      currentCalendarDate.getFullYear(),
-      currentCalendarDate.getMonth()
-    );
-  }
 }
 
-// Function to update existing note
+// Funktion zum Aktualisieren einer vorhandenen Notiz
 function updateNote(noteElement, title, content, color, priority) {
   // Update title
   noteElement.querySelector("h2").textContent = title;
@@ -315,15 +328,26 @@ function updateNote(noteElement, title, content, color, priority) {
   noteElement.querySelector("p").textContent = content;
 
   // Update color
-  noteElement.classList.remove("colorful");
-  noteElement.style.backgroundColor = "";
+  noteElement.classList.remove(
+    "colorful",
+    "color-green",
+    "color-yellow",
+    "color-red"
+  );
 
   if (color !== "default") {
     noteElement.classList.add("colorful");
-    noteElement.style.backgroundColor = color;
+    const colorMap = {
+      "#83cc16d3": "color-green",
+      "#facc15da": "color-yellow",
+      "#e11d44d2": "color-red",
+    };
+    if (colorMap[color]) {
+      noteElement.classList.add(colorMap[color]);
+    }
   }
 
-  // Update icons (colorful class)
+  // Update nav icon colors
   const icons = noteElement.querySelectorAll(".nav-icon");
   icons.forEach((icon) => {
     if (color !== "default") {
@@ -341,7 +365,7 @@ function updateNote(noteElement, title, content, color, priority) {
     footerDate.classList.remove("colorful");
   }
 
-  // Update priority icon
+  // Update priority
   const existingPriorityIcon = noteElement.querySelector(".priority-icon");
   if (existingPriorityIcon) {
     existingPriorityIcon.remove();
@@ -350,39 +374,38 @@ function updateNote(noteElement, title, content, color, priority) {
   if (priority !== "none") {
     const cardHeaderIcons = noteElement.querySelector(".card-header-icons");
     const priorityIcon = document.createElement("img");
-    priorityIcon.src = `icons/circle-${priority}.svg`;
+    priorityIcon.src = `icons/${priority}.svg`;
     priorityIcon.alt = "Priority";
     priorityIcon.className = `priority-icon ${
       color !== "default" ? "colorful" : ""
     }`;
-    priorityIcon.style.cssText =
-      "width: 24px; height: 24px; margin: 0px 10px 5px 0px";
 
-    // Insert before first edit icon
+    // Füge das Prioritäts-Icon am Anfang der Icon-Leiste hinzu
     const firstIcon = cardHeaderIcons.querySelector(".nav-icon");
     cardHeaderIcons.insertBefore(priorityIcon, firstIcon);
   }
 
   // Update date
-  const currentDate = new Date().toLocaleDateString("de-DE");
-  footerDate.textContent = `Zuletzt bearbeitet: ${currentDate}`;
+  const currentDate = new Date().toLocaleTimeString("de-DE");
+  footerDate.textContent = `Zuletzt aktualisiert: ${currentDate}`;
 
+  // LOG für Debugging
   console.log("Note updated:", { title, content, color, priority });
 
   // Update calendar if it's visible
-  if (
-    document.getElementById("calendar-section").classList.contains("visible")
-  ) {
-    generateCalendar(
-      currentCalendarDate.getFullYear(),
-      currentCalendarDate.getMonth()
-    );
+  // if (
+  //   document.getElementById("calendar-section").classList.contains("visible")
+  // ) {
+  //   generateCalendar(
+  //     currentCalendarDate.getFullYear(),
+  //     currentCalendarDate.getMonth()
+  //   );
 
-    // Refresh selected date notes if a date is selected
-    if (selectedDate) {
-      showNotesForDate(selectedDate);
-    }
-  }
+  //   // Datum aktualisieren
+  //   if (selectedDate) {
+  //     showNotesForDate(selectedDate);
+  //   }
+  // }
 }
 
 // Function to open edit modal
@@ -396,10 +419,13 @@ function openEditModal(noteElement) {
   // Get current color
   let currentColor = "default";
   if (noteElement.classList.contains("colorful")) {
-    const bgColor = noteElement.style.backgroundColor;
-    if (bgColor.includes("131, 204, 22")) currentColor = "#83cc16d3";
-    else if (bgColor.includes("250, 204, 21")) currentColor = "#facc15da";
-    else if (bgColor.includes("225, 29, 68")) currentColor = "#e11d44d2";
+    if (noteElement.classList.contains("color-green")) {
+      currentColor = "#83cc16d3";
+    } else if (noteElement.classList.contains("color-yellow")) {
+      currentColor = "#facc15da";
+    } else if (noteElement.classList.contains("color-red")) {
+      currentColor = "#e11d44d2";
+    }
   }
 
   // Get current priority
