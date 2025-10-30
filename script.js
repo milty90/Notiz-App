@@ -903,7 +903,7 @@ function resetSettings() {
   // Reset to default values
   document.getElementById("darkModeToggle").checked = false;
   document.getElementById("compactModeToggle").checked = false;
-  document.getElementById("autoSaveToggle").checked = true;
+  document.getElementById("autoSaveToggle").checked = false;
   document.getElementById("confirmDeleteToggle").checked = true;
 
   // Apply settings

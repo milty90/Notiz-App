@@ -257,6 +257,7 @@ main {
 main::-webkit-scrollbar {
   display: none;
 }
+
 .overlay {
   width: 100%;
   height: 100%;
@@ -270,10 +271,12 @@ main::-webkit-scrollbar {
   flex-direction: column;
   height: 100%;
 }
+
 .last-edited-title {
   margin: 10px 0 0 25px;
   color: #505050;
 }
+
 .note-title {
   color: #505050;
   margin: 25px 0 5px 25px;
@@ -290,6 +293,7 @@ main::-webkit-scrollbar {
   filter: invert(40%);
   transition: all 0.3s ease;
 }
+
 .note-all:hover,
 .note-today:hover,
 .note-this-week:hover,
@@ -376,9 +380,9 @@ main::-webkit-scrollbar {
   border: 1px solid #e9ecef;
   border-radius: 15px;
   padding: 16px;
-  max-height: 220px; /* Maximális magasság beállítása */
-  overflow: hidden; /* Túlcsordulás elrejtése */
-  transition: all 0.3s ease; /* Smooth hover animáció */
+  max-height: 220px;
+  overflow: hidden;
+  transition: all 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
     rgba(0, 0, 0, 0.2) 0px 10px 20px -5px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
 }
@@ -519,7 +523,7 @@ body.modal-open {
 
 .modal-content {
   background-color: #fff;
-  margin: 5% auto;
+  margin: 3% auto;
   padding: 0;
   border-radius: 15px;
   width: 90%;
@@ -953,15 +957,38 @@ body.modal-open {
 }
 
 @media (max-width: 768px) {
-  .calendar-container {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  main {
+    padding: 0;
   }
-
-  .calendar-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
+  main.visibility {
+    padding: 0;
+  }
+  .last-edited-grid .note-grid {
+    padding: 0;
+    margin: 0;
+  }
+  header.visibility {
+    padding: 10px 20px 0 80px;
+  }
+  .menu-bar.visibility {
+    width: 60px;
+  }
+  main.visibility {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+  .nav-text.visibility {
+    display: none;
+  }
+  .nav-icons.visibility {
+    width: 50px !important;
+  }
+  .nav-item.visibility {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    width: 50px !important;
   }
 }
 
