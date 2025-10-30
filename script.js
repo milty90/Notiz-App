@@ -733,6 +733,7 @@ function initSettings() {
 
   const darkModeToggle = document.getElementById("darkModeToggle");
   const compactModeToggle = document.getElementById("compactModeToggle");
+  const menuBarToggle = document.getElementById("menuBarToggle");
   const autoSaveToggle = document.getElementById("autoSaveToggle");
   const confirmDeleteToggle = document.getElementById("confirmDeleteToggle");
 
@@ -780,9 +781,9 @@ function initSettings() {
     toggleCompactMode(this.checked);
     saveSettings();
   });
-
-  // Auto save toggle
-  autoSaveToggle.addEventListener("change", function () {
+  // Menu bar toggle
+  menuBarToggle.addEventListener("change", function () {
+    toggleMenuBar(this.checked);
     saveSettings();
   });
 
@@ -828,10 +829,33 @@ function toggleCompactMode(enabled) {
   }
 }
 
+function toggleMenuBar(enabled) {
+  const header = document.querySelector("header");
+  const menuBar = document.querySelector(".menu-bar");
+  const mainContent = document.querySelector("main");
+  const navItems = document.querySelectorAll(".nav-item");
+  const navTexts = document.querySelectorAll(".nav-text");
+
+  if (enabled) {
+    header.classList.add("visibility");
+    menuBar.classList.add("visibility");
+    mainContent.classList.add("visibility");
+    navTexts.forEach((text) => text.classList.add("visibility"));
+    navItems.forEach((item) => item.classList.add("visibility"));
+  } else {
+    header.classList.remove("visibility");
+    menuBar.classList.remove("visibility");
+    mainContent.classList.remove("visibility");
+    navTexts.forEach((text) => text.classList.remove("visibility"));
+    navItems.forEach((item) => item.classList.remove("visibility"));
+  }
+}
+
 function saveSettings() {
   const settings = {
     darkMode: document.getElementById("darkModeToggle").checked,
     compactMode: document.getElementById("compactModeToggle").checked,
+    menuBar: document.getElementById("menuBarToggle").checked,
     autoSave: document.getElementById("autoSaveToggle").checked,
     confirmDelete: document.getElementById("confirmDeleteToggle").checked,
   };
@@ -854,7 +878,14 @@ function loadSettings() {
     // Apply compact mode
     document.getElementById("compactModeToggle").checked =
       settings.compactMode || false;
+    console.log("Compact mode toggle:", settings.compactMode || false);
     toggleCompactMode(settings.compactMode || false);
+
+    // Apply menu bar
+    document.getElementById("menuBarToggle").checked =
+      settings.menuBar || false;
+    console.log("Menu bar toggle:", settings.menuBar || false);
+    toggleMenuBar(settings.menuBar || false);
 
     // Apply auto save
     document.getElementById("autoSaveToggle").checked =

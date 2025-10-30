@@ -26,35 +26,35 @@
         </div>
       </div>
     </header>
-    <nav>
-      <ul class="nav-top">
-        <li class="nav-item add-note-btn">
+    <nav class="menu-bar">
+      <div class="nav-top">
+        <div class="nav-item add-note-btn">
           <img src="icons/add.svg" alt="Add" class="nav-icon" />
-          <span>Notiz hinzufügen</span>
-        </li>
-        <li class="nav-item calendar-btn">
+          <span class="nav-text">Hinzufügen</span>
+        </div>
+        <div class="nav-item calendar-btn">
           <img src="icons/notebook.svg" alt="note" class="nav-icon" />
-          <span>Notizen</span>
-        </li>
-        <li class="nav-item">
+          <span class="nav-text">Notizen</span>
+        </div>
+        <div class="nav-item">
           <img src="icons/archive.svg" alt="Archive" class="nav-icon" />
-          <span>Archiv</span>
-        </li>
-        <li class="nav-item">
+          <span class="nav-text">Archiv</span>
+        </div>
+        <div class="nav-item">
           <img src="icons/trash.svg" alt="Trash" class="nav-icon" />
-          <span>Papierkorb</span>
-        </li>
-      </ul>
-      <ul class="nav-bottom">
-        <li class="nav-item settings-btn">
+          <span class="nav-text">Papierkorb</span>
+        </div>
+      </div>
+      <div class="nav-bottom">
+        <div class="nav-item settings-btn">
           <img src="icons/gear.svg" alt="Settings" class="nav-icon" />
-          <span>Einstellungen</span>
-        </li>
-        <li class="nav-item">
+          <span class="nav-text">Einstellungen</span>
+        </div>
+        <div class="nav-item">
           <img src="icons/door.svg" alt="Settings" class="nav-icon" />
-          <span>Abmelden</span>
-        </li>
-      </ul>
+          <span class="nav-text">Abmelden</span>
+        </div>
+      </div>
     </nav>
     <main>
       <div class="overlay">
@@ -507,7 +507,7 @@
       </div>
     </main>
 
-    <!-- Add Note Modal -->
+    <!-- Notiz Modal zur Erstellung -->
     <div id="addNoteModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -591,7 +591,7 @@
       </div>
     </div>
 
-    <!-- Edit Note Modal -->
+    <!-- Notiz Modal zur Bearbeitung -->
     <div id="editNoteModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -682,7 +682,7 @@
       </div>
     </div>
 
-    <!-- Settings Modal -->
+    <!-- Einstellungen Modal -->
     <div id="settingsModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -719,6 +719,20 @@
               <div class="setting-control">
                 <label class="toggle-switch">
                   <input type="checkbox" id="compactModeToggle" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info">
+                <label class="setting-label">Menuleiste anzeigen</label>
+                <p class="setting-description">
+                  Zeigen Sie die Menuleiste auf der linken Seite an
+                </p>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="menuBarToggle" />
                   <span class="toggle-slider"></span>
                 </label>
               </div>
@@ -770,7 +784,7 @@
       </div>
     </div>
 
-    <!--Delete Modal -->
+    <!--Notiz Modal zur Löschung -->
     <div id="deleteNoteModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
