@@ -661,16 +661,6 @@ function deleteNote(noteElement) {
     // If confirmation is disabled, delete immediately
     noteElement.remove();
     console.log("Note deleted");
-
-    // Update calendar if it's visible
-    if (
-      document.getElementById("calendar-section").classList.contains("visible")
-    ) {
-      generateCalendar(
-        currentCalendarDate.getFullYear(),
-        currentCalendarDate.getMonth()
-      );
-    }
   } else {
     // Show confirmation modal
     noteToDelete = noteElement;
