@@ -569,6 +569,7 @@ function toggleMenuBar(enabled) {
   const mainContent = document.querySelector("main");
   const navItems = document.querySelectorAll(".nav-item");
   const navTexts = document.querySelectorAll(".nav-text");
+  const navIcons = document.querySelectorAll(".nav-icon");
 
   if (enabled) {
     header.classList.add("visibility");
@@ -576,12 +577,14 @@ function toggleMenuBar(enabled) {
     mainContent.classList.add("visibility");
     navTexts.forEach((text) => text.classList.add("visibility"));
     navItems.forEach((item) => item.classList.add("visibility"));
+    navIcons.forEach((icon) => icon.classList.add("visibility"));
   } else {
     header.classList.remove("visibility");
     menuBar.classList.remove("visibility");
     mainContent.classList.remove("visibility");
     navTexts.forEach((text) => text.classList.remove("visibility"));
     navItems.forEach((item) => item.classList.remove("visibility"));
+    navIcons.forEach((icon) => icon.classList.remove("visibility"));
   }
 }
 
