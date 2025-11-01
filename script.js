@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initSettings();
 });
 
-// Initialize vorhandene Notizen
+// Vorhandene Notizen initialisieren
 function initExistingNotes() {
   const existingNotes = document.querySelectorAll(".note-card");
 
@@ -78,16 +78,19 @@ function initExistingNotes() {
   });
 }
 
-// Initialize modal Funktionalität
+// Modal-Funktionalität initialisieren
 function initModal() {
   const addNoteBtn = document.querySelector(".add-note-btn");
+  const infoBtn = document.querySelector(".info-btn");
   const addModal = document.getElementById("addNoteModal");
   const editModal = document.getElementById("editNoteModal");
   const deleteModal = document.getElementById("deleteNoteModal");
+  const infoModal = document.getElementById("infoModal");
 
   const closeAddModal = document.querySelector(".close-modal");
   const closeEditModal = document.querySelector(".close-edit-modal");
   const closeDeleteModal = document.querySelector(".close-delete-modal");
+  const closeInfoModal = document.querySelector(".close-info-modal");
 
   const cancelAddBtn = document.querySelector(".btn-cancel");
   const cancelEditBtn = document.querySelector(".btn-cancel-edit");
@@ -100,6 +103,12 @@ function initModal() {
   // Öffne das ADD-Modal, wenn die Schaltfläche "Hinzufügen" geklickt wird
   addNoteBtn.addEventListener("click", function () {
     addModal.classList.add("show");
+    document.body.classList.add("modal-open");
+  });
+
+  // Öffne das INFO-Modal, wenn die Schaltfläche "Info" geklickt wird
+  infoBtn.addEventListener("click", function () {
+    infoModal.classList.add("show");
     document.body.classList.add("modal-open");
   });
 
@@ -121,6 +130,11 @@ function initModal() {
     document.body.classList.remove("modal-open");
   }
 
+  function closeInfoModalWindow() {
+    infoModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
+  }
+
   // schließe ADD modal events
   closeAddModal.addEventListener("click", closeAddModalWindow);
   cancelAddBtn.addEventListener("click", closeAddModalWindow);
@@ -132,6 +146,9 @@ function initModal() {
   // schließe DELETE modal events
   closeDeleteModal.addEventListener("click", closeDeleteModalWindow);
   cancelDeleteBtn.addEventListener("click", closeDeleteModalWindow);
+
+  // schließe INFO modal events
+  closeInfoModal.addEventListener("click", closeInfoModalWindow);
 
   // schließe modals wenn außerhalb des Modals geklickt wird
   window.addEventListener("click", function (event) {
@@ -157,6 +174,9 @@ function initModal() {
       }
       if (deleteModal.classList.contains("show")) {
         closeDeleteModalWindow();
+      }
+      if (infoModal.classList.contains("show")) {
+        closeInfoModalWindow();
       }
     }
   });
@@ -186,13 +206,13 @@ function initModal() {
     ).value;
     const priority = document.getElementById("editNotePriority").value;
 
-    // Update note
+    // Notiz aktualisieren
     const currentNote = editModal.currentNoteElement;
     if (currentNote) {
       updateNote(currentNote, title, content, color, priority);
     }
 
-    // Close modal
+    // Modal schließen
     editModal.classList.remove("show");
     document.body.classList.remove("modal-open");
     editNoteForm.reset();
@@ -323,13 +343,13 @@ function createNewNote(title, content, color, priority) {
 
 // Funktion zum Aktualisieren einer vorhandenen Notiz
 function updateNote(noteElement, title, content, color, priority) {
-  // Update title
+  // Titel aktualisieren
   noteElement.querySelector("h2").textContent = title;
 
-  // Update content
+  // Inhalt aktualisieren
   noteElement.querySelector("p").textContent = content;
 
-  // Update color
+  // Farbe aktualisieren
   noteElement.classList.remove(
     "colorful",
     "color-green",
@@ -349,7 +369,7 @@ function updateNote(noteElement, title, content, color, priority) {
     }
   }
 
-  // Update nav icon colors
+  // Icon-Farben aktualisieren
   const icons = noteElement.querySelectorAll(".nav-icon");
   icons.forEach((icon) => {
     if (color !== "default") {
@@ -359,7 +379,7 @@ function updateNote(noteElement, title, content, color, priority) {
     }
   });
 
-  // Update footer date class
+  // Footer-Datums-Klasse aktualisieren
   const footerDate = noteElement.querySelector(".footer-date");
   if (color !== "default") {
     footerDate.classList.add("colorful");
@@ -367,7 +387,7 @@ function updateNote(noteElement, title, content, color, priority) {
     footerDate.classList.remove("colorful");
   }
 
-  // Update priority
+  // Priorität aktualisieren
   const existingPriorityIcon = noteElement.querySelector(".priority-icon");
   if (existingPriorityIcon) {
     existingPriorityIcon.remove();
@@ -387,7 +407,7 @@ function updateNote(noteElement, title, content, color, priority) {
     cardHeaderIcons.insertBefore(priorityIcon, firstIcon);
   }
 
-  // Update date
+  // Datum aktualisieren
   const currentDate = new Date();
   const formatedDate = currentDate.toLocaleDateString("de-DE");
   const formatedTime = currentDate.toLocaleTimeString("de-DE");
@@ -397,7 +417,7 @@ function updateNote(noteElement, title, content, color, priority) {
   console.log("Notiz erstellt:", { title, content, color, priority });
 }
 
-// Function to open edit modal
+// Funktion zum Öffnen des Bearbeitungsmodals
 function openEditModal(noteElement) {
   const editModal = document.getElementById("editNoteModal");
 
@@ -405,7 +425,7 @@ function openEditModal(noteElement) {
   const title = noteElement.querySelector("h2").textContent;
   const content = noteElement.querySelector("p").textContent;
 
-  // Get current color
+  // Aktuelles Farbschema ermitteln
   let currentColor = "default";
   if (noteElement.classList.contains("colorful")) {
     if (noteElement.classList.contains("color-green")) {
@@ -417,7 +437,7 @@ function openEditModal(noteElement) {
     }
   }
 
-  // Get current priority
+  // Aktuelle Priorität ermitteln
   let currentPriority = "none";
   const priorityIcon = noteElement.querySelector(".priority-icon");
   if (priorityIcon) {
@@ -427,7 +447,7 @@ function openEditModal(noteElement) {
     else if (src.includes("red")) currentPriority = "red";
   }
 
-  // Fill form with current data
+  // Formular mit aktuellen Daten füllen
   document.getElementById("editNoteTitle").value = title;
   document.getElementById("editNoteContent").value = content;
   document.querySelector(
@@ -435,20 +455,20 @@ function openEditModal(noteElement) {
   ).checked = true;
   document.getElementById("editNotePriority").value = currentPriority;
 
-  // Store reference to current note
+  // Referenz zur aktuellen Notiz speichern
   editModal.dataset.currentNote =
     noteElement.dataset.noteId ||
     Array.from(noteElement.parentNode.children).indexOf(noteElement);
   editModal.currentNoteElement = noteElement;
 
-  // Show edit modal
+  // Bearbeitungsmodal anzeigen
   editModal.classList.add("show");
   document.body.classList.add("modal-open");
 }
 
 //selectedNotesContainer.innerHTML = notesHtml;
 
-// Settings functionality
+// Einstellungen-Funktionalität
 function initSettings() {
   const settingsBtn = document.querySelector(".settings-btn");
   const settingsModal = document.getElementById("settingsModal");
@@ -462,62 +482,62 @@ function initSettings() {
   const autoSaveToggle = document.getElementById("autoSaveToggle");
   const confirmDeleteToggle = document.getElementById("confirmDeleteToggle");
 
-  // Load saved settings
+  // Gespeicherte Einstellungen laden
   loadSettings();
 
-  // Open settings modal
+  // Einstellungsmodal öffnen
   settingsBtn.addEventListener("click", function () {
     settingsModal.classList.add("show");
     document.body.classList.add("modal-open");
   });
 
-  // Close settings modal functions
+  // Einstellungsmodal schließen - Funktionen
   function closeSettingsModalWindow() {
     settingsModal.classList.remove("show");
     document.body.classList.remove("modal-open");
   }
 
-  // Close settings modal events
+  // Einstellungsmodal schließen - Events
   closeSettingsModal.addEventListener("click", closeSettingsModalWindow);
   cancelSettingsBtn.addEventListener("click", closeSettingsModalWindow);
 
-  // Close modal when clicking outside
+  // Modal schließen, wenn außerhalb geklickt wird
   window.addEventListener("click", function (event) {
     if (event.target === settingsModal) {
       closeSettingsModalWindow();
     }
   });
 
-  // Close modal on Escape key
+  // Modal bei Escape-Taste schließen
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" && settingsModal.classList.contains("show")) {
       closeSettingsModalWindow();
     }
   });
 
-  // Dark mode toggle
+  // Dunkelmodus-Umschalter
   darkModeToggle.addEventListener("change", function () {
     toggleDarkMode(this.checked);
     saveSettings();
   });
 
-  // Compact mode toggle
+  // Kompakter Modus-Umschalter
   compactModeToggle.addEventListener("change", function () {
     toggleCompactMode(this.checked);
     saveSettings();
   });
-  // Menu bar toggle
+  // Menüleisten-Umschalter
   menuBarToggle.addEventListener("change", function () {
     toggleMenuBar(this.checked);
     saveSettings();
   });
 
-  // Confirm delete toggle
+  // Löschen-bestätigen-Umschalter
   confirmDeleteToggle.addEventListener("change", function () {
     saveSettings();
   });
 
-  // Reset settings
+  // Einstellungen zurücksetzen
   resetSettingsBtn.addEventListener("click", function () {
     if (
       confirm(
@@ -598,28 +618,28 @@ function loadSettings() {
   if (savedSettings) {
     const settings = JSON.parse(savedSettings);
 
-    // Apply dark mode
+    // Dunkelmodus anwenden
     document.getElementById("darkModeToggle").checked =
       settings.darkMode || false;
     toggleDarkMode(settings.darkMode || false);
 
-    // Apply compact mode
+    // Kompaktmodus anwenden
     document.getElementById("compactModeToggle").checked =
       settings.compactMode || false;
     console.log("Compact mode toggle:", settings.compactMode || false);
     toggleCompactMode(settings.compactMode || false);
 
-    // Apply menu bar
+    // Menüleiste anwenden
     document.getElementById("menuBarToggle").checked =
       settings.menuBar || false;
     console.log("Menu bar toggle:", settings.menuBar || false);
     toggleMenuBar(settings.menuBar || false);
 
-    // Apply auto save
+    // Automatisches Speichern anwenden
     document.getElementById("autoSaveToggle").checked =
       settings.autoSave !== undefined ? settings.autoSave : true;
 
-    // Apply confirm delete
+    // Löschen-bestätigen anwenden
     document.getElementById("confirmDeleteToggle").checked =
       settings.confirmDelete !== undefined ? settings.confirmDelete : true;
 
@@ -628,55 +648,55 @@ function loadSettings() {
 }
 
 function resetSettings() {
-  // Reset to default values
+  // Auf Standardwerte zurücksetzen
   document.getElementById("darkModeToggle").checked = false;
   document.getElementById("compactModeToggle").checked = false;
   document.getElementById("autoSaveToggle").checked = false;
   document.getElementById("confirmDeleteToggle").checked = true;
 
-  // Apply settings
+  // Einstellungen anwenden
   toggleDarkMode(false);
   toggleCompactMode(false);
 
-  // Save to localStorage
+  // In localStorage speichern
   saveSettings();
 
-  console.log("Settings reset to defaults");
+  console.log("Einstellungen auf Standard zurückgesetzt");
 }
 
-// Update delete function to respect confirm delete setting
-let noteToDelete = null; // Store reference to note being deleted
+// Löschfunktion aktualisieren, um die Bestätigungseinstellung zu beachten
+let noteToDelete = null; // Referenz zur zu löschenden Notiz speichern
 
 function deleteNote(noteElement) {
   const confirmDelete = document.getElementById("confirmDeleteToggle").checked;
   const deleteModal = document.getElementById("deleteNoteModal");
 
   if (!confirmDelete) {
-    // If confirmation is disabled, delete immediately
+    // Wenn Bestätigung deaktiviert ist, sofort löschen
     noteElement.remove();
-    console.log("Note deleted");
+    console.log("Notiz gelöscht");
   } else {
-    // Show confirmation modal
+    // Bestätigungsmodal anzeigen
     noteToDelete = noteElement;
     deleteModal.classList.add("show");
     document.body.classList.add("modal-open");
   }
 }
 
-// Handle delete confirmation
+// Löschbestätigung verarbeiten
 function confirmDelete() {
   if (noteToDelete) {
     noteToDelete.remove();
-    console.log("Note deleted");
+    console.log("Notiz gelöscht");
 
-    // Reset and close modal
+    // Zurücksetzen und Modal schließen
     noteToDelete = null;
     document.getElementById("deleteNoteModal").classList.remove("show");
     document.body.classList.remove("modal-open");
   }
 }
 
-// Initialize delete modal event listener
+// Event-Listener für Löschmodal initialisieren
 document.addEventListener("DOMContentLoaded", function () {
   const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
   if (confirmDeleteBtn) {

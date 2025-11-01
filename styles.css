@@ -247,9 +247,11 @@ nav a {
 .nav-item:hover .nav-icon {
   filter: invert(1) brightness(20%);
 }
+
 #editNote:hover {
   filter: invert(1) brightness(20%);
 }
+
 #deleteNote:hover {
   filter: invert(1) brightness(20%);
 }
@@ -257,6 +259,7 @@ nav a {
 #editNote.colorful {
   filter: invert(1) brightness(90%) !important;
 }
+
 #deleteNote.colorful {
   filter: invert(1) brightness(90%) !important;
 }
@@ -264,6 +267,7 @@ nav a {
 .note-card.colorful.color-yellow #editNote.colorful {
   filter: invert(1) brightness(40%) !important;
 }
+
 .note-card.colorful.color-yellow #deleteNote.colorful {
   filter: invert(1) brightness(40%) !important;
 }
@@ -271,6 +275,7 @@ nav a {
 #editNote.colorful:hover {
   filter: invert(1) brightness(100%) !important;
 }
+
 #deleteNote.colorful:hover {
   filter: invert(1) brightness(100%) !important;
 }
@@ -278,6 +283,7 @@ nav a {
 .note-card.colorful.color-yellow #editNote.colorful:hover {
   filter: invert(1) brightness(20%) !important;
 }
+
 .note-card.colorful.color-yellow #deleteNote.colorful:hover {
   filter: invert(1) brightness(20%) !important;
 }
@@ -490,19 +496,18 @@ main::-webkit-scrollbar {
   position: relative;
 }
 
-/* Interaktív hover effekt a grid-re */
 .note-grid:hover .note-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
   transition: all 0.3s ease;
 }
 
-/* Ugyanez a last-edited grid-hez */
 .last-edited-grid:hover .note-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
   transition: all 0.3s ease;
 }
+
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -863,23 +868,29 @@ body.modal-open {
   main {
     padding: 0;
   }
+
   main.visibility {
     padding: 0;
   }
+
   .last-edited-grid .note-grid {
     padding: 0;
     margin: 0;
   }
+
   header.visibility {
     padding: 10px 20px 0 80px;
   }
+
   .menu-bar.visibility {
     width: 60px;
   }
+
   main.visibility {
     margin-left: 60px;
     width: calc(100% - 60px);
   }
+
   .nav-text.visibility {
     display: none;
   }
@@ -1119,6 +1130,7 @@ body.dark-mode .note-card p {
 body.dark-mode .footer-date {
   color: #888;
 }
+
 body.dark-mode .note-card.colorful p {
   color: var(--gray94);
 }
