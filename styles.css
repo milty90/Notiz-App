@@ -381,6 +381,7 @@ main::-webkit-scrollbar {
   gap: 20px;
   margin-right: 10px;
   padding: 15px 15px 35px 15px;
+  overflow-y: overlay;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
   transition: all 0.3s ease;
@@ -1107,6 +1108,10 @@ body.dark-mode .note-card h2 {
   color: var(--white);
 }
 
+body.dark-mode .note-card.note-card.colorful.color-yellow h2 {
+  color: var(--gray20);
+}
+
 body.dark-mode .note-card p {
   color: var(--gray69);
 }
@@ -1118,8 +1123,16 @@ body.dark-mode .note-card.colorful p {
   color: var(--gray94);
 }
 
+body.dark-mode .note-card.colorful.color-yellow p {
+  color: var(--gray50);
+}
+
 body.dark-mode .footer-date.colorful {
   color: var(--gray94);
+}
+
+body.dark-mode .note-card.colorful.color-yellow .footer-date.colorful {
+  color: var(--gray50);
 }
 
 body.dark-mode .note-card:hover {

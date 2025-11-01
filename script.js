@@ -251,7 +251,9 @@ function createNewNote(title, content, color, priority) {
   }
 
   // Aktuelles Datum abrufen
-  const currentDate = new Date().toLocaleString("de-DE");
+  const currentDate = new Date();
+  const formatedDate = currentDate.toLocaleDateString("de-DE");
+  const formatedTime = currentDate.toLocaleTimeString("de-DE");
 
   // HTML für die Notiz erstellen
   const header = document.createElement("div");
@@ -307,7 +309,7 @@ function createNewNote(title, content, color, priority) {
   const dateElem = document.createElement("span");
   dateElem.classList.add("footer-date");
   if (color !== "default") dateElem.classList.add("colorful");
-  dateElem.textContent = `Erstellt am: ${currentDate}`;
+  dateElem.textContent = `Erstellt am: ${formatedTime}, ${formatedDate}`;
 
   footer.appendChild(dateElem);
 
@@ -386,26 +388,13 @@ function updateNote(noteElement, title, content, color, priority) {
   }
 
   // Update date
-  const currentDate = new Date().toLocaleTimeString("de-DE");
-  footerDate.textContent = `Zuletzt aktualisiert: ${currentDate}`;
+  const currentDate = new Date();
+  const formatedDate = currentDate.toLocaleDateString("de-DE");
+  const formatedTime = currentDate.toLocaleTimeString("de-DE");
+  footerDate.textContent = `Zuletzt aktualisiert: ${formatedTime}, ${formatedDate}`;
 
   // LOG für Debugging
   console.log("Notiz erstellt:", { title, content, color, priority });
-
-  // Update calendar if it's visible
-  // if (
-  //   document.getElementById("calendar-section").classList.contains("visible")
-  // ) {
-  //   generateCalendar(
-  //     currentCalendarDate.getFullYear(),
-  //     currentCalendarDate.getMonth()
-  //   );
-
-  //   // Datum aktualisieren
-  //   if (selectedDate) {
-  //     showNotesForDate(selectedDate);
-  //   }
-  // }
 }
 
 // Function to open edit modal
