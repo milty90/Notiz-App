@@ -12,10 +12,10 @@
   --gray20: #333;
   --blackolive: #404040;
   --darkgraygreen: #2d2d2d;
-  --redvariant1: #e11d44;
+  --redvariant1: #e11d44d2;
   --redvariant2: #c41e3a;
-  --green: #83cc16;
-  --yellow: #facc15;
+  --green: #83cc16d3;
+  --yellow: #facc15da;
 }
 
 body {
@@ -114,6 +114,7 @@ header {
 .search-icon.rotate {
   transform: rotate(90deg);
 }
+
 .menu-bar {
   display: flex;
   flex-direction: column;
@@ -129,27 +130,33 @@ header {
   z-index: 999;
   overflow-y: auto;
 }
+
 .nav-text {
   display: none;
   font-size: 0.9rem;
   margin-top: 5px;
 }
+
 header.visibility {
   padding: 10px 20px 0 200px;
 }
+
 .menu-bar.visibility {
   width: 160px;
   gap: 10px;
 }
+
 main.visibility {
   margin-left: 160px;
   width: calc(100% - 160px);
 }
+
 .nav-text.visibility {
   display: block;
   font-size: 1rem;
   font-weight: 500;
 }
+
 /* nav {
   display: flex;
   flex-direction: column;
@@ -195,6 +202,7 @@ nav a {
   margin-top: auto;
   padding: 50px 0;
 }
+
 .nav-top.visibility {
   margin-bottom: auto;
   padding: 5px 0;
@@ -204,8 +212,9 @@ nav a {
   margin-top: auto;
   padding: 50px 0;
 }
+
 .nav-item.search-toggle.visibility {
-  width: 40px !important;
+  width: 2.3rem !important;
 }
 
 .nav-item {
@@ -238,6 +247,40 @@ nav a {
 .nav-item:hover .nav-icon {
   filter: invert(1) brightness(20%);
 }
+#editNote:hover {
+  filter: invert(1) brightness(20%);
+}
+#deleteNote:hover {
+  filter: invert(1) brightness(20%);
+}
+
+#editNote.colorful {
+  filter: invert(1) brightness(90%) !important;
+}
+#deleteNote.colorful {
+  filter: invert(1) brightness(90%) !important;
+}
+
+.note-card.colorful.color-yellow #editNote.colorful {
+  filter: invert(1) brightness(40%) !important;
+}
+.note-card.colorful.color-yellow #deleteNote.colorful {
+  filter: invert(1) brightness(40%) !important;
+}
+
+#editNote.colorful:hover {
+  filter: invert(1) brightness(100%) !important;
+}
+#deleteNote.colorful:hover {
+  filter: invert(1) brightness(100%) !important;
+}
+
+.note-card.colorful.color-yellow #editNote.colorful:hover {
+  filter: invert(1) brightness(20%) !important;
+}
+.note-card.colorful.color-yellow #deleteNote.colorful:hover {
+  filter: invert(1) brightness(20%) !important;
+}
 
 .nav-item svg,
 .nav-item .nav-icon {
@@ -253,17 +296,17 @@ nav a {
 }
 
 .nav-icon.colorful {
-  filter: invert(100%);
+  filter: invert(100%), brightness(100%);
   width: 25px;
 }
 
 .nav-item .nav-icon {
-  filter: invert(40%);
+  filter: invert(60%);
 }
 
 .nav-icon {
   width: 24px;
-  filter: invert(40%);
+  filter: invert(54%);
 }
 
 main {
@@ -310,7 +353,7 @@ main::-webkit-scrollbar {
 
 .note-title {
   color: var(--gray50);
-  margin: 25px 0 5px 25px;
+  margin: 15px 0 0 25px;
 }
 
 .note-filters {
@@ -320,7 +363,7 @@ main::-webkit-scrollbar {
   font-size: 0.9rem;
   font-weight: 500;
   gap: 35px;
-  margin: 0 0 10px 20px;
+  margin: 0 0 0 20px;
   filter: invert(40%);
   transition: all 0.3s ease;
 }
@@ -335,13 +378,9 @@ main::-webkit-scrollbar {
 .note-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 178px;
   gap: 20px;
-  flex: 1;
   margin-right: 10px;
   padding: 15px 15px 35px 15px;
-  overflow-y: overlay;
-  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
   transition: all 0.3s ease;
@@ -413,8 +452,6 @@ main::-webkit-scrollbar {
   border: 1px solid #e9ecef;
   border-radius: 15px;
   padding: 16px;
-  max-height: 220px;
-  overflow: hidden;
   transition: all 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
     rgba(0, 0, 0, 0.2) 0px 10px 20px -5px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
@@ -425,23 +462,21 @@ main::-webkit-scrollbar {
   border: 1px solid var(--gray80);
   border-radius: 15px;
   padding: 20px;
-  max-height: 220px;
-  overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px,
     rgba(0, 0, 0, 0.2) 0px 10px 20px -3px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
 }
 
 /* Farbige Hintergründe */
 .note-card.color-green {
-  background-color: var(--green) d3 !important;
+  background-color: var(--green) !important;
 }
 
 .note-card.color-yellow {
-  background-color: var(--yellow) da !important;
+  background-color: var(--yellow) !important;
 }
 
 .note-card.color-red {
-  background-color: var(--redvariant1) d2 !important;
+  background-color: var(--redvariant1) !important;
 }
 
 .note-card:hover {
@@ -490,6 +525,15 @@ main::-webkit-scrollbar {
   white-space: nowrap;
 }
 
+.note-card.colorful.color-red h2 {
+  margin: 0;
+  color: var(--white);
+  max-width: 135px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .note-card p {
   color: var(--gray40);
   line-height: 1;
@@ -505,19 +549,34 @@ main::-webkit-scrollbar {
   line-height: 1;
   font-size: 1.1rem;
 }
+
+.note-card.colorful.color-red p {
+  color: var(--white);
+  line-height: 1;
+  font-size: 1.1rem;
+}
+
 .footer-date {
   font-size: 1rem;
   color: #777;
 }
+
 .footer-date.colorful {
   font-size: 1rem;
   color: rgb(75, 75, 75);
 }
+
+.note-card.colorful.color-red .footer-date.colorful {
+  font-size: 1rem;
+  color: var(--gray94);
+}
+
 .priority-icon {
   width: 24px;
   height: 24px;
   margin: 0 10px 5px 0;
 }
+
 .hasColor .priority-icon {
   filter: invert(100%);
 }
@@ -705,7 +764,7 @@ body.modal-open {
 }
 
 .color-option.red {
-  background-color: var(--redvariant1);
+  background-color: #e11d44;
 }
 
 .color-options input[type="radio"]:checked + .color-option {
@@ -1001,10 +1060,19 @@ body.dark-mode .nav-item:hover {
   background-color: var(--blackolive);
 }
 
+body.dark-mode #editNote.colorful,
+body.dark-mode #deleteNote.colorful {
+  filter: invert(1) brightness(87%);
+}
+
 /* Dark mode nav icon fehér színű hover állapotban */
 body.dark-mode .nav-item:hover svg,
 body.dark-mode .nav-item:hover .nav-icon {
   filter: invert(1) brightness(80%);
+}
+body.dark-mode #editNote:hover,
+body.dark-mode #deleteNote:hover {
+  filter: invert(1) brightness(100%);
 }
 
 body.dark-mode main {
@@ -1036,7 +1104,7 @@ body.dark-mode .note-card {
 }
 
 body.dark-mode .note-card h2 {
-  color: var(--gray88);
+  color: var(--white);
 }
 
 body.dark-mode .note-card p {
@@ -1145,16 +1213,17 @@ body.dark-mode .setting-item {
 
 /* Compact Mode Styles */
 body.compact-mode .note-card {
-  padding: 12px !important;
+  padding: 2px 12px 12px 12px !important;
   margin-bottom: 10px !important;
 }
 
 body.compact-mode .card-header {
-  margin-bottom: 15px !important;
+  margin-bottom: 1px !important;
+  padding: 0 !important;
 }
 
 body.compact-mode .note-card h2 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 body.compact-mode .note-card p {

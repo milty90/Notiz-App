@@ -272,6 +272,7 @@ function createNewNote(title, content, color, priority) {
 
   // EDIT icon
   const editIcon = document.createElement("img");
+  editIcon.id = "editNote";
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -282,6 +283,7 @@ function createNewNote(title, content, color, priority) {
 
   // DELETE icon
   const deleteIcon = document.createElement("img");
+  deleteIcon.id = "deleteNote";
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
