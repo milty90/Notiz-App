@@ -873,9 +873,12 @@ body.modal-open {
     padding: 0;
   }
 
-  .last-edited-grid .note-grid {
-    padding: 0;
-    margin: 0;
+  .last-edited-grid {
+    margin-right: 2px;
+  }
+
+  .note-grid {
+    margin-right: 2px;
   }
 
   header.visibility {

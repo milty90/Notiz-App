@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   initSettings();
 
-  // Event-Listener für Löschmodal initialisieren (korábban külön DOMContentLoaded-ban volt)
+  // Event-Listener für Löschmodal initialisieren
   const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
   if (confirmDeleteBtn) {
     confirmDeleteBtn.addEventListener("click", confirmDelete);
@@ -166,6 +166,9 @@ function initModal() {
     }
     if (event.target === deleteModal) {
       closeDeleteModalWindow();
+    }
+    if (event.target === infoModal) {
+      closeInfoModalWindow();
     }
   });
 
