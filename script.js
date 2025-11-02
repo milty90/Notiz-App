@@ -1,14 +1,4 @@
 let noteArray = [];
-let selectedNotes = [];
-
-const note = {
-  id: null,
-  title: "",
-  content: "",
-  color: "",
-  createdAt: null,
-  updatedAt: null,
-};
 
 // Vorhandene Notizen initialisieren
 function initExistingNotes() {
@@ -201,119 +191,7 @@ function filterNotes(searchTerm) {
 
 // Funktion zum Erstellen einer neuen Notiz
 function createNewNote(title, content, color, priority) {
-  const noteGrid = document.querySelector(".note-grid");
-  const noteCard = document.createElement("div");
-  const priorityIcon = document.createElement("img");
-
-  // Klassen hinzufügen
-  noteCard.classList.add("note-card");
-
-  // Farbzuordnung definieren (nur einmal!)
-  const colorMap = {
-    "#83cc16d3": "color-green",
-    "#facc15da": "color-yellow",
-    "#e11d44d2": "color-red",
-  };
-
-  const priorityColorMap = {
-    "#83cc16d3": "green",
-    "#facc15da": "yellow",
-    "#e11d44d2": "red",
-  };
-
-  // Hintergrundfarbe setzen
-  if (color !== "default") {
-    noteCard.classList.add("colorful");
-    if (colorMap[color]) {
-      noteCard.classList.add(colorMap[color]);
-    }
-  }
-
-  // Prioritätsicon hinzufügen
-  // Prüfen ob Farbe und Priorität übereinstimmen (z.B. grüne Farbe + grüne Priorität)
-  const selectedColorName = priorityColorMap[color]; // z.B. "green"
-  const isColorAndPriorityMatch =
-    selectedColorName && selectedColorName === priority;
-
-  if (priority !== "none") {
-    if (isColorAndPriorityMatch) {
-      // Wenn Farbe und Priorität übereinstimmen, zeige Clock-Icon
-      priorityIcon.src = `icons/clock.svg`;
-      priorityIcon.alt = "Priority";
-      priorityIcon.classList.add("priority-clock");
-    } else {
-      // Normale Prioritäts-Icons
-      priorityIcon.src = `icons/${priority}.svg`;
-      priorityIcon.alt = "Priority";
-      priorityIcon.classList.add("priority-icon");
-    }
-  }
-
-  // Aktuelles Datum abrufen
-  const currentDate = new Date();
-  const formatedDate = currentDate.toLocaleDateString("de-DE");
-  const formatedTime = currentDate.toLocaleTimeString("de-DE");
-
-  // HTML für die Notiz erstellen
-  const header = document.createElement("div");
-  header.classList.add("card-header");
-
-  // Bezeichnung
-  const titleElem = document.createElement("h2");
-  titleElem.textContent = title;
-
-  // icon container
-  const iconsDiv = document.createElement("div");
-  iconsDiv.classList.add("card-header-icons");
-
-  // PRIORITY icon (wenn priority gesetzt ist)
-  if (priority !== "none") {
-    iconsDiv.appendChild(priorityIcon);
-  }
-
-  // EDIT icon
-  const editIcon = document.createElement("img");
-  editIcon.id = "editNote";
-  editIcon.src = "icons/pencil.svg";
-  editIcon.alt = "Edit";
-  editIcon.classList.add("nav-icon");
-  if (color !== "default") editIcon.classList.add("colorful");
-  editIcon.addEventListener("click", () => {
-    openEditModal(noteCard);
-  });
-
-  // DELETE icon
-  const deleteIcon = document.createElement("img");
-  deleteIcon.id = "deleteNote";
-  deleteIcon.src = "icons/trash-repo.svg";
-  deleteIcon.alt = "Delete";
-  deleteIcon.classList.add("nav-icon");
-  if (color !== "default") deleteIcon.classList.add("colorful");
-  deleteIcon.addEventListener("click", () => {
-    deleteNote(noteCard);
-  });
-
-  iconsDiv.append(editIcon, deleteIcon);
-
-  header.append(titleElem, iconsDiv);
-
-  // ---- INHALT ----
-  const contentElem = document.createElement("p");
-  contentElem.textContent = content;
-
-  // ---- FOOTER ----
-  const footer = document.createElement("div");
-  footer.classList.add("card-footer");
-
-  const dateElem = document.createElement("span");
-  dateElem.classList.add("footer-date");
-  if (color !== "default") dateElem.classList.add("colorful");
-  dateElem.textContent = `Erstellt am: ${formatedTime}, ${formatedDate}`;
-
-  footer.appendChild(dateElem);
-
-  // ---- Card zusammenfügen ----
-  noteCard.append(header, contentElem, footer);
+  noteCard(title, content, color, priority);
 
   noteArray.push({
     id: Date.now(),
@@ -324,13 +202,8 @@ function createNewNote(title, content, color, priority) {
     createdAt: Date.now(),
     updatedAt: Date.now(),
   });
-  // Notizkarte zum Grid hinzufügen
-  noteGrid.appendChild(noteCard);
 
-  console.log("Neue Notiz erstellt:", { title, content, color, priority });
-  noteArray.forEach((note) => {
-    console.log("Notiz im Array:", note);
-  });
+  setArrayInStorage();
 }
 
 // Funktion zum Aktualisieren einer vorhandenen Notiz
@@ -425,19 +298,19 @@ function updateNote(noteElement, title, content, color, priority) {
   const formatedTime = currentDate.toLocaleTimeString("de-DE");
   footerDate.textContent = `Zuletzt aktualisiert: ${formatedTime}, ${formatedDate}`;
 
-  noteArray.forEach((note) => {
-    if (note.id === parseInt(noteElement.dataset.noteId)) {
-      note.title = title;
-      note.content = content;
-      note.color = color;
-      note.priority = priority;
-    }
-  });
+  // Notiz im Array aktualisieren
+  const noteIndex = Array.from(noteElement.parentNode.children).indexOf(
+    noteElement
+  );
+  if (noteIndex > -1 && noteArray[noteIndex]) {
+    noteArray[noteIndex].title = title;
+    noteArray[noteIndex].content = content;
+    noteArray[noteIndex].color = color;
+    noteArray[noteIndex].priority = priority;
+    noteArray[noteIndex].updatedAt = Date.now();
+  }
 
-  // LOG für Debugging
-  noteArray.forEach((note) => {
-    console.log("Notiz aktualisiert:", note);
-  });
+  setArrayInStorage();
 }
 
 // Funktion zum Öffnen des Bearbeitungsmodals
@@ -694,9 +567,125 @@ function resetSettings() {
 
   console.log("Einstellungen auf Standard zurückgesetzt");
 }
+function noteCard(title, content, color, priority) {
+  const noteGrid = document.querySelector(".note-grid");
+  const noteCard = document.createElement("div");
+  noteCard.id = `${Date.now()}`;
+  const priorityIcon = document.createElement("img");
+  noteCard.classList.add("note-card");
+
+  // Farbzuordnung definieren (nur einmal!)
+  const colorMap = {
+    "#83cc16d3": "color-green",
+    "#facc15da": "color-yellow",
+    "#e11d44d2": "color-red",
+  };
+
+  const priorityColorMap = {
+    "#83cc16d3": "green",
+    "#facc15da": "yellow",
+    "#e11d44d2": "red",
+  };
+
+  // Hintergrundfarbe setzen
+  if (color !== "default") {
+    noteCard.classList.add("colorful");
+    if (colorMap[color]) {
+      noteCard.classList.add(colorMap[color]);
+    }
+  }
+  // Prioritätsicon hinzufügen
+  // Prüfen ob Farbe und Priorität übereinstimmen (z.B. grüne Farbe + grüne Priorität)
+  const selectedColorName = priorityColorMap[color]; // z.B. "green"
+  const isColorAndPriorityMatch =
+    selectedColorName && selectedColorName === priority;
+
+  if (priority !== "none") {
+    if (isColorAndPriorityMatch) {
+      // Wenn Farbe und Priorität übereinstimmen, zeige Clock-Icon
+      priorityIcon.src = `icons/clock.svg`;
+      priorityIcon.alt = "Priority";
+      priorityIcon.classList.add("priority-clock");
+    } else {
+      // Normale Prioritäts-Icons
+      priorityIcon.src = `icons/${priority}.svg`;
+      priorityIcon.alt = "Priority";
+      priorityIcon.classList.add("priority-icon");
+    }
+  }
+
+  // Aktuelles Datum abrufen
+  const currentDate = new Date();
+  const formatedDate = currentDate.toLocaleDateString("de-DE");
+  const formatedTime = currentDate.toLocaleTimeString("de-DE");
+
+  // HTML für die Notiz erstellen
+  const header = document.createElement("div");
+  header.classList.add("card-header");
+
+  // Bezeichnung
+  const titleElem = document.createElement("h2");
+  titleElem.textContent = title;
+
+  // icon container
+  const iconsDiv = document.createElement("div");
+  iconsDiv.classList.add("card-header-icons");
+
+  // PRIORITY icon (wenn priority gesetzt ist)
+  if (priority !== "none") {
+    iconsDiv.appendChild(priorityIcon);
+  }
+
+  // EDIT icon
+  const editIcon = document.createElement("img");
+  editIcon.id = "editNote";
+  editIcon.src = "icons/pencil.svg";
+  editIcon.alt = "Edit";
+  editIcon.classList.add("nav-icon");
+  if (color !== "default") editIcon.classList.add("colorful");
+  editIcon.addEventListener("click", () => {
+    openEditModal(noteCard);
+  });
+
+  // DELETE icon
+  const deleteIcon = document.createElement("img");
+  deleteIcon.id = "deleteNote";
+  deleteIcon.src = "icons/trash-repo.svg";
+  deleteIcon.alt = "Delete";
+  deleteIcon.classList.add("nav-icon");
+  if (color !== "default") deleteIcon.classList.add("colorful");
+  deleteIcon.addEventListener("click", () => {
+    deleteNote(noteCard);
+  });
+
+  iconsDiv.append(editIcon, deleteIcon);
+
+  header.append(titleElem, iconsDiv);
+
+  // ---- INHALT ----
+  const contentElem = document.createElement("p");
+  contentElem.textContent = content;
+
+  // ---- FOOTER ----
+  const footer = document.createElement("div");
+  footer.classList.add("card-footer");
+
+  const dateElem = document.createElement("span");
+  dateElem.classList.add("footer-date");
+  if (color !== "default") dateElem.classList.add("colorful");
+  dateElem.textContent = `Erstellt am: ${formatedTime}, ${formatedDate}`;
+
+  footer.appendChild(dateElem);
+
+  // ---- Card zusammenfügen ----
+  noteCard.append(header, contentElem, footer);
+  noteGrid.appendChild(noteCard);
+}
 
 // Löschfunktion aktualisieren, um die Bestätigungseinstellung zu beachten
-let noteToDelete = null; // Referenz zur zu löschenden Notiz speichern
+// Referenz zur zu löschenden Notiz speichern
+
+let noteToDelete = null;
 
 function deleteNote(noteElement) {
   const confirmDelete = document.getElementById("confirmDeleteToggle").checked;
@@ -705,13 +694,13 @@ function deleteNote(noteElement) {
   if (!confirmDelete) {
     // Wenn Bestätigung deaktiviert ist, sofort löschen
     noteElement.remove();
-    console.log("Notiz gelöscht");
   } else {
     // Bestätigungsmodal anzeigen
     noteToDelete = noteElement;
     deleteModal.classList.add("show");
     document.body.classList.add("modal-open");
   }
+  setArrayInStorage();
 }
 
 // Löschbestätigung verarbeiten
@@ -726,6 +715,33 @@ function confirmDelete() {
     document.body.classList.remove("modal-open");
   }
 }
+
+// function deleteNote(noteElem) {
+//   const noteInd = Array.from(noteElem.parentNode.children).indexOf(noteElem);
+//   console.log(`Notiz-Index: ${noteInd}`);
+
+//   if (noteInd > -1 && noteArray[noteInd]) {
+//     noteArray.splice(noteInd, 1);
+//     setArrayInStorage();
+//   }
+// }
+
+// Notizen im lokalen Speicher speichern
+function setArrayInStorage() {
+  localStorage.setItem("notes", JSON.stringify(noteArray));
+}
+
+// Notizen aus dem lokalen Speicher laden
+function loadNotesFromStorage() {
+  const savedNotes = localStorage.getItem("notes");
+  if (savedNotes) {
+    noteArray = JSON.parse(savedNotes);
+    noteArray.forEach((note) => {
+      noteCard(note.title, note.content, note.color, note.priority);
+    });
+  }
+}
+
 // Sucheleisten Funktionalität
 document.addEventListener("DOMContentLoaded", function () {
   const searchToggle = document.querySelector(".search-toggle");
@@ -782,6 +798,8 @@ document.addEventListener("DOMContentLoaded", function () {
   initExistingNotes();
 
   initSettings();
+
+  loadNotesFromStorage();
 
   // Event-Listener für Löschmodal initialisieren
   const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
