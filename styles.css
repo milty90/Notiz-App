@@ -591,8 +591,10 @@ main::-webkit-scrollbar {
   width: 25px;
   height: 25px;
   margin: 0 10px 5px 0;
-  filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(20deg) brightness(80%)
-    contrast(90%);
+  filter: invert(100%);
+}
+.note-card.colorful.color-yellow .priority-clock {
+  filter: invert(40%);
 }
 
 /* Modal Styles */
@@ -714,6 +716,7 @@ body.modal-open {
 .form-group select {
   width: 100%;
   padding: 12px;
+  resize: none;
   border: 2px solid #eee;
   border-radius: 8px;
   font-size: 14px;

@@ -1,66 +1,14 @@
-// Sucheleisten Funktionalität
-document.addEventListener("DOMContentLoaded", function () {
-  const searchToggle = document.querySelector(".search-toggle");
-  const searchInput = document.querySelector(".search-input");
-  const searchIcon = document.querySelector(".search-icon");
+let noteArray = [];
+let selectedNotes = [];
 
-  let isSearchOpen = false;
-
-  // Suchleiste bei Icon-Klick umschalten
-  searchToggle.addEventListener("click", function () {
-    isSearchOpen = !isSearchOpen;
-
-    if (isSearchOpen) {
-      searchInput.classList.add("active");
-      searchInput.focus();
-      searchIcon.classList.toggle("rotate");
-    } else {
-      searchInput.classList.remove("active");
-      searchInput.blur();
-      searchIcon.classList.remove("rotate");
-      searchInput.value = "";
-    }
-  });
-
-  document.addEventListener("click", function (event) {
-    if (!event.target.closest(".search-container") && isSearchOpen) {
-      isSearchOpen = false;
-      searchInput.classList.remove("active");
-      searchInput.blur();
-      searchIcon.classList.remove("rotate");
-      searchInput.value = "";
-    }
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && isSearchOpen) {
-      isSearchOpen = false;
-      searchInput.classList.remove("active");
-      searchInput.blur();
-      searchIcon.classList.remove("rotate");
-      searchInput.value = "";
-    }
-  });
-
-  searchInput.addEventListener("input", function () {
-    const searchTerm = this.value.toLowerCase();
-    console.log("Suchbegriff:", searchTerm);
-
-    filterNotes(searchTerm);
-  });
-
-  initModal();
-
-  initExistingNotes();
-
-  initSettings();
-
-  // Event-Listener für Löschmodal initialisieren
-  const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
-  if (confirmDeleteBtn) {
-    confirmDeleteBtn.addEventListener("click", confirmDelete);
-  }
-});
+const note = {
+  id: null,
+  title: "",
+  content: "",
+  color: "",
+  createdAt: null,
+  updatedAt: null,
+};
 
 // Vorhandene Notizen initialisieren
 function initExistingNotes() {
@@ -366,10 +314,23 @@ function createNewNote(title, content, color, priority) {
 
   // ---- Card zusammenfügen ----
   noteCard.append(header, contentElem, footer);
+
+  noteArray.push({
+    id: Date.now(),
+    title: title,
+    content: content,
+    color: color,
+    priority: priority,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  });
   // Notizkarte zum Grid hinzufügen
   noteGrid.appendChild(noteCard);
 
   console.log("Neue Notiz erstellt:", { title, content, color, priority });
+  noteArray.forEach((note) => {
+    console.log("Notiz im Array:", note);
+  });
 }
 
 // Funktion zum Aktualisieren einer vorhandenen Notiz
@@ -526,8 +487,6 @@ function openEditModal(noteElement) {
   editModal.classList.add("show");
   document.body.classList.add("modal-open");
 }
-
-// selectedNotesContainer.innerHTML = notesHtml;
 
 // Einstellungen-Funktionalität
 function initSettings() {
@@ -756,3 +715,66 @@ function confirmDelete() {
     document.body.classList.remove("modal-open");
   }
 }
+// Sucheleisten Funktionalität
+document.addEventListener("DOMContentLoaded", function () {
+  const searchToggle = document.querySelector(".search-toggle");
+  const searchInput = document.querySelector(".search-input");
+  const searchIcon = document.querySelector(".search-icon");
+
+  let isSearchOpen = false;
+
+  // Suchleiste bei Icon-Klick umschalten
+  searchToggle.addEventListener("click", function () {
+    isSearchOpen = !isSearchOpen;
+
+    if (isSearchOpen) {
+      searchInput.classList.add("active");
+      searchInput.focus();
+      searchIcon.classList.toggle("rotate");
+    } else {
+      searchInput.classList.remove("active");
+      searchInput.blur();
+      searchIcon.classList.remove("rotate");
+      searchInput.value = "";
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".search-container") && isSearchOpen) {
+      isSearchOpen = false;
+      searchInput.classList.remove("active");
+      searchInput.blur();
+      searchIcon.classList.remove("rotate");
+      searchInput.value = "";
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && isSearchOpen) {
+      isSearchOpen = false;
+      searchInput.classList.remove("active");
+      searchInput.blur();
+      searchIcon.classList.remove("rotate");
+      searchInput.value = "";
+    }
+  });
+
+  searchInput.addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    console.log("Suchbegriff:", searchTerm);
+
+    filterNotes(searchTerm);
+  });
+
+  initModal();
+
+  initExistingNotes();
+
+  initSettings();
+
+  // Event-Listener für Löschmodal initialisieren
+  const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", confirmDelete);
+  }
+});
