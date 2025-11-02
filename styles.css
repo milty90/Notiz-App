@@ -42,7 +42,7 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: var(--white);
+  /* background: var(--white); */
   height: 60px;
   color: #000000;
   padding: 10px 20px 0 80px;
