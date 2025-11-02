@@ -425,8 +425,19 @@ function updateNote(noteElement, title, content, color, priority) {
   const formatedTime = currentDate.toLocaleTimeString("de-DE");
   footerDate.textContent = `Zuletzt aktualisiert: ${formatedTime}, ${formatedDate}`;
 
+  noteArray.forEach((note) => {
+    if (note.id === parseInt(noteElement.dataset.noteId)) {
+      note.title = title;
+      note.content = content;
+      note.color = color;
+      note.priority = priority;
+    }
+  });
+
   // LOG für Debugging
-  console.log("Notiz erstellt:", { title, content, color, priority });
+  noteArray.forEach((note) => {
+    console.log("Notiz aktualisiert:", note);
+  });
 }
 
 // Funktion zum Öffnen des Bearbeitungsmodals
