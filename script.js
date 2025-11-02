@@ -259,24 +259,46 @@ function createNewNote(title, content, color, priority) {
 
   // Klassen hinzufügen
   noteCard.classList.add("note-card");
+
+  // Farbzuordnung definieren (nur einmal!)
+  const colorMap = {
+    "#83cc16d3": "color-green",
+    "#facc15da": "color-yellow",
+    "#e11d44d2": "color-red",
+  };
+
+  const priorityColorMap = {
+    "#83cc16d3": "green",
+    "#facc15da": "yellow",
+    "#e11d44d2": "red",
+  };
+
   // Hintergrundfarbe setzen
   if (color !== "default") {
     noteCard.classList.add("colorful");
-    const colorMap = {
-      "#83cc16d3": "color-green",
-      "#facc15da": "color-yellow",
-      "#e11d44d2": "color-red",
-    };
     if (colorMap[color]) {
       noteCard.classList.add(colorMap[color]);
     }
   }
 
   // Prioritätsicon hinzufügen
+  // Prüfen ob Farbe und Priorität übereinstimmen (z.B. grüne Farbe + grüne Priorität)
+  const selectedColorName = priorityColorMap[color]; // z.B. "green"
+  const isColorAndPriorityMatch =
+    selectedColorName && selectedColorName === priority;
+
   if (priority !== "none") {
-    priorityIcon.src = `icons/${priority}.svg`;
-    priorityIcon.alt = "Priority";
-    priorityIcon.classList.add("priority-icon");
+    if (isColorAndPriorityMatch) {
+      // Wenn Farbe und Priorität übereinstimmen, zeige Clock-Icon
+      priorityIcon.src = `icons/clock.svg`;
+      priorityIcon.alt = "Priority";
+      priorityIcon.classList.add("priority-clock");
+    } else {
+      // Normale Prioritäts-Icons
+      priorityIcon.src = `icons/${priority}.svg`;
+      priorityIcon.alt = "Priority";
+      priorityIcon.classList.add("priority-icon");
+    }
   }
 
   // Aktuelles Datum abrufen
@@ -405,7 +427,27 @@ function updateNote(noteElement, title, content, color, priority) {
   if (priority !== "none") {
     const cardHeaderIcons = noteElement.querySelector(".card-header-icons");
     const priorityIcon = document.createElement("img");
-    priorityIcon.src = `icons/${priority}.svg`;
+
+    // Prüfen ob Farbe und Priorität übereinstimmen
+    const priorityColorMap = {
+      "#83cc16d3": "green",
+      "#facc15da": "yellow",
+      "#e11d44d2": "red",
+    };
+
+    const selectedColorName = priorityColorMap[color];
+    const isColorAndPriorityMatch =
+      selectedColorName && selectedColorName === priority;
+
+    if (isColorAndPriorityMatch) {
+      // Wenn Farbe und Priorität übereinstimmen, zeige Clock-Icon
+      priorityIcon.src = `icons/clock.svg`;
+      priorityIcon.classList.add("priority-clock");
+    } else {
+      // Normale Prioritäts-Icons
+      priorityIcon.src = `icons/${priority}.svg`;
+    }
+
     priorityIcon.alt = "Priority";
     priorityIcon.className = `priority-icon ${
       color !== "default" ? "colorful" : ""
@@ -454,6 +496,16 @@ function openEditModal(noteElement) {
     if (src.includes("green")) currentPriority = "green";
     else if (src.includes("yellow")) currentPriority = "yellow";
     else if (src.includes("red")) currentPriority = "red";
+    else if (src.includes("clock")) {
+      // Clock icon bedeutet, dass Farbe und Priorität übereinstimmen
+      // Ermittle die Priorität basierend auf der Farbe
+      if (noteElement.classList.contains("color-green"))
+        currentPriority = "green";
+      else if (noteElement.classList.contains("color-yellow"))
+        currentPriority = "yellow";
+      else if (noteElement.classList.contains("color-red"))
+        currentPriority = "red";
+    }
   }
 
   // Formular mit aktuellen Daten füllen
@@ -475,7 +527,7 @@ function openEditModal(noteElement) {
   document.body.classList.add("modal-open");
 }
 
-//selectedNotesContainer.innerHTML = notesHtml;
+// selectedNotesContainer.innerHTML = notesHtml;
 
 // Einstellungen-Funktionalität
 function initSettings() {
