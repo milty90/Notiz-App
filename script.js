@@ -54,6 +54,12 @@ document.addEventListener("DOMContentLoaded", function () {
   initExistingNotes();
 
   initSettings();
+
+  // Event-Listener für Löschmodal initialisieren (korábban külön DOMContentLoaded-ban volt)
+  const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", confirmDelete);
+  }
 });
 
 // Vorhandene Notizen initialisieren
@@ -695,11 +701,3 @@ function confirmDelete() {
     document.body.classList.remove("modal-open");
   }
 }
-
-// Event-Listener für Löschmodal initialisieren
-document.addEventListener("DOMContentLoaded", function () {
-  const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
-  if (confirmDeleteBtn) {
-    confirmDeleteBtn.addEventListener("click", confirmDelete);
-  }
-});

@@ -915,6 +915,10 @@ body.modal-open {
   margin-bottom: 30px;
 }
 
+.settings-section:first-child {
+  margin-bottom: 10px;
+}
+
 .settings-section h3 {
   margin: 0 0 20px 0;
   color: var(--gray20);
