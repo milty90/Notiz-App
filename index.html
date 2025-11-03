@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notiz App</title>
+    <title>my notes</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js"></script>
   </head>
@@ -39,10 +39,6 @@
           <img src="icons/archive.svg" alt="Archive" class="nav-icon" />
           <span class="nav-text">Archiv</span>
         </div>
-        <div class="nav-item">
-          <img src="icons/trash.svg" alt="Trash" class="nav-icon" />
-          <span class="nav-text">Papierkorb</span>
-        </div>
       </div>
       <div class="nav-bottom">
         <div class="nav-item settings-btn">
@@ -59,126 +55,8 @@
       <div class="overlay">
         <section id="last-edited-section">
           <h2 class="last-edited-title">Zuletzt bearbeitet</h2>
-          <div class="last-edited-grid">
-            <!-- <div class="note-card">
-              <div class="card-header">
-                <h2>1. Beispielnotiz</h2>
-                <div class="card-header-icons">
-                  <img
-                    src="icons/green.svg"
-                    alt="Priority"
-                    class="priority-icon"
-                    style="width: 24px; height: 24px; margin: 0px 10px 5px 0px"
-                  />
-                  <img
-                    src="icons/pencil.svg"
-                    alt="Edit"
-                    class="nav-icon"
-                    id="editNote"
-                  />
-                  <img
-                    id="deleteNote"
-                    src="icons/trash-repo.svg"
-                    alt="Delete"
-                    class="nav-icon"
-                  />
-                </div>
-              </div>
-              <p>Dies ist der Inhalt der Beispielnotiz.</p>
-              <div class="card-footer">
-                <span class="footer-date">Zuletzt bearbeitet: 25.10.2025</span>
-              </div>
-            </div>
-            <div class="note-card">
-              <div class="card-header">
-                <h2>Beispielnotiz</h2>
-                <div class="card-header-icons">
-                  <img
-                    src="icons/green.svg"
-                    alt="Priority"
-                    class="priority-icon"
-                    style="width: 24px; height: 24px; margin: 0px 10px 5px 0px"
-                  />
-                  <img
-                    id="editNote"
-                    src="icons/pencil.svg"
-                    alt="Bearbeiten"
-                    class="nav-icon"
-                  />
-                  <img
-                    id="deleteNote"
-                    src="icons/trash-repo.svg"
-                    alt="Löschen"
-                    class="nav-icon"
-                  />
-                </div>
-              </div>
-              <p>Dies ist der Inhalt der Beispielnotiz.</p>
-              <div class="card-footer">
-                <span class="footer-date">Zuletzt bearbeitet: 26.10.2025</span>
-              </div>
-            </div>
-            <div class="note-card">
-              <div class="card-header">
-                <h2>Beispielnotiz</h2>
-                <div class="card-header-icons">
-                  <img
-                    src="icons/green.svg"
-                    alt="Priority"
-                    class="priority-icon"
-                    style="width: 24px; height: 24px; margin: 0px 10px 5px 0px"
-                  />
-                  <img
-                    id="editNote"
-                    src="icons/pencil.svg"
-                    alt="Edit"
-                    class="nav-icon"
-                  />
-                  <img
-                    id="deleteNote"
-                    src="icons/trash-repo.svg"
-                    alt="Delete"
-                    class="nav-icon"
-                  />
-                </div>
-              </div>
-              <p>Dies ist der Inhalt der Beispielnotiz.</p>
-              <div class="card-footer">
-                <span class="footer-date">Zuletzt bearbeitet: 27.10.2025</span>
-              </div>
-            </div>
-            <div class="note-card">
-              <div class="card-header">
-                <h2>Beispielnotiz</h2>
-                <div class="card-header-icons">
-                  <img
-                    src="icons/green.svg"
-                    alt="Priority"
-                    class="priority-icon"
-                    style="width: 24px; height: 24px; margin: 0px 10px 5px 0px"
-                  />
-                  <img
-                    id="editNote"
-                    src="icons/pencil.svg"
-                    alt="Edit"
-                    class="nav-icon"
-                  />
-                  <img
-                    id="deleteNote"
-                    src="icons/trash-repo.svg"
-                    alt="Delete"
-                    class="nav-icon"
-                  />
-                </div>
-              </div>
-              <p>Dies ist der Inhalt der Beispielnotiz.</p>
-              <div class="card-footer">
-                <span class="footer-date">Zuletzt bearbeitet: 28.10.2025</span>
-              </div>
-            </div> -->
-          </div>
+          <div class="last-edited-grid"></div>
         </section>
-
         <section id="note-section">
           <h2 class="note-title">Notizen</h2>
           <div class="note-filters">
@@ -187,7 +65,6 @@
             <p class="note-this-week">Diese Woche</p>
             <p class="note-this-month">Diesen Monat</p>
           </div>
-
           <div class="note-grid"></div>
         </section>
       </div>
@@ -233,7 +110,6 @@
                   checked
                 />
                 <label for="colorDefault" class="color-option default"></label>
-
                 <input
                   type="radio"
                   id="colorGreen"
@@ -241,7 +117,6 @@
                   value="#83cc16d3"
                 />
                 <label for="colorGreen" class="color-option green"></label>
-
                 <input
                   type="radio"
                   id="colorYellow"
@@ -249,7 +124,6 @@
                   value="#facc15da"
                 />
                 <label for="colorYellow" class="color-option yellow"></label>
-
                 <input
                   type="radio"
                   id="colorRed"
@@ -472,6 +346,7 @@
           </p>
 
           <div class="modal-actions">
+            <button type="button" class="btn-cancel-delete">Archivieren</button>
             <button type="button" class="btn-cancel-delete">Abbrechen</button>
             <button type="button" class="btn-confirm-delete">Löschen</button>
           </div>
@@ -487,10 +362,22 @@
           <span class="close-info-modal close-modal">&times;</span>
         </div>
         <div class="modal-body">
-          <p>My Notes ist eine einfache und benutzerfreundliche Notizen-App.</p>
+          <p>My Notes ist eine einfache und benutzerfreundliche Notizen App.</p>
           <p class="delete-warning">
-            Hinweis: My Notes App ist für alle Bildschirme über 390 px
-            optimiert.
+            Hinweis: My Notes App ist für alle Bildschirme über 390px optimiert.
+          </p>
+          <p>Funktionen:</p>
+          <ul>
+            <li>Notizen erstellen, bearbeiten und löschen</li>
+            <li>Notizen nach Priorität und Farbe filtern</li>
+            <li>Responsive Design für mobile Geräte</li>
+          </ul>
+          <p>Bedienung:</p>
+          <p>
+            Verwenden Sie die Schaltfläche "Hinzufügen", um eine neue Notiz zu
+            erstellen. Klicken Sie auf eine Notiz, um sie zu bearbeiten oder zu
+            löschen. Nutzen Sie die Filteroptionen, um Ihre Notizen nach
+            Priorität oder Farbe zu sortieren.
           </p>
           <p>
             Version: 1.0.0<br />
