@@ -15,15 +15,14 @@ let demoNotes = [
     title: "Projektideen",
     content: "Notiz-App, Wetter-App, ToDo-Liste",
     color: "#facc15da",
-    priority: "yellow",
+    priority: "green",
     createdAt: Date.now() - 2000000,
     updatedAt: Date.now() - 1500000,
   },
   {
     id: 345678912,
     title: "Reiseplanung",
-    content:
-      "Flüge buchen, Hotel reservieren, Sehenswürdigkeiten recherchieren",
+    content: "Flüge buchen, Hotel reservieren",
     color: "#e11d44d2",
     priority: "green",
     createdAt: Date.now() - 3000000,
@@ -33,7 +32,7 @@ let demoNotes = [
     id: 456789123,
     title: "Fitness Ziele",
     content: "3x die Woche ins Fitnessstudio, gesunde Ernährung",
-    color: "#34d399",
+    color: "#83cc16d3",
     priority: "yellow",
     createdAt: Date.now() - 4000000,
     updatedAt: Date.now() - 3500000,
@@ -41,7 +40,7 @@ let demoNotes = [
   {
     id: 567891234,
     title: "Lernziele",
-    content: "JavaScript, Python, Webentwicklung",
+    content: "JavaScript, TypeScript, Webentwicklung",
     color: "#facc15da",
     priority: "yellow",
     createdAt: Date.now() - 5000000,
@@ -50,7 +49,7 @@ let demoNotes = [
   {
     id: 678912345,
     title: "Bücherliste",
-    content: "1984, Der Alchimist, Clean Code",
+    content: "Clean Code",
     color: "#e11d44d2",
     priority: "red",
     createdAt: Date.now() - 6000000,
@@ -60,7 +59,7 @@ let demoNotes = [
     id: 789123456,
     title: "Urlaubsplanung",
     content: "Reiseziele, Budget, Aktivitäten",
-    color: "#83cc16d3",
+    color: "default",
     priority: "green",
     createdAt: Date.now() - 7000000,
     updatedAt: Date.now() - 6500000,
@@ -73,6 +72,78 @@ let demoNotes = [
     priority: "yellow",
     createdAt: Date.now() - 8000000,
     updatedAt: Date.now() - 7500000,
+  },
+  {
+    id: 901234567,
+    title: "Geburtstagsgeschenke",
+    content: "Geschenkideen für Familie und Freunde",
+    color: "#e11d44d2",
+    priority: "yellow",
+    createdAt: Date.now() - 9000000,
+    updatedAt: Date.now() - 8500000,
+  },
+  {
+    id: 912345678,
+    title: "Wochenplan",
+    content: "Montag: Einkaufen, Dienstag: Sport, Mittwoch: Kochen",
+    color: "default",
+    priority: "red",
+    createdAt: Date.now() - 10000000,
+    updatedAt: Date.now() - 9500000,
+  },
+  {
+    id: 923456789,
+    title: "Meditationsübungen",
+    content: "Täglich 10 Minuten Achtsamkeitspraxis",
+    color: "default",
+    priority: "none",
+    createdAt: Date.now() - 11000000,
+    updatedAt: Date.now() - 10500000,
+  },
+  {
+    id: 934567891,
+    title: "Sprachlernziele",
+    content: "Täglich 15 Minuten Vokabeln lernen",
+    color: "#83cc16d3",
+    priority: "green",
+    createdAt: Date.now() - 12000000,
+    updatedAt: Date.now() - 11500000,
+  },
+  {
+    id: 945678912,
+    title: "Gartenarbeit",
+    content: "Pflanzen gießen, Rasen mähen",
+    color: "#e11d44d2",
+    priority: "none",
+    createdAt: Date.now() - 13000000,
+    updatedAt: Date.now() - 12500000,
+  },
+  {
+    id: 956789123,
+    title: "Musikplaylist",
+    content: "Meine Lieblingssongs für gute Laune",
+    color: "#facc15da",
+    priority: "yellow",
+    createdAt: Date.now() - 14000000,
+    updatedAt: Date.now() - 13500000,
+  },
+  {
+    id: 967891234,
+    title: "Film- und Serienliste",
+    content: "Must-Watch Filme und Serien",
+    color: "default",
+    priority: "none",
+    createdAt: Date.now() - 15000000,
+    updatedAt: Date.now() - 14500000,
+  },
+  {
+    id: 978912345,
+    title: "Hobbyideen",
+    content: "Fotografie, Malen, Kochen",
+    color: "#83cc16d3",
+    priority: "green",
+    createdAt: Date.now() - 16000000,
+    updatedAt: Date.now() - 15500000,
   },
 ];
 
@@ -708,10 +779,6 @@ function toggleMenuBar(enabled) {
   }
 }
 
-// function saveDemoNotesToStorage(enabled) {
-//   localStorage.setItem("demoNotes", JSON.stringify(demoNotes));
-// }
-
 function saveSettings() {
   const settings = {
     darkMode: document.getElementById("darkModeToggle").checked,
@@ -940,18 +1007,6 @@ function setArrayInStorage() {
   localStorage.setItem("notes", JSON.stringify(noteArray));
 }
 
-// function loadDemoNotesFromStorage() {
-//   const savedDemoNotes = localStorage.getItem("demoNotes");
-
-//   if (savedDemoNotes) {
-//     demoNotes = JSON.parse(savedDemoNotes);
-//     demoNotes.forEach((note) => {
-//       noteCard(note.title, note.content, note.color, note.priority, note.id);
-//     });
-//     updateLastEditedSection();
-//   }
-// }
-
 function loadNotesFromStorage() {
   const savedNotes = localStorage.getItem("notes");
 
@@ -969,6 +1024,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchToggle = document.querySelector(".search-toggle");
   const searchInput = document.querySelector(".search-input");
   const searchIcon = document.querySelector(".search-icon");
+  const demoNotesBtn = document.querySelector("#demoNotesBtn");
 
   let isSearchOpen = false;
 
@@ -986,6 +1042,11 @@ document.addEventListener("DOMContentLoaded", function () {
       searchIcon.classList.remove("rotate");
       searchInput.value = "";
     }
+  });
+
+  demoNotesBtn.addEventListener("click", function () {
+    localStorage.setItem("notes", JSON.stringify(demoNotes));
+    loadNotesFromStorage();
   });
 
   document.addEventListener("click", function (event) {
