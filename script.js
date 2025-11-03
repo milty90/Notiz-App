@@ -1,4 +1,5 @@
 let noteArray = [];
+let archiveArray = [];
 
 // Vorhandene Notizen initialisieren
 function initExistingNotes() {
@@ -538,10 +539,6 @@ function loadSettings() {
       settings.menuBar || false;
     console.log("Menu bar toggle:", settings.menuBar || false);
     toggleMenuBar(settings.menuBar || false);
-
-    // Automatisches Speichern anwenden
-    document.getElementById("autoSaveToggle").checked =
-      settings.autoSave !== undefined ? settings.autoSave : true;
 
     // Löschen-bestätigen anwenden
     document.getElementById("confirmDeleteToggle").checked =
