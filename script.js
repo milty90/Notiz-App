@@ -1,6 +1,7 @@
 let noteArray = [];
 let archiveArray = [];
 let noteToDelete = null;
+let noteToArchieve = null;
 let demoNotes = [
   {
     id: 123456789,
@@ -312,6 +313,7 @@ function initModal() {
   const deleteModal = document.getElementById("deleteNoteModal");
   const infoModal = document.getElementById("infoModal");
   const demoNotesBtn = document.querySelector("#demoNotesBtn");
+  const archiveNotesBtn = document.querySelector(".btn-archive-delete");
 
   const closeAddModal = document.querySelector(".close-modal");
   const closeEditModal = document.querySelector(".close-edit-modal");
@@ -446,6 +448,10 @@ function initModal() {
   demoNotesBtn.addEventListener("click", function () {
     getDemoNotes();
     closeInfoModalWindow();
+  });
+  archiveNotesBtn.addEventListener("click", function () {
+    noteToArchieve = this.closest(".note-card");
+    archiveNote();
   });
 }
 
@@ -975,6 +981,26 @@ function deleteNote(noteElement) {
     noteToDelete = noteElement;
     deleteModal.classList.add("show");
     document.body.classList.add("modal-open");
+  }
+}
+
+function archiveNote() {
+  if (noteToArchieve) {
+    const noteIndex = Array.from(noteToArchieve.parentNode.children).indexOf(
+      noteToArchieve
+    );
+    noteToArchieve.remove();
+    archiveArray.push(noteToArchieve);
+
+    deletefromStorage(noteIndex);
+
+    // Zurücksetzen und Modal schließen
+    noteToArchieve = null;
+    document.getElementById("archiveNoteModal").classList.remove("show");
+    document.body.classList.remove("modal-open");
+
+    // Zuletzt bearbeitet frissítése archiválás után
+    updateLastEditedSection();
   }
 }
 
