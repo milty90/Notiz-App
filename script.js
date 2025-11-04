@@ -1,5 +1,6 @@
 let noteArray = [];
 let archiveArray = [];
+let noteToDelete = null;
 let demoNotes = [
   {
     id: 123456789,
@@ -310,6 +311,7 @@ function initModal() {
   const editModal = document.getElementById("editNoteModal");
   const deleteModal = document.getElementById("deleteNoteModal");
   const infoModal = document.getElementById("infoModal");
+  const demoNotesBtn = document.querySelector("#demoNotesBtn");
 
   const closeAddModal = document.querySelector(".close-modal");
   const closeEditModal = document.querySelector(".close-edit-modal");
@@ -440,6 +442,10 @@ function initModal() {
     editModal.classList.remove("show");
     document.body.classList.remove("modal-open");
     editNoteForm.reset();
+  });
+  demoNotesBtn.addEventListener("click", function () {
+    getDemoNotes();
+    closeInfoModalWindow();
   });
 }
 
@@ -952,8 +958,6 @@ function noteCard(title, content, color, priority, noteId = null) {
   noteGrid.appendChild(noteCard);
 }
 
-let noteToDelete = null;
-
 function deleteNote(noteElement) {
   const confirmDelete = document.getElementById("confirmDeleteToggle").checked;
   const deleteModal = document.getElementById("deleteNoteModal");
@@ -1019,12 +1023,15 @@ function loadNotesFromStorage() {
     updateLastEditedSection();
   }
 }
+function getDemoNotes() {
+  localStorage.setItem("notes", JSON.stringify(demoNotes));
+  loadNotesFromStorage();
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   const searchToggle = document.querySelector(".search-toggle");
   const searchInput = document.querySelector(".search-input");
   const searchIcon = document.querySelector(".search-icon");
-  const demoNotesBtn = document.querySelector("#demoNotesBtn");
 
   let isSearchOpen = false;
 
@@ -1042,11 +1049,6 @@ document.addEventListener("DOMContentLoaded", function () {
       searchIcon.classList.remove("rotate");
       searchInput.value = "";
     }
-  });
-
-  demoNotesBtn.addEventListener("click", function () {
-    localStorage.setItem("notes", JSON.stringify(demoNotes));
-    loadNotesFromStorage();
   });
 
   document.addEventListener("click", function (event) {
