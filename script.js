@@ -5,148 +5,180 @@ let noteToArchieve = null;
 let currentView = "note";
 let demoNotes = [
   {
-    id: 123456789,
+    id: 1762349091,
     title: "Einkaufsliste",
     content: "Milch, Brot, Eier, Butter, Käse",
     color: "#83cc16d3",
     priority: "yellow",
     createdAt: Date.now() - 1000000,
     updatedAt: Date.now() - 500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 234567891,
+    id: 1762349151,
     title: "Projektideen",
     content: "Notiz-App, Wetter-App, ToDo-Liste",
     color: "#facc15da",
     priority: "green",
     createdAt: Date.now() - 2000000,
     updatedAt: Date.now() - 1500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 345678912,
+    id: 1762349121,
     title: "Reiseplanung",
     content: "Flüge buchen, Hotel reservieren",
     color: "#e11d44d2",
     priority: "green",
     createdAt: Date.now() - 3000000,
     updatedAt: Date.now() - 2500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 456789123,
+    id: 1762349194,
     title: "Fitness Ziele",
     content: "3x die Woche ins Fitnessstudio, gesunde Ernährung",
     color: "#83cc16d3",
     priority: "yellow",
     createdAt: Date.now() - 4000000,
     updatedAt: Date.now() - 3500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 567891234,
+    id: 1762349234,
     title: "Lernziele",
     content: "JavaScript, TypeScript, Webentwicklung",
     color: "#facc15da",
     priority: "yellow",
     createdAt: Date.now() - 5000000,
     updatedAt: Date.now() - 4500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 678912345,
+    id: 1762349284,
     title: "Bücherliste",
     content: "Clean Code",
     color: "#e11d44d2",
     priority: "red",
     createdAt: Date.now() - 6000000,
     updatedAt: Date.now() - 5500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 789123456,
+    id: 1762349321,
     title: "Urlaubsplanung",
     content: "Reiseziele, Budget, Aktivitäten",
     color: "default",
     priority: "green",
     createdAt: Date.now() - 7000000,
     updatedAt: Date.now() - 6500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 890123456,
+    id: 1762349371,
     title: "Hausarbeiten",
     content: "Küche putzen, Staubsaugen, Wäsche waschen",
     color: "#facc15da",
     priority: "yellow",
     createdAt: Date.now() - 8000000,
     updatedAt: Date.now() - 7500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 901234567,
+    id: 1762349272,
     title: "Geburtstagsgeschenke",
     content: "Geschenkideen für Familie und Freunde",
     color: "#e11d44d2",
     priority: "yellow",
     createdAt: Date.now() - 9000000,
     updatedAt: Date.now() - 8500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 912345678,
+    id: 1762349194,
     title: "Wochenplan",
     content: "Montag: Einkaufen, Dienstag: Sport, Mittwoch: Kochen",
     color: "default",
     priority: "red",
     createdAt: Date.now() - 10000000,
     updatedAt: Date.now() - 9500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 923456789,
+    id: 1762349300,
     title: "Meditationsübungen",
     content: "Täglich 10 Minuten Achtsamkeitspraxis",
     color: "default",
     priority: "none",
     createdAt: Date.now() - 11000000,
     updatedAt: Date.now() - 10500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 934567891,
+    id: 1762349345,
     title: "Sprachlernziele",
     content: "Täglich 15 Minuten Vokabeln lernen",
     color: "#83cc16d3",
     priority: "green",
     createdAt: Date.now() - 12000000,
     updatedAt: Date.now() - 11500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 945678912,
+    id: 1762349406,
     title: "Gartenarbeit",
     content: "Pflanzen gießen, Rasen mähen",
     color: "#e11d44d2",
     priority: "none",
     createdAt: Date.now() - 13000000,
     updatedAt: Date.now() - 12500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 956789123,
+    id: 1762349456,
     title: "Musikplaylist",
     content: "Meine Lieblingssongs für gute Laune",
     color: "#facc15da",
     priority: "yellow",
     createdAt: Date.now() - 14000000,
     updatedAt: Date.now() - 13500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 967891234,
+    id: 1762349506,
     title: "Film- und Serienliste",
     content: "Must-Watch Filme und Serien",
     color: "default",
     priority: "none",
     createdAt: Date.now() - 15000000,
     updatedAt: Date.now() - 14500000,
+    archived: false,
+    archivedAt: null,
   },
   {
-    id: 978912345,
+    id: 1762349556,
     title: "Hobbyideen",
     content: "Fotografie, Malen, Kochen",
     color: "#83cc16d3",
     priority: "green",
     createdAt: Date.now() - 16000000,
     updatedAt: Date.now() - 15500000,
+    archived: false,
+    archivedAt: null,
   },
 ];
 
@@ -285,16 +317,24 @@ function createLastEditedNoteCard(note) {
   lastEditedGrid.appendChild(noteCard);
 }
 function createArchivedNoteCard(note) {
-  const archiveGrid = document.querySelector(".archive-grid");
+  const archivedGrid = document.querySelector(".archive-grid");
   const noteCard = document.createElement("div");
-  noteCard.classList.add("archive-card");
+  noteCard.classList.add("note-card");
   noteCard.dataset.noteId = note.id;
+
   // Farbzuordnung
   const colorMap = {
     "#83cc16d3": "color-green",
     "#facc15da": "color-yellow",
     "#e11d44d2": "color-red",
   };
+
+  const priorityColorMap = {
+    "#83cc16d3": "green",
+    "#facc15da": "yellow",
+    "#e11d44d2": "red",
+  };
+
   // Hintergrundfarbe setzen
   if (note.color !== "default") {
     noteCard.classList.add("colorful");
@@ -302,14 +342,36 @@ function createArchivedNoteCard(note) {
       noteCard.classList.add(colorMap[note.color]);
     }
   }
+
   // Header erstellen
   const header = document.createElement("div");
   header.classList.add("card-header");
 
   const titleElem = document.createElement("h2");
   titleElem.textContent = note.title;
+
   const iconsDiv = document.createElement("div");
   iconsDiv.classList.add("card-header-icons");
+
+  // Prioritäts-Icon
+  if (note.priority !== "none") {
+    const priorityIcon = document.createElement("img");
+    const selectedColorName = priorityColorMap[note.color];
+    const isColorAndPriorityMatch =
+      selectedColorName && selectedColorName === note.priority;
+
+    if (isColorAndPriorityMatch) {
+      priorityIcon.src = `icons/clock.svg`;
+    } else {
+      priorityIcon.src = `icons/${note.priority}.svg`;
+    }
+
+    priorityIcon.alt = "Priority";
+    priorityIcon.classList.add("priority-icon");
+    if (note.color !== "default") priorityIcon.classList.add("colorful");
+    iconsDiv.appendChild(priorityIcon);
+  }
+
   const editIcon = document.createElement("img");
   editIcon.id = `editNote`;
   editIcon.src = "icons/pencil.svg";
@@ -317,11 +379,12 @@ function createArchivedNoteCard(note) {
   editIcon.classList.add("nav-icon");
   if (note.color !== "default") editIcon.classList.add("colorful");
   editIcon.addEventListener("click", () => {
-    const originalNoteCard = document.querySelector(`#archive-${note.id}`);
+    const originalNoteCard = document.querySelector(`#note-${note.id}`);
     if (originalNoteCard) {
       openEditModal(originalNoteCard);
     }
   });
+
   const deleteIcon = document.createElement("img");
   deleteIcon.id = `deleteNote`;
   deleteIcon.src = "icons/trash-repo.svg";
@@ -330,36 +393,120 @@ function createArchivedNoteCard(note) {
   if (note.color !== "default") deleteIcon.classList.add("colorful");
   deleteIcon.addEventListener("click", () => {
     // Lösche die Originalnotiz
-    const originalNoteCard = document.querySelector(`#archive-${note.id}`);
+    const originalNoteCard = document.querySelector(`#note-${note.id}`);
     if (originalNoteCard) {
       deleteNote(originalNoteCard);
     }
   });
+
   iconsDiv.append(editIcon, deleteIcon);
   header.append(titleElem, iconsDiv);
+
   // Content
   const contentElem = document.createElement("p");
   contentElem.textContent =
     note.content.length > 50
       ? note.content.substring(0, 50) + "..."
       : note.content;
+
   // Footer
   const footer = document.createElement("div");
   footer.classList.add("card-footer");
+
   const dateElem = document.createElement("span");
   dateElem.classList.add("footer-date");
   if (note.color !== "default") dateElem.classList.add("colorful");
+
   const updateDate = new Date(note.updatedAt);
   const formattedDate = updateDate.toLocaleDateString("de-DE");
   const formattedTime = updateDate.toLocaleTimeString("de-DE", {
     hour: "2-digit",
     minute: "2-digit",
   });
+
   dateElem.textContent = `Zuletzt bearbeitet:  ${formattedTime},  ${formattedDate}`;
+
   footer.appendChild(dateElem);
+
   noteCard.append(header, contentElem, footer);
-  archiveGrid.appendChild(noteCard);
+  archivedGrid.appendChild(noteCard);
 }
+// function createArchivedNoteCard(note) {
+//   const archiveGrid = document.querySelector(".archive-grid");
+//   const noteCard = document.createElement("div");
+//   noteCard.classList.add("archive-card");
+//   noteCard.dataset.noteId = note.id;
+//   // Farbzuordnung
+//   const colorMap = {
+//     "#83cc16d3": "color-green",
+//     "#facc15da": "color-yellow",
+//     "#e11d44d2": "color-red",
+//   };
+//   // Hintergrundfarbe setzen
+//   if (note.color !== "default") {
+//     noteCard.classList.add("colorful");
+//     if (colorMap[note.color]) {
+//       noteCard.classList.add(colorMap[note.color]);
+//     }
+//   }
+//   // Header erstellen
+//   const header = document.createElement("div");
+//   header.classList.add("card-header");
+
+//   const titleElem = document.createElement("h2");
+//   titleElem.textContent = note.title;
+//   const iconsDiv = document.createElement("div");
+//   iconsDiv.classList.add("card-header-icons");
+//   const editIcon = document.createElement("img");
+//   editIcon.id = `editNote`;
+//   editIcon.src = "icons/pencil.svg";
+//   editIcon.alt = "Edit";
+//   editIcon.classList.add("nav-icon");
+//   if (note.color !== "default") editIcon.classList.add("colorful");
+//   editIcon.addEventListener("click", () => {
+//     const originalNoteCard = document.querySelector(`#archive-${note.id}`);
+//     if (originalNoteCard) {
+//       openEditModal(originalNoteCard);
+//     }
+//   });
+//   const deleteIcon = document.createElement("img");
+//   deleteIcon.id = `deleteNote`;
+//   deleteIcon.src = "icons/trash-repo.svg";
+//   deleteIcon.alt = "Delete";
+//   deleteIcon.classList.add("nav-icon");
+//   if (note.color !== "default") deleteIcon.classList.add("colorful");
+//   deleteIcon.addEventListener("click", () => {
+//     // Lösche die Originalnotiz
+//     const originalNoteCard = document.querySelector(`#archive-${note.id}`);
+//     if (originalNoteCard) {
+//       deleteNote(originalNoteCard);
+//     }
+//   });
+//   iconsDiv.append(editIcon, deleteIcon);
+//   header.append(titleElem, iconsDiv);
+//   // Content
+//   const contentElem = document.createElement("p");
+//   contentElem.textContent =
+//     note.content.length > 50
+//       ? note.content.substring(0, 50) + "..."
+//       : note.content;
+//   // Footer
+//   const footer = document.createElement("div");
+//   footer.classList.add("card-footer");
+//   const dateElem = document.createElement("span");
+//   dateElem.classList.add("footer-date");
+//   if (note.color !== "default") dateElem.classList.add("colorful");
+//   const updateDate = new Date(note.updatedAt);
+//   const formattedDate = updateDate.toLocaleDateString("de-DE");
+//   const formattedTime = updateDate.toLocaleTimeString("de-DE", {
+//     hour: "2-digit",
+//     minute: "2-digit",
+//   });
+//   dateElem.textContent = `Zuletzt bearbeitet:  ${formattedTime},  ${formattedDate}`;
+//   footer.appendChild(dateElem);
+//   noteCard.append(header, contentElem, footer);
+//   archiveGrid.appendChild(noteCard);
+// }
 
 function initExistingNotes() {
   const existingNotes = document.querySelectorAll(".note-card");
@@ -384,9 +531,9 @@ function initExistingNotes() {
 function initArchivedNotes() {
   const existingArchivedNotes = document.querySelectorAll(".archive-card");
 
-  existingArchivedNotes.forEach((noteCard) => {
-    const editBtn = noteCard.querySelector("#editNote");
-    const deleteBtn = noteCard.querySelector("#deleteNote");
+  existingArchivedNotes.forEach((archiveCard) => {
+    const editBtn = archiveCard.querySelector("#editNote");
+    const deleteBtn = archiveCard.querySelector("#deleteNote");
 
     if (editBtn && !editBtn.onclick) {
       editBtn.onclick = function () {
@@ -399,9 +546,6 @@ function initArchivedNotes() {
         deleteNote(this.closest(".archive-card"));
       };
     }
-  });
-  archiveArray.forEach((note) => {
-    console.log(note);
   });
 }
 
@@ -551,6 +695,8 @@ function initModal() {
   });
   archiveBtn.addEventListener("click", function () {
     archiveNote(noteToDelete);
+    initArchivedNotes();
+    toggleMainView();
     closeDeleteModalWindow();
   });
 }
@@ -1274,11 +1420,9 @@ document.addEventListener("DOMContentLoaded", function () {
     filterNotes(searchTerm);
   });
 
+  document.getElementById("archive-section").style.display = "none";
+
   initModal();
-
-  // initExistingNotes();
-
-  // initArchivedNotes();
 
   initSettings();
 
