@@ -27,6 +27,18 @@ const domCache = {
   infoBtn: null,
   settingsBtn: null,
 
+  colorMap: {
+    "#83cc16d3": "color-green",
+    "#facc15da": "color-yellow",
+    "#e11d44d2": "color-red",
+  },
+
+  priorityColorMap: {
+    "#83cc16d3": "green",
+    "#facc15da": "yellow",
+    "#e11d44d2": "red",
+  },
+
   init() {
     this.noteGrid = document.querySelector(".note-grid");
     this.archiveGrid = document.querySelector(".archive-grid");
@@ -252,24 +264,11 @@ function createLastEditedNoteCard(note) {
   noteCard.dataset.noteId = note.id;
   noteCard.id = `recent-${note.id}`;
 
-  // Farbzuordnung
-  const colorMap = {
-    "#83cc16d3": "color-green",
-    "#facc15da": "color-yellow",
-    "#e11d44d2": "color-red",
-  };
-
-  const priorityColorMap = {
-    "#83cc16d3": "green",
-    "#facc15da": "yellow",
-    "#e11d44d2": "red",
-  };
-
   // Hintergrundfarbe setzen
   if (note.color !== "default") {
     noteCard.classList.add("colorful");
-    if (colorMap[note.color]) {
-      noteCard.classList.add(colorMap[note.color]);
+    if (domCache.colorMap[note.color]) {
+      noteCard.classList.add(domCache.colorMap[note.color]);
     }
   }
 
@@ -285,7 +284,7 @@ function createLastEditedNoteCard(note) {
   // Prioritäts-Icon
   if (note.priority !== "none") {
     const priorityIcon = document.createElement("img");
-    const selectedColorName = priorityColorMap[note.color];
+    const selectedColorName = domCache.priorityColorMap[note.color];
     const isColorAndPriorityMatch =
       selectedColorName && selectedColorName === note.priority;
 
@@ -393,24 +392,11 @@ function createArchivedNoteCard(note) {
   noteCard.dataset.noteId = note.id;
   noteCard.id = `archived-${note.id}`;
 
-  // Farbzuordnung
-  const colorMap = {
-    "#83cc16d3": "color-green",
-    "#facc15da": "color-yellow",
-    "#e11d44d2": "color-red",
-  };
-
-  const priorityColorMap = {
-    "#83cc16d3": "green",
-    "#facc15da": "yellow",
-    "#e11d44d2": "red",
-  };
-
   // Hintergrundfarbe setzen
   if (note.color !== "default") {
     noteCard.classList.add("colorful");
-    if (colorMap[note.color]) {
-      noteCard.classList.add(colorMap[note.color]);
+    if (domCache.colorMap[note.color]) {
+      noteCard.classList.add(domCache.colorMap[note.color]);
     }
   }
 
@@ -426,7 +412,7 @@ function createArchivedNoteCard(note) {
   // Prioritäts-Icon
   if (note.priority !== "none") {
     const priorityIcon = document.createElement("img");
-    const selectedColorName = priorityColorMap[note.color];
+    const selectedColorName = domCache.priorityColorMap[note.color];
     const isColorAndPriorityMatch =
       selectedColorName && selectedColorName === note.priority;
 
@@ -754,13 +740,9 @@ function updateNote(noteElement, title, content, color, priority) {
 
   if (color !== "default") {
     noteElement.classList.add("colorful");
-    const colorMap = {
-      "#83cc16d3": "color-green",
-      "#facc15da": "color-yellow",
-      "#e11d44d2": "color-red",
-    };
-    if (colorMap[color]) {
-      noteElement.classList.add(colorMap[color]);
+    domCache.colorMap[color];
+    if (domCache.colorMap[color]) {
+      noteElement.classList.add(domCache.colorMap[color]);
     }
   }
 
@@ -792,14 +774,7 @@ function updateNote(noteElement, title, content, color, priority) {
     const cardHeaderIcons = noteElement.querySelector(".card-header-icons");
     const priorityIcon = document.createElement("img");
 
-    // Prüfen ob Farbe und Priorität übereinstimmen
-    const priorityColorMap = {
-      "#83cc16d3": "green",
-      "#facc15da": "yellow",
-      "#e11d44d2": "red",
-    };
-
-    const selectedColorName = priorityColorMap[color];
+    const selectedColorName = domCache.priorityColorMap[color];
     const isColorAndPriorityMatch =
       selectedColorName && selectedColorName === priority;
 
@@ -1104,29 +1079,16 @@ function noteCard(title, content, color, priority, noteId = null) {
   const priorityIcon = document.createElement("img");
   noteCard.classList.add("note-card");
 
-  // Farbzuordnung definieren (nur einmal!)
-  const colorMap = {
-    "#83cc16d3": "color-green",
-    "#facc15da": "color-yellow",
-    "#e11d44d2": "color-red",
-  };
-
-  const priorityColorMap = {
-    "#83cc16d3": "green",
-    "#facc15da": "yellow",
-    "#e11d44d2": "red",
-  };
-
   // Hintergrundfarbe setzen
   if (color !== "default") {
     noteCard.classList.add("colorful");
-    if (colorMap[color]) {
-      noteCard.classList.add(colorMap[color]);
+    if (domCache.colorMap[color]) {
+      noteCard.classList.add(domCache.colorMap[color]);
     }
   }
   // Prioritätsicon hinzufügen
   // Prüfen ob Farbe und Priorität übereinstimmen (z.B. grüne Farbe + grüne Priorität)
-  const selectedColorName = priorityColorMap[color];
+  const selectedColorName = domCache.priorityColorMap[color];
   const isColorAndPriorityMatch =
     selectedColorName && selectedColorName === priority;
 
