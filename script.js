@@ -1,11 +1,10 @@
 let noteArray = [];
-let archiveArray = [];
 let noteToDelete = null;
-let noteToArchieve = null;
+let noteToArchive = null;
 let currentView = "note";
 let demoNotes = [
   {
-    id: 1762349091,
+    id: 1762349350,
     title: "Einkaufsliste",
     content: "Milch, Brot, Eier, Butter, Käse",
     color: "#83cc16d3",
@@ -16,7 +15,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349151,
+    id: 1762349351,
     title: "Projektideen",
     content: "Notiz-App, Wetter-App, ToDo-Liste",
     color: "#facc15da",
@@ -27,7 +26,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349121,
+    id: 1762349352,
     title: "Reiseplanung",
     content: "Flüge buchen, Hotel reservieren",
     color: "#e11d44d2",
@@ -38,7 +37,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349194,
+    id: 1762349353,
     title: "Fitness Ziele",
     content: "3x die Woche ins Fitnessstudio, gesunde Ernährung",
     color: "#83cc16d3",
@@ -49,7 +48,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349234,
+    id: 1762349354,
     title: "Lernziele",
     content: "JavaScript, TypeScript, Webentwicklung",
     color: "#facc15da",
@@ -60,7 +59,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349284,
+    id: 1762349355,
     title: "Bücherliste",
     content: "Clean Code",
     color: "#e11d44d2",
@@ -71,7 +70,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349321,
+    id: 1762349356,
     title: "Urlaubsplanung",
     content: "Reiseziele, Budget, Aktivitäten",
     color: "default",
@@ -82,7 +81,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349371,
+    id: 1762349357,
     title: "Hausarbeiten",
     content: "Küche putzen, Staubsaugen, Wäsche waschen",
     color: "#facc15da",
@@ -93,7 +92,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349272,
+    id: 1762349358,
     title: "Geburtstagsgeschenke",
     content: "Geschenkideen für Familie und Freunde",
     color: "#e11d44d2",
@@ -104,7 +103,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349194,
+    id: 1762349359,
     title: "Wochenplan",
     content: "Montag: Einkaufen, Dienstag: Sport, Mittwoch: Kochen",
     color: "default",
@@ -115,7 +114,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349300,
+    id: 1762349360,
     title: "Meditationsübungen",
     content: "Täglich 10 Minuten Achtsamkeitspraxis",
     color: "default",
@@ -126,7 +125,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349345,
+    id: 1762349361,
     title: "Sprachlernziele",
     content: "Täglich 15 Minuten Vokabeln lernen",
     color: "#83cc16d3",
@@ -137,7 +136,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349406,
+    id: 1762349362,
     title: "Gartenarbeit",
     content: "Pflanzen gießen, Rasen mähen",
     color: "#e11d44d2",
@@ -148,7 +147,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349456,
+    id: 1762349363,
     title: "Musikplaylist",
     content: "Meine Lieblingssongs für gute Laune",
     color: "#facc15da",
@@ -159,7 +158,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349506,
+    id: 1762349364,
     title: "Film- und Serienliste",
     content: "Must-Watch Filme und Serien",
     color: "default",
@@ -170,7 +169,7 @@ let demoNotes = [
     archivedAt: null,
   },
   {
-    id: 1762349556,
+    id: 1762349365,
     title: "Hobbyideen",
     content: "Fotografie, Malen, Kochen",
     color: "#83cc16d3",
@@ -199,13 +198,13 @@ function updateLastEditedSection() {
     createLastEditedNoteCard(note);
   });
 }
-
 // Mini-Version der Notiz erstellen für die "Zuletzt bearbeitet" Sektion
 function createLastEditedNoteCard(note) {
   const lastEditedGrid = document.querySelector(".last-edited-grid");
   const noteCard = document.createElement("div");
   noteCard.classList.add("note-card");
   noteCard.dataset.noteId = note.id;
+  noteCard.id = `note-${note.id}`;
 
   // Farbzuordnung
   const colorMap = {
@@ -264,7 +263,12 @@ function createLastEditedNoteCard(note) {
   editIcon.classList.add("nav-icon");
   if (note.color !== "default") editIcon.classList.add("colorful");
   editIcon.addEventListener("click", () => {
-    const originalNoteCard = document.querySelector(`#note-${note.id}`);
+    // Először aktív jegyzetek között keresi
+    let originalNoteCard = document.querySelector(`#note-${note.id}`);
+    // Ha nem találja, archivált jegyzetek között keresi
+    if (!originalNoteCard) {
+      originalNoteCard = document.querySelector(`#archived-${note.id}`);
+    }
     if (originalNoteCard) {
       openEditModal(originalNoteCard);
     }
@@ -277,8 +281,12 @@ function createLastEditedNoteCard(note) {
   deleteIcon.classList.add("nav-icon");
   if (note.color !== "default") deleteIcon.classList.add("colorful");
   deleteIcon.addEventListener("click", () => {
-    // Lösche die Originalnotiz
-    const originalNoteCard = document.querySelector(`#note-${note.id}`);
+    // Először aktív jegyzetek között keresi
+    let originalNoteCard = document.querySelector(`#note-${note.id}`);
+    // Ha nem találja, archivált jegyzetek között keresi
+    if (!originalNoteCard) {
+      originalNoteCard = document.querySelector(`#archived-${note.id}`);
+    }
     if (originalNoteCard) {
       deleteNote(originalNoteCard);
     }
@@ -316,11 +324,13 @@ function createLastEditedNoteCard(note) {
   noteCard.append(header, contentElem, footer);
   lastEditedGrid.appendChild(noteCard);
 }
+
 function createArchivedNoteCard(note) {
   const archivedGrid = document.querySelector(".archive-grid");
   const noteCard = document.createElement("div");
   noteCard.classList.add("note-card");
   noteCard.dataset.noteId = note.id;
+  noteCard.id = `archived-${note.id}`;
 
   // Farbzuordnung
   const colorMap = {
@@ -379,10 +389,7 @@ function createArchivedNoteCard(note) {
   editIcon.classList.add("nav-icon");
   if (note.color !== "default") editIcon.classList.add("colorful");
   editIcon.addEventListener("click", () => {
-    const originalNoteCard = document.querySelector(`#note-${note.id}`);
-    if (originalNoteCard) {
-      openEditModal(originalNoteCard);
-    }
+    openEditModal(noteCard);
   });
 
   const deleteIcon = document.createElement("img");
@@ -392,11 +399,7 @@ function createArchivedNoteCard(note) {
   deleteIcon.classList.add("nav-icon");
   if (note.color !== "default") deleteIcon.classList.add("colorful");
   deleteIcon.addEventListener("click", () => {
-    // Lösche die Originalnotiz
-    const originalNoteCard = document.querySelector(`#note-${note.id}`);
-    if (originalNoteCard) {
-      deleteNote(originalNoteCard);
-    }
+    deleteNote(noteCard);
   });
 
   iconsDiv.append(editIcon, deleteIcon);
@@ -431,82 +434,6 @@ function createArchivedNoteCard(note) {
   noteCard.append(header, contentElem, footer);
   archivedGrid.appendChild(noteCard);
 }
-// function createArchivedNoteCard(note) {
-//   const archiveGrid = document.querySelector(".archive-grid");
-//   const noteCard = document.createElement("div");
-//   noteCard.classList.add("archive-card");
-//   noteCard.dataset.noteId = note.id;
-//   // Farbzuordnung
-//   const colorMap = {
-//     "#83cc16d3": "color-green",
-//     "#facc15da": "color-yellow",
-//     "#e11d44d2": "color-red",
-//   };
-//   // Hintergrundfarbe setzen
-//   if (note.color !== "default") {
-//     noteCard.classList.add("colorful");
-//     if (colorMap[note.color]) {
-//       noteCard.classList.add(colorMap[note.color]);
-//     }
-//   }
-//   // Header erstellen
-//   const header = document.createElement("div");
-//   header.classList.add("card-header");
-
-//   const titleElem = document.createElement("h2");
-//   titleElem.textContent = note.title;
-//   const iconsDiv = document.createElement("div");
-//   iconsDiv.classList.add("card-header-icons");
-//   const editIcon = document.createElement("img");
-//   editIcon.id = `editNote`;
-//   editIcon.src = "icons/pencil.svg";
-//   editIcon.alt = "Edit";
-//   editIcon.classList.add("nav-icon");
-//   if (note.color !== "default") editIcon.classList.add("colorful");
-//   editIcon.addEventListener("click", () => {
-//     const originalNoteCard = document.querySelector(`#archive-${note.id}`);
-//     if (originalNoteCard) {
-//       openEditModal(originalNoteCard);
-//     }
-//   });
-//   const deleteIcon = document.createElement("img");
-//   deleteIcon.id = `deleteNote`;
-//   deleteIcon.src = "icons/trash-repo.svg";
-//   deleteIcon.alt = "Delete";
-//   deleteIcon.classList.add("nav-icon");
-//   if (note.color !== "default") deleteIcon.classList.add("colorful");
-//   deleteIcon.addEventListener("click", () => {
-//     // Lösche die Originalnotiz
-//     const originalNoteCard = document.querySelector(`#archive-${note.id}`);
-//     if (originalNoteCard) {
-//       deleteNote(originalNoteCard);
-//     }
-//   });
-//   iconsDiv.append(editIcon, deleteIcon);
-//   header.append(titleElem, iconsDiv);
-//   // Content
-//   const contentElem = document.createElement("p");
-//   contentElem.textContent =
-//     note.content.length > 50
-//       ? note.content.substring(0, 50) + "..."
-//       : note.content;
-//   // Footer
-//   const footer = document.createElement("div");
-//   footer.classList.add("card-footer");
-//   const dateElem = document.createElement("span");
-//   dateElem.classList.add("footer-date");
-//   if (note.color !== "default") dateElem.classList.add("colorful");
-//   const updateDate = new Date(note.updatedAt);
-//   const formattedDate = updateDate.toLocaleDateString("de-DE");
-//   const formattedTime = updateDate.toLocaleTimeString("de-DE", {
-//     hour: "2-digit",
-//     minute: "2-digit",
-//   });
-//   dateElem.textContent = `Zuletzt bearbeitet:  ${formattedTime},  ${formattedDate}`;
-//   footer.appendChild(dateElem);
-//   noteCard.append(header, contentElem, footer);
-//   archiveGrid.appendChild(noteCard);
-// }
 
 function initExistingNotes() {
   const existingNotes = document.querySelectorAll(".note-card");
@@ -528,8 +455,11 @@ function initExistingNotes() {
     }
   });
 }
+
 function initArchivedNotes() {
-  const existingArchivedNotes = document.querySelectorAll(".archive-card");
+  const existingArchivedNotes = document.querySelectorAll(
+    ".archive-grid .note-card"
+  );
 
   existingArchivedNotes.forEach((archiveCard) => {
     const editBtn = archiveCard.querySelector("#editNote");
@@ -537,13 +467,13 @@ function initArchivedNotes() {
 
     if (editBtn && !editBtn.onclick) {
       editBtn.onclick = function () {
-        openEditModal(this.closest(".archive-card"));
+        openEditModal(this.closest(".note-card"));
       };
     }
 
     if (deleteBtn && !deleteBtn.onclick) {
       deleteBtn.onclick = function () {
-        deleteNote(this.closest(".archive-card"));
+        deleteNote(this.closest(".note-card"));
       };
     }
   });
@@ -557,7 +487,7 @@ function initModal() {
   const deleteModal = document.getElementById("deleteNoteModal");
   const infoModal = document.getElementById("infoModal");
   const demoNotesBtn = document.querySelector("#demoNotesBtn");
-  const archiveBtn = document.querySelector(".btn-archive-delete");
+  const archiveButton = document.querySelector(".btn-archive-delete");
 
   const closeAddModal = document.querySelector(".close-modal");
   const closeEditModal = document.querySelector(".close-edit-modal");
@@ -693,7 +623,7 @@ function initModal() {
     getDemoNotes();
     closeInfoModalWindow();
   });
-  archiveBtn.addEventListener("click", function () {
+  archiveButton.addEventListener("click", function () {
     archiveNote(noteToDelete);
     initArchivedNotes();
     toggleMainView();
@@ -837,9 +767,9 @@ function updateNote(noteElement, title, content, color, priority) {
   footerDate.textContent = `Zuletzt aktualisiert: ${formatedTime}  ${formatedDate}`;
 
   // Notiz im Array aktualisieren
-  const noteIndex = Array.from(noteElement.parentNode.children).indexOf(
-    noteElement
-  );
+  const noteId = noteElement.dataset.noteId;
+  const noteIndex = noteArray.findIndex((note) => note.id == noteId);
+
   if (noteIndex > -1 && noteArray[noteIndex]) {
     noteArray[noteIndex].title = title;
     noteArray[noteIndex].content = content;
@@ -1002,15 +932,8 @@ function toggleCompactMode(enabled) {
 
   if (enabled) {
     document.body.classList.add("compact-mode");
-    noteCards.forEach((card) => {
-      card.style.padding = "12px";
-      card.style.marginBottom = "10px";
-    });
   } else {
     document.body.classList.remove("compact-mode");
-    noteCards.forEach((card) => {
-      card.style.padding = "20px";
-    });
   }
 }
 
@@ -1097,7 +1020,7 @@ function resetSettings() {
   // Auf Standardwerte zurücksetzen
   document.getElementById("darkModeToggle").checked = false;
   document.getElementById("compactModeToggle").checked = false;
-  document.getElementById("autoSaveToggle").checked = false;
+  document.getElementById("menuBarToggle").checked = false;
   document.getElementById("confirmDeleteToggle").checked = true;
 
   // Einstellungen anwenden
@@ -1303,17 +1226,23 @@ function loadNotesFromStorage() {
 
   if (savedNotes) {
     noteArray = JSON.parse(savedNotes);
-    noteArray.forEach((note) => {
-      noteCard(note.title, note.content, note.color, note.priority, note.id);
-    });
+
+    // Csak az aktív jegyzeteket jelenítsd meg a betöltéskor
+    noteArray
+      .filter((note) => !note.archived)
+      .forEach((note) => {
+        noteCard(note.title, note.content, note.color, note.priority, note.id);
+      });
 
     updateLastEditedSection();
   }
 }
+
 function getDemoNotes() {
   localStorage.setItem("notes", JSON.stringify(demoNotes));
   loadNotesFromStorage();
 }
+
 function showActiveNotes() {
   document.getElementById("note-section").style.display = "block";
   document.getElementById("archive-section").style.display = "none";
@@ -1339,6 +1268,7 @@ function showArchivedNotes() {
     .filter((note) => note.archived)
     .forEach((note) => createArchivedNoteCard(note));
 }
+
 function updateNavbarState(view) {
   const archiveBtn = document.querySelector(".archive-btn");
   const notesBtn = document.querySelector(".notes-btn");
@@ -1350,6 +1280,7 @@ function updateNavbarState(view) {
     archiveBtn.classList.remove("active");
   }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
   const searchToggle = document.querySelector(".search-toggle");
   const searchInput = document.querySelector(".search-input");
@@ -1360,15 +1291,15 @@ document.addEventListener("DOMContentLoaded", function () {
   let isSearchOpen = false;
 
   notesBtn.addEventListener("click", function () {
-    currentView = "archive";
-    initArchivedNotes();
-    toggleMainView();
+    currentView = "note";
+    showActiveNotes();
+    updateNavbarState("note");
   });
 
   archiveBtn.addEventListener("click", function () {
-    currentView = "note";
-    initExistingNotes();
-    toggleMainView();
+    currentView = "archive";
+    showArchivedNotes();
+    updateNavbarState("archive");
   });
 
   // Suchleiste bei Icon-Klick umschalten
@@ -1407,11 +1338,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  document
-    .querySelector(".btn-archive-delete")
-    .addEventListener("click", function () {
-      toggleArchiveView();
-    });
+  // document
+  //   .querySelector(".btn-archive-delete")
+  //   .addEventListener("click", function () {
+  //     toggleMainView();
+  //   });
 
   searchInput.addEventListener("input", function () {
     const searchTerm = this.value.toLowerCase();
@@ -1426,7 +1357,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   initSettings();
 
+  currentView = "note";
+
   loadNotesFromStorage();
+  updateNavbarState("note");
+
+  initExistingNotes();
+
+  initArchivedNotes();
 
   // Event-Listener für Löschmodal initialisieren
   const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");
