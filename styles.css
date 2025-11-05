@@ -330,26 +330,38 @@ main::-webkit-scrollbar {
 .note-title,
 .archive-title {
   color: var(--gray50);
-  margin: 15px 0 0 25px;
+  margin: 15px 0 15px 25px;
 }
 
 .note-filters {
   display: flex;
   flex-direction: row;
   font-family: "Montserrat", sans-serif;
-  font-size: 0.9rem;
   font-weight: 500;
   gap: 35px;
-  margin: 0 0 0 20px;
-  filter: invert(40%);
-  transition: all 0.3s ease;
+  margin: 0 0 5px 20px;
+  filter: invert(50%);
+}
+.filter-button.all,
+.filter-button.date,
+.filter-button.color,
+.filter-button.priority {
+  font-size: 0.96rem;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+  transition: transform 0.1s ease-in-out;
 }
 
-.note-all:hover,
-.note-today:hover,
-.note-this-week:hover,
-.note-this-month:hover {
-  font-weight: 600;
+.filter-button.all:hover,
+.filter-button.date:hover,
+.filter-button.color:hover,
+.filter-button.priority:hover {
+  color: black;
+  transform: scale(1.15);
 }
 
 .note-grid,
@@ -641,7 +653,7 @@ body.modal-open {
 
 .modal-content {
   background-color: var(--white);
-  margin: 5% auto;
+  margin: 1% auto;
   padding: 0;
   border-radius: 15px;
   width: 90%;
@@ -1335,8 +1347,4 @@ body.compact-mode .note-card p,
 body.compact-mode .archive-card p {
   font-size: 0.9rem;
   line-height: 1.2;
-}
-
-body.compact-mode #note-section {
-  gap: 10px;
 }

@@ -302,7 +302,7 @@ function createLastEditedNoteCard(note) {
   }
 
   const editIcon = document.createElement("img");
-  editIcon.id = `editNote`;
+  editIcon.id = `editNote-${note.id}`;
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -324,7 +324,7 @@ function createLastEditedNoteCard(note) {
   });
 
   const deleteIcon = document.createElement("img");
-  deleteIcon.id = `deleteNote`;
+  deleteIcon.id = `deleteNote-${note.id}`;
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
@@ -443,7 +443,7 @@ function createArchivedNoteCard(note) {
   }
 
   const editIcon = document.createElement("img");
-  editIcon.id = `editNote`;
+  editIcon.id = `editNote-${note.id}`;
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -453,7 +453,7 @@ function createArchivedNoteCard(note) {
   });
 
   const deleteIcon = document.createElement("img");
-  deleteIcon.id = `deleteNote`;
+  deleteIcon.id = `deleteNote-${note.id}`;
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
@@ -832,10 +832,11 @@ function updateNote(noteElement, title, content, color, priority) {
   footerDate.textContent = `Zuletzt aktualisiert: ${formatedTime}  ${formatedDate}`;
 
   // Notiz im Array aktualisieren
+
   const noteId = noteElement.dataset.noteId;
   const noteIndex = noteArray.findIndex((note) => note.id == noteId);
 
-  if (noteIndex > -1 && noteArray[noteIndex]) {
+  if (noteIndex > -1 && noteIndex < noteArray.length && noteArray[noteIndex]) {
     noteArray[noteIndex].title = title;
     noteArray[noteIndex].content = content;
     noteArray[noteIndex].color = color;
@@ -1044,26 +1045,33 @@ function loadSettings() {
   const savedSettings = localStorage.getItem("notizAppSettings");
 
   if (savedSettings) {
-    const settings = JSON.parse(savedSettings);
+    try {
+      const settings = JSON.parse(savedSettings);
 
-    // Dunkelmodus anwenden
-    document.getElementById("darkModeToggle").checked =
-      settings.darkMode || false;
-    toggleDarkMode(settings.darkMode || false);
+      // Dunkelmodus anwenden
+      document.getElementById("darkModeToggle").checked =
+        settings.darkMode || false;
+      toggleDarkMode(settings.darkMode || false);
 
-    // Kompaktmodus anwenden
-    document.getElementById("compactModeToggle").checked =
-      settings.compactMode || false;
-    toggleCompactMode(settings.compactMode || false);
+      // Kompaktmodus anwenden
+      document.getElementById("compactModeToggle").checked =
+        settings.compactMode || false;
+      toggleCompactMode(settings.compactMode || false);
 
-    // Menüleiste anwenden
-    document.getElementById("menuBarToggle").checked =
-      settings.menuBar || false;
-    toggleMenuBar(settings.menuBar || false);
+      // Menüleiste anwenden
+      document.getElementById("menuBarToggle").checked =
+        settings.menuBar || false;
+      toggleMenuBar(settings.menuBar || false);
 
-    // Löschen-bestätigen anwenden
-    document.getElementById("confirmDeleteToggle").checked =
-      settings.confirmDelete !== undefined ? settings.confirmDelete : true;
+      // Löschen-bestätigen anwenden
+      document.getElementById("confirmDeleteToggle").checked =
+        settings.confirmDelete !== undefined ? settings.confirmDelete : true;
+    } catch (error) {
+      console.error(
+        "Fehler beim Parsen der gespeicherten Einstellungen:",
+        error
+      );
+    }
   }
 }
 
@@ -1160,7 +1168,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   }
 
   const editIcon = document.createElement("img");
-  editIcon.id = "editNote";
+  editIcon.id = `editNote-${note.id}`;
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -1170,7 +1178,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   });
 
   const deleteIcon = document.createElement("img");
-  deleteIcon.id = "deleteNote";
+  deleteIcon.id = `deleteNote-${note.id}`;
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
@@ -1304,9 +1312,9 @@ function getDemoNotes() {
 
     // Aktualisiere die Anzeige
     noteArray = [];
-    const noteGrid = document.querySelector(".note-grid");
-    if (noteGrid) {
-      noteGrid.innerHTML = "";
+    domCache.noteGrid;
+    if (domCache.noteGrid) {
+      domCache.noteGrid.innerHTML = "";
     }
     loadNotesFromStorage();
   } catch (error) {
