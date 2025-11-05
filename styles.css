@@ -126,7 +126,7 @@ header {
   height: calc(100vh - 70px);
   background: var(--white);
   padding: 20px 0;
-  z-index: 999;
+  z-index: 1000;
   overflow-y: auto;
 }
 
@@ -271,7 +271,7 @@ main.visibility {
 }
 
 .nav-icon.colorful {
-  filter: invert(100%), brightness(100%);
+  filter: invert(100%) brightness(100%);
   width: 25px;
 }
 
@@ -407,27 +407,27 @@ main::-webkit-scrollbar {
   transition: all 0.3s ease;
 }
 
-.last-edited-list::-webkit-scrollbar {
+.last-edited-grid::-webkit-scrollbar {
   width: 6px;
   background: transparent;
 }
 
-.last-edited-list::-webkit-scrollbar-track {
+.last-edited-grid::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.last-edited-list::-webkit-scrollbar-thumb {
+.last-edited-grid::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.last-edited-list:hover::-webkit-scrollbar-thumb {
+.last-edited-grid:hover::-webkit-scrollbar-thumb {
   opacity: 1;
 }
 
-.last-edited-list::-webkit-scrollbar-thumb:hover {
+.last-edited-grid::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -496,11 +496,6 @@ main::-webkit-scrollbar {
   transition: all 0.3s ease;
 }
 
-/* .last-edited-grid:hover .note-card:not(:hover) {
-  transform: scale(0.96);
-  opacity: 0.8;
-  transition: all 0.3s ease;
-} */
 .last-edited-grid:hover .archive-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
@@ -609,7 +604,7 @@ main::-webkit-scrollbar {
 .modal {
   display: none;
   position: fixed;
-  z-index: 2000;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
@@ -642,15 +637,6 @@ body.modal-open {
 
 .visible {
   display: block !important;
-}
-
-/* Section */
-.section-hidden {
-  display: none;
-}
-
-.section-visible {
-  display: block;
 }
 
 .modal-content {
@@ -789,7 +775,7 @@ body.modal-open {
 }
 
 .color-option.red {
-  background-color: #e11d44;
+  background-color: var(--redvariant1);
 }
 
 .color-options input[type="radio"]:checked + .color-option {
@@ -922,7 +908,7 @@ body.modal-open {
   }
 
   header.visibility {
-    padding: 10px 20px 0 80px;
+    padding: 15px 20px 0 80px;
   }
 
   header {
@@ -1168,19 +1154,19 @@ body.dark-mode main {
 /* Dark mode scrollbar styles */
 body.dark-mode .note-grid::-webkit-scrollbar-track,
 body.dark-mode .archive-grid::-webkit-scrollbar-track,
-body.dark-mode .last-edited-list::-webkit-scrollbar-track {
+body.dark-mode .last-edited-grid::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .note-grid::-webkit-scrollbar-thumb,
 body.dark-mode .archive-grid::-webkit-scrollbar-thumb,
-body.dark-mode .last-edited-list::-webkit-scrollbar-thumb {
+body.dark-mode .last-edited-grid::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
 }
 
 body.dark-mode .note-grid::-webkit-scrollbar-thumb:hover,
 body.dark-mode .archive-grid::-webkit-scrollbar-thumb:hover,
-body.dark-mode .last-edited-list::-webkit-scrollbar-thumb:hover {
+body.dark-mode .last-edited-grid::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 
@@ -1238,7 +1224,7 @@ body.dark-mode .archive-card:hover {
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   transform: translateY(-8px) scale(1.05);
   transition: all 0.3s ease;
-  z-index: 10;
+  z-index: 1000;
   position: relative;
 }
 

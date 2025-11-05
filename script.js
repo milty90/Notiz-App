@@ -2,6 +2,57 @@ let noteArray = [];
 let noteToDelete = null;
 let noteToArchive = null;
 let currentView = "note";
+
+const domCache = {
+  noteGrid: null,
+  archiveGrid: null,
+  lastEditedGrid: null,
+
+  noteSection: null,
+  archiveSection: null,
+
+  archiveBtn: null,
+  notesBtn: null,
+  searchToggle: null,
+  searchInput: null,
+  searchIcon: null,
+
+  addModal: null,
+  editModal: null,
+  deleteModal: null,
+  infoModal: null,
+  settingsModal: null,
+
+  addNoteBtn: null,
+  infoBtn: null,
+  settingsBtn: null,
+
+  init() {
+    this.noteGrid = document.querySelector(".note-grid");
+    this.archiveGrid = document.querySelector(".archive-grid");
+    this.lastEditedGrid = document.querySelector(".last-edited-grid");
+
+    this.noteSection = document.getElementById("note-section");
+    this.archiveSection = document.getElementById("archive-section");
+
+    this.archiveBtn = document.querySelector(".archive-btn");
+    this.notesBtn = document.querySelector(".notes-btn");
+    this.searchToggle = document.querySelector(".search-toggle");
+    this.searchInput = document.querySelector(".search-input");
+    this.searchIcon = document.querySelector(".search-icon");
+
+    this.addModal = document.getElementById("addNoteModal");
+    this.editModal = document.getElementById("editNoteModal");
+    this.deleteModal = document.getElementById("deleteNoteModal");
+    this.infoModal = document.getElementById("infoModal");
+    this.settingsModal = document.getElementById("settingsModal");
+
+    this.addNoteBtn = document.querySelector(".add-note-btn");
+    this.infoBtn = document.querySelector(".info-btn");
+    this.settingsBtn = document.querySelector(".settings-btn");
+  },
+};
+
 let demoNotes = [
   {
     id: 1762349350,
@@ -183,28 +234,23 @@ let demoNotes = [
 
 // Zuletzt bearbeitet Sektion
 function updateLastEditedSection() {
-  const lastEditedGrid = document.querySelector(".last-edited-grid");
+  domCache.lastEditedGrid.innerHTML = "";
 
-  lastEditedGrid.innerHTML = "";
-
-  // Notizen updatedAt sortieren nach (neueste zuerst)
+  // Notizen nach updatedAt sortieren (neueste zuerst)
   const sortedNotes = [...noteArray].sort((a, b) => b.updatedAt - a.updatedAt);
 
-  // nur die ersten 4 Notizen anzeigen
+  // Nur die ersten 4 Notizen anzeigen
   const recentNotes = sortedNotes.slice(0, 4);
 
   recentNotes.forEach((note) => {
-    // Mini-Version der Notiz erstellen
     createLastEditedNoteCard(note);
   });
 }
-// Mini-Version der Notiz erstellen für die "Zuletzt bearbeitet" Sektion
 function createLastEditedNoteCard(note) {
-  const lastEditedGrid = document.querySelector(".last-edited-grid");
   const noteCard = document.createElement("div");
   noteCard.classList.add("note-card");
   noteCard.dataset.noteId = note.id;
-  noteCard.id = `note-${note.id}`;
+  noteCard.id = `recent-${note.id}`;
 
   // Farbzuordnung
   const colorMap = {
@@ -227,7 +273,6 @@ function createLastEditedNoteCard(note) {
     }
   }
 
-  // Header erstellen
   const header = document.createElement("div");
   header.classList.add("card-header");
 
@@ -263,11 +308,15 @@ function createLastEditedNoteCard(note) {
   editIcon.classList.add("nav-icon");
   if (note.color !== "default") editIcon.classList.add("colorful");
   editIcon.addEventListener("click", () => {
-    // Először aktív jegyzetek között keresi
+    // Zuerst in aktiven Notizen suchen
     let originalNoteCard = document.querySelector(`#note-${note.id}`);
-    // Ha nem találja, archivált jegyzetek között keresi
+    // Falls nicht gefunden, in archivierten Notizen suchen
     if (!originalNoteCard) {
       originalNoteCard = document.querySelector(`#archived-${note.id}`);
+    }
+    // Falls immer noch nicht gefunden, das "recent" Element verwenden
+    if (!originalNoteCard) {
+      originalNoteCard = document.querySelector(`#recent-${note.id}`);
     }
     if (originalNoteCard) {
       openEditModal(originalNoteCard);
@@ -281,11 +330,15 @@ function createLastEditedNoteCard(note) {
   deleteIcon.classList.add("nav-icon");
   if (note.color !== "default") deleteIcon.classList.add("colorful");
   deleteIcon.addEventListener("click", () => {
-    // Először aktív jegyzetek között keresi
+    // Zuerst in aktiven Notizen suchen
     let originalNoteCard = document.querySelector(`#note-${note.id}`);
-    // Ha nem találja, archivált jegyzetek között keresi
+    // Falls nicht gefunden, in archivierten Notizen suchen
     if (!originalNoteCard) {
       originalNoteCard = document.querySelector(`#archived-${note.id}`);
+    }
+    // Falls immer noch nicht gefunden, in "Zuletzt bearbeitet" suchen
+    if (!originalNoteCard) {
+      originalNoteCard = document.querySelector(`#recent-${note.id}`);
     }
     if (originalNoteCard) {
       deleteNote(originalNoteCard);
@@ -295,14 +348,12 @@ function createLastEditedNoteCard(note) {
   iconsDiv.append(editIcon, deleteIcon);
   header.append(titleElem, iconsDiv);
 
-  // Content
   const contentElem = document.createElement("p");
   contentElem.textContent =
     note.content.length > 50
       ? note.content.substring(0, 50) + "..."
       : note.content;
 
-  // Footer
   const footer = document.createElement("div");
   footer.classList.add("card-footer");
 
@@ -317,16 +368,26 @@ function createLastEditedNoteCard(note) {
     minute: "2-digit",
   });
 
-  dateElem.textContent = `Zuletzt bearbeitet:  ${formattedTime},  ${formattedDate}`;
+  // Zeige "Zuletzt bearbeitet" nur wenn es sich vom Erstellungsdatum unterscheidet
+  if (note.updatedAt !== note.createdAt) {
+    dateElem.textContent = `Zuletzt bearbeitet: ${formattedTime}, ${formattedDate}`;
+  } else {
+    const createdDate = new Date(note.createdAt);
+    const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
+    const createdFormattedTime = createdDate.toLocaleTimeString("de-DE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    dateElem.textContent = `Erstellt am: ${createdFormattedTime}, ${createdFormattedDate}`;
+  }
 
   footer.appendChild(dateElem);
 
   noteCard.append(header, contentElem, footer);
-  lastEditedGrid.appendChild(noteCard);
+  domCache.lastEditedGrid.appendChild(noteCard);
 }
 
 function createArchivedNoteCard(note) {
-  const archivedGrid = document.querySelector(".archive-grid");
   const noteCard = document.createElement("div");
   noteCard.classList.add("note-card");
   noteCard.dataset.noteId = note.id;
@@ -353,7 +414,6 @@ function createArchivedNoteCard(note) {
     }
   }
 
-  // Header erstellen
   const header = document.createElement("div");
   header.classList.add("card-header");
 
@@ -405,14 +465,12 @@ function createArchivedNoteCard(note) {
   iconsDiv.append(editIcon, deleteIcon);
   header.append(titleElem, iconsDiv);
 
-  // Content
   const contentElem = document.createElement("p");
   contentElem.textContent =
     note.content.length > 50
       ? note.content.substring(0, 50) + "..."
       : note.content;
 
-  // Footer
   const footer = document.createElement("div");
   footer.classList.add("card-footer");
 
@@ -427,12 +485,24 @@ function createArchivedNoteCard(note) {
     minute: "2-digit",
   });
 
-  dateElem.textContent = `Zuletzt bearbeitet:  ${formattedTime},  ${formattedDate}`;
+  // Zeige Archivierungsdatum für archivierte Notizen
+  if (note.archivedAt) {
+    const archivedDate = new Date(note.archivedAt);
+    const archivedFormattedDate = archivedDate.toLocaleDateString("de-DE");
+    const archivedFormattedTime = archivedDate.toLocaleTimeString("de-DE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    dateElem.textContent = `Archiviert am: ${archivedFormattedTime}, ${archivedFormattedDate}`;
+  } else {
+    // Zeige letztes Update-Datum
+    dateElem.textContent = `Zuletzt bearbeitet: ${formattedTime}, ${formattedDate}`;
+  }
 
   footer.appendChild(dateElem);
 
   noteCard.append(header, contentElem, footer);
-  archivedGrid.appendChild(noteCard);
+  domCache.archiveGrid.appendChild(noteCard);
 }
 
 function initExistingNotes() {
@@ -480,14 +550,8 @@ function initArchivedNotes() {
 }
 
 function initModal() {
-  const addNoteBtn = document.querySelector(".add-note-btn");
-  const infoBtn = document.querySelector(".info-btn");
-  const addModal = document.getElementById("addNoteModal");
-  const editModal = document.getElementById("editNoteModal");
-  const deleteModal = document.getElementById("deleteNoteModal");
-  const infoModal = document.getElementById("infoModal");
-  const demoNotesBtn = document.querySelector("#demoNotesBtn");
-  const archiveButton = document.querySelector(".btn-archive-delete");
+  const addNoteForm = document.getElementById("addNoteForm");
+  const editNoteForm = document.getElementById("editNoteForm");
 
   const closeAddModal = document.querySelector(".close-modal");
   const closeEditModal = document.querySelector(".close-edit-modal");
@@ -498,46 +562,45 @@ function initModal() {
   const cancelEditBtn = document.querySelector(".btn-cancel-edit");
   const cancelDeleteBtn = document.querySelector(".btn-cancel-delete");
 
-  const addNoteForm = document.getElementById("addNoteForm");
-  const editNoteForm = document.getElementById("editNoteForm");
-  // const deleteNoteForm = document.getElementById("deleteNoteForm");
+  const demoNotesBtn = document.querySelector("#demoNotesBtn");
+  const archiveButton = document.querySelector(".btn-archive-delete");
 
   // Öffne das ADD-Modal, wenn die Schaltfläche "Hinzufügen" geklickt wird
-  addNoteBtn.addEventListener("click", function () {
-    addModal.classList.add("show");
+  domCache.addNoteBtn.addEventListener("click", function () {
+    domCache.addModal.classList.add("show");
     document.body.classList.add("modal-open");
   });
 
   // Öffne das INFO-Modal, wenn die Schaltfläche "Info" geklickt wird
-  infoBtn.addEventListener("click", function () {
-    infoModal.classList.add("show");
+  domCache.infoBtn.addEventListener("click", function () {
+    domCache.infoModal.classList.add("show");
     document.body.classList.add("modal-open");
   });
 
-  // schließe Modal-Funktionen
+  // Schließe Modal-Funktionen
   function closeAddModalWindow() {
-    addModal.classList.remove("show");
+    domCache.addModal.classList.remove("show");
     document.body.classList.remove("modal-open");
     addNoteForm.reset();
   }
 
   function closeEditModalWindow() {
-    editModal.classList.remove("show");
+    domCache.editModal.classList.remove("show");
     document.body.classList.remove("modal-open");
     editNoteForm.reset();
   }
 
   function closeDeleteModalWindow() {
-    deleteModal.classList.remove("show");
+    domCache.deleteModal.classList.remove("show");
     document.body.classList.remove("modal-open");
   }
 
   function closeInfoModalWindow() {
-    infoModal.classList.remove("show");
+    domCache.infoModal.classList.remove("show");
     document.body.classList.remove("modal-open");
   }
 
-  // schließe modal events
+  // Schließe Modal Events
 
   closeAddModal.addEventListener("click", closeAddModalWindow);
   cancelAddBtn.addEventListener("click", closeAddModalWindow);
@@ -550,35 +613,35 @@ function initModal() {
 
   closeInfoModal.addEventListener("click", closeInfoModalWindow);
 
-  // schließe modals wenn außerhalb des Modals geklickt wird
+  // Schließe Modals wenn außerhalb des Modals geklickt wird
   window.addEventListener("click", function (event) {
-    if (event.target === addModal) {
+    if (event.target === domCache.addModal) {
       closeAddModalWindow();
     }
-    if (event.target === editModal) {
+    if (event.target === domCache.editModal) {
       closeEditModalWindow();
     }
-    if (event.target === deleteModal) {
+    if (event.target === domCache.deleteModal) {
       closeDeleteModalWindow();
     }
-    if (event.target === infoModal) {
+    if (event.target === domCache.infoModal) {
       closeInfoModalWindow();
     }
   });
 
-  // schließe modals bei Escape-Taste
+  // Schließe Modals bei Escape-Taste
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
-      if (addModal.classList.contains("show")) {
+      if (domCache.addModal.classList.contains("show")) {
         closeAddModalWindow();
       }
-      if (editModal.classList.contains("show")) {
+      if (domCache.editModal.classList.contains("show")) {
         closeEditModalWindow();
       }
-      if (deleteModal.classList.contains("show")) {
+      if (domCache.deleteModal.classList.contains("show")) {
         closeDeleteModalWindow();
       }
-      if (infoModal.classList.contains("show")) {
+      if (domCache.infoModal.classList.contains("show")) {
         closeInfoModalWindow();
       }
     }
@@ -609,13 +672,13 @@ function initModal() {
     const priority = document.getElementById("editNotePriority").value;
 
     // Notiz aktualisieren
-    const currentNote = editModal.currentNoteElement;
+    const currentNote = domCache.editModal.currentNoteElement;
     if (currentNote) {
       updateNote(currentNote, title, content, color, priority);
     }
 
     // Modal schließen
-    editModal.classList.remove("show");
+    domCache.editModal.classList.remove("show");
     document.body.classList.remove("modal-open");
     editNoteForm.reset();
   });
@@ -624,14 +687,17 @@ function initModal() {
     closeInfoModalWindow();
   });
   archiveButton.addEventListener("click", function () {
-    archiveNote(noteToDelete);
+    try {
+      archiveNote(noteToDelete);
+    } catch (error) {
+      console.error("Fehler beim Archivieren der Notiz:", error);
+    }
     initArchivedNotes();
     toggleMainView();
     closeDeleteModalWindow();
   });
 }
 
-// Funktion zum Filtern von Notizen basierend auf dem Suchbegriff
 function filterNotes(searchTerm) {
   const noteCards = document.querySelectorAll(".note-card");
 
@@ -654,7 +720,6 @@ function filterNotes(searchTerm) {
   });
 }
 
-// Funktion zum Erstellen einer neuen Notiz
 function createNewNote(title, content, color, priority) {
   const noteId = Date.now();
   noteCard(title, content, color, priority, noteId);
@@ -784,7 +849,6 @@ function updateNote(noteElement, title, content, color, priority) {
 
 // Funktion zum Öffnen des Bearbeitungsmodals
 function openEditModal(noteElement) {
-  const editModal = document.getElementById("editNoteModal");
   const title = noteElement.querySelector("h2").textContent;
   const content = noteElement.querySelector("p").textContent;
 
@@ -829,20 +893,17 @@ function openEditModal(noteElement) {
   document.getElementById("editNotePriority").value = currentPriority;
 
   // Referenz zur aktuellen Notiz speichern
-  editModal.dataset.currentNote =
+  domCache.editModal.dataset.currentNote =
     noteElement.dataset.noteId ||
     Array.from(noteElement.parentNode.children).indexOf(noteElement);
-  editModal.currentNoteElement = noteElement;
+  domCache.editModal.currentNoteElement = noteElement;
 
   // Bearbeitungsmodal anzeigen
-  editModal.classList.add("show");
+  domCache.editModal.classList.add("show");
   document.body.classList.add("modal-open");
 }
 
-// Einstellungen-Funktionalität
 function initSettings() {
-  const settingsBtn = document.querySelector(".settings-btn");
-  const settingsModal = document.getElementById("settingsModal");
   const closeSettingsModal = document.querySelector(".close-settings-modal");
   const cancelSettingsBtn = document.querySelector(".btn-cancel-settings");
   const resetSettingsBtn = document.querySelector(".btn-reset-settings");
@@ -852,62 +913,55 @@ function initSettings() {
   const menuBarToggle = document.getElementById("menuBarToggle");
   const confirmDeleteToggle = document.getElementById("confirmDeleteToggle");
 
-  // Gespeicherte Einstellungen laden
   loadSettings();
 
-  // Einstellungsmodal öffnen
-  settingsBtn.addEventListener("click", function () {
-    settingsModal.classList.add("show");
+  domCache.settingsBtn.addEventListener("click", function () {
+    domCache.settingsModal.classList.add("show");
     document.body.classList.add("modal-open");
   });
 
-  // Einstellungsmodal schließen - Funktionen
   function closeSettingsModalWindow() {
-    settingsModal.classList.remove("show");
+    domCache.settingsModal.classList.remove("show");
     document.body.classList.remove("modal-open");
   }
 
-  // Einstellungsmodal schließen - Events
   closeSettingsModal.addEventListener("click", closeSettingsModalWindow);
   cancelSettingsBtn.addEventListener("click", closeSettingsModalWindow);
 
-  // Modal schließen, wenn außerhalb geklickt wird
   window.addEventListener("click", function (event) {
-    if (event.target === settingsModal) {
+    if (event.target === domCache.settingsModal) {
       closeSettingsModalWindow();
     }
   });
 
-  // Modal bei Escape-Taste schließen
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && settingsModal.classList.contains("show")) {
+    if (
+      event.key === "Escape" &&
+      domCache.settingsModal.classList.contains("show")
+    ) {
       closeSettingsModalWindow();
     }
   });
 
-  // Dunkelmodus-Umschalter
   darkModeToggle.addEventListener("change", function () {
     toggleDarkMode(this.checked);
     saveSettings();
   });
 
-  // Kompakter Modus-Umschalter
   compactModeToggle.addEventListener("change", function () {
     toggleCompactMode(this.checked);
     saveSettings();
   });
-  // Menüleisten-Umschalter
+
   menuBarToggle.addEventListener("change", function () {
     toggleMenuBar(this.checked);
     saveSettings();
   });
 
-  // Löschen-bestätigen-Umschalter
   confirmDeleteToggle.addEventListener("change", function () {
     saveSettings();
   });
 
-  // Einstellungen zurücksetzen
   resetSettingsBtn.addEventListener("click", function () {
     if (
       confirm(
@@ -928,8 +982,6 @@ function toggleDarkMode(enabled) {
 }
 
 function toggleCompactMode(enabled) {
-  const noteCards = document.querySelectorAll(".note-card");
-
   if (enabled) {
     document.body.classList.add("compact-mode");
   } else {
@@ -975,14 +1027,17 @@ function toggleMainView() {
 }
 
 function saveSettings() {
-  const settings = {
-    darkMode: document.getElementById("darkModeToggle").checked,
-    compactMode: document.getElementById("compactModeToggle").checked,
-    menuBar: document.getElementById("menuBarToggle").checked,
-    confirmDelete: document.getElementById("confirmDeleteToggle").checked,
-  };
-
-  localStorage.setItem("notizAppSettings", JSON.stringify(settings));
+  try {
+    const settings = {
+      darkMode: document.getElementById("darkModeToggle").checked,
+      compactMode: document.getElementById("compactModeToggle").checked,
+      menuBar: document.getElementById("menuBarToggle").checked,
+      confirmDelete: document.getElementById("confirmDeleteToggle").checked,
+    };
+    localStorage.setItem("notizAppSettings", JSON.stringify(settings));
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function loadSettings() {
@@ -999,20 +1054,16 @@ function loadSettings() {
     // Kompaktmodus anwenden
     document.getElementById("compactModeToggle").checked =
       settings.compactMode || false;
-    console.log("Compact mode toggle:", settings.compactMode || false);
     toggleCompactMode(settings.compactMode || false);
 
     // Menüleiste anwenden
     document.getElementById("menuBarToggle").checked =
       settings.menuBar || false;
-    console.log("Menu bar toggle:", settings.menuBar || false);
     toggleMenuBar(settings.menuBar || false);
 
     // Löschen-bestätigen anwenden
     document.getElementById("confirmDeleteToggle").checked =
       settings.confirmDelete !== undefined ? settings.confirmDelete : true;
-
-    console.log("Settings loaded:", settings);
   }
 }
 
@@ -1026,6 +1077,7 @@ function resetSettings() {
   // Einstellungen anwenden
   toggleDarkMode(false);
   toggleCompactMode(false);
+  toggleMenuBar(false);
 
   // In localStorage speichern
   saveSettings();
@@ -1034,7 +1086,6 @@ function resetSettings() {
 }
 
 function noteCard(title, content, color, priority, noteId = null) {
-  const noteGrid = document.querySelector(".note-grid");
   const noteCard = document.createElement("div");
 
   // ID für die Notiz festlegen
@@ -1085,9 +1136,11 @@ function noteCard(title, content, color, priority, noteId = null) {
     }
   }
 
-  const currentDate = new Date();
-  const formatedDate = currentDate.toLocaleDateString("de-DE");
-  const formatedTime = currentDate.toLocaleTimeString("de-DE", {
+  // Datum aus noteArray holen für Konsistenz
+  const note = noteArray.find((n) => n.id == id);
+  const createdDate = note ? new Date(note.createdAt) : new Date();
+  const formatedDate = createdDate.toLocaleDateString("de-DE");
+  const formatedTime = createdDate.toLocaleTimeString("de-DE", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -1144,7 +1197,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   footer.appendChild(dateElem);
 
   noteCard.append(header, contentElem, footer);
-  noteGrid.appendChild(noteCard);
+  domCache.noteGrid.appendChild(noteCard);
 }
 
 function deleteNote(noteElement) {
@@ -1156,7 +1209,7 @@ function deleteNote(noteElement) {
     const noteIndex = findNoteIndex(noteElement);
     noteElement.remove();
     deletefromStorage(noteIndex);
-    updateLastEditedSection(); // ← Zuletzt bearbeitet frissítése
+    updateLastEditedSection();
   } else {
     // Bestätigungsmodal anzeigen
     noteToDelete = noteElement;
@@ -1205,7 +1258,6 @@ function confirmDelete() {
     document.getElementById("deleteNoteModal").classList.remove("show");
     document.body.classList.remove("modal-open");
 
-    // Zuletzt bearbeitet frissítése törlés után
     updateLastEditedSection();
   }
 }
@@ -1218,7 +1270,11 @@ function deletefromStorage(noteInd) {
 }
 
 function setArrayInStorage() {
-  localStorage.setItem("notes", JSON.stringify(noteArray));
+  try {
+    localStorage.setItem("notes", JSON.stringify(noteArray));
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function loadNotesFromStorage() {
@@ -1226,8 +1282,6 @@ function loadNotesFromStorage() {
 
   if (savedNotes) {
     noteArray = JSON.parse(savedNotes);
-
-    // Csak az aktív jegyzeteket jelenítsd meg a betöltéskor
     noteArray
       .filter((note) => !note.archived)
       .forEach((note) => {
@@ -1239,15 +1293,31 @@ function loadNotesFromStorage() {
 }
 
 function getDemoNotes() {
-  localStorage.setItem("notes", JSON.stringify(demoNotes));
-  loadNotesFromStorage();
+  try {
+    const existingSettings = localStorage.getItem("notizAppSettings");
+
+    localStorage.setItem("notes", JSON.stringify(demoNotes));
+
+    if (existingSettings) {
+      localStorage.setItem("notizAppSettings", existingSettings);
+    }
+
+    // Aktualisiere die Anzeige
+    noteArray = [];
+    const noteGrid = document.querySelector(".note-grid");
+    if (noteGrid) {
+      noteGrid.innerHTML = "";
+    }
+    loadNotesFromStorage();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function showActiveNotes() {
-  document.getElementById("note-section").style.display = "block";
-  document.getElementById("archive-section").style.display = "none";
-  const noteGrid = document.querySelector(".note-grid");
-  noteGrid.innerHTML = "";
+  domCache.noteSection.style.display = "block";
+  domCache.archiveSection.style.display = "none";
+  domCache.noteGrid.innerHTML = "";
 
   noteArray
     .filter((note) => !note.archived)
@@ -1259,10 +1329,9 @@ function showActiveNotes() {
 }
 
 function showArchivedNotes() {
-  document.getElementById("note-section").style.display = "none";
-  document.getElementById("archive-section").style.display = "block";
-  const archiveGrid = document.querySelector(".archive-grid");
-  archiveGrid.innerHTML = "";
+  domCache.noteSection.style.display = "none";
+  domCache.archiveSection.style.display = "block";
+  domCache.archiveGrid.innerHTML = "";
 
   noteArray
     .filter((note) => note.archived)
@@ -1270,88 +1339,76 @@ function showArchivedNotes() {
 }
 
 function updateNavbarState(view) {
-  const archiveBtn = document.querySelector(".archive-btn");
-  const notesBtn = document.querySelector(".notes-btn");
   if (view === "archive") {
-    archiveBtn.classList.add("active");
-    notesBtn.classList.remove("active");
+    domCache.archiveBtn.classList.add("active");
+    domCache.notesBtn.classList.remove("active");
   } else {
-    notesBtn.classList.add("active");
-    archiveBtn.classList.remove("active");
+    domCache.notesBtn.classList.add("active");
+    domCache.archiveBtn.classList.remove("active");
   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const searchToggle = document.querySelector(".search-toggle");
-  const searchInput = document.querySelector(".search-input");
-  const searchIcon = document.querySelector(".search-icon");
-  const archiveBtn = document.querySelector(".archive-btn");
-  const notesBtn = document.querySelector(".notes-btn");
+  domCache.init();
 
   let isSearchOpen = false;
 
-  notesBtn.addEventListener("click", function () {
+  domCache.notesBtn.addEventListener("click", function () {
     currentView = "note";
     showActiveNotes();
     updateNavbarState("note");
   });
 
-  archiveBtn.addEventListener("click", function () {
+  domCache.archiveBtn.addEventListener("click", function () {
     currentView = "archive";
     showArchivedNotes();
     updateNavbarState("archive");
   });
 
   // Suchleiste bei Icon-Klick umschalten
-  searchToggle.addEventListener("click", function () {
+  domCache.searchToggle.addEventListener("click", function () {
     isSearchOpen = !isSearchOpen;
 
     if (isSearchOpen) {
-      searchInput.classList.add("active");
-      searchInput.focus();
-      searchIcon.classList.toggle("rotate");
+      domCache.searchInput.classList.add("active");
+      domCache.searchInput.focus();
+      domCache.searchIcon.classList.toggle("rotate");
     } else {
-      searchInput.classList.remove("active");
-      searchInput.blur();
-      searchIcon.classList.remove("rotate");
-      searchInput.value = "";
+      domCache.searchInput.classList.remove("active");
+      domCache.searchInput.blur();
+      domCache.searchIcon.classList.remove("rotate");
+      domCache.searchInput.value = "";
     }
   });
 
   document.addEventListener("click", function (event) {
     if (!event.target.closest(".search-container") && isSearchOpen) {
       isSearchOpen = false;
-      searchInput.classList.remove("active");
-      searchInput.blur();
-      searchIcon.classList.remove("rotate");
-      searchInput.value = "";
+      domCache.searchInput.classList.remove("active");
+      domCache.searchInput.blur();
+      domCache.searchIcon.classList.remove("rotate");
+      domCache.searchInput.value = "";
     }
   });
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" && isSearchOpen) {
       isSearchOpen = false;
-      searchInput.classList.remove("active");
-      searchInput.blur();
-      searchIcon.classList.remove("rotate");
-      searchInput.value = "";
+      domCache.searchInput.classList.remove("active");
+      domCache.searchInput.blur();
+      domCache.searchIcon.classList.remove("rotate");
+      domCache.searchInput.value = "";
     }
   });
 
-  // document
-  //   .querySelector(".btn-archive-delete")
-  //   .addEventListener("click", function () {
-  //     toggleMainView();
-  //   });
-
-  searchInput.addEventListener("input", function () {
+  domCache.searchInput.addEventListener("input", function () {
     const searchTerm = this.value.toLowerCase();
     console.log("Suchbegriff:", searchTerm);
 
     filterNotes(searchTerm);
   });
 
-  document.getElementById("archive-section").style.display = "none";
+  domCache.archiveSection.style.display = "none";
 
   initModal();
 
