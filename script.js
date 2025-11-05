@@ -302,7 +302,7 @@ function createLastEditedNoteCard(note) {
   }
 
   const editIcon = document.createElement("img");
-  editIcon.id = `editNote-${note.id}`;
+  editIcon.id = `editNote`;
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -324,7 +324,7 @@ function createLastEditedNoteCard(note) {
   });
 
   const deleteIcon = document.createElement("img");
-  deleteIcon.id = `deleteNote-${note.id}`;
+  deleteIcon.id = `deleteNote`;
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
@@ -443,7 +443,7 @@ function createArchivedNoteCard(note) {
   }
 
   const editIcon = document.createElement("img");
-  editIcon.id = `editNote-${note.id}`;
+  editIcon.id = `editNote`;
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -453,7 +453,7 @@ function createArchivedNoteCard(note) {
   });
 
   const deleteIcon = document.createElement("img");
-  deleteIcon.id = `deleteNote-${note.id}`;
+  deleteIcon.id = `deleteNote`;
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
@@ -1168,7 +1168,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   }
 
   const editIcon = document.createElement("img");
-  editIcon.id = `editNote-${note.id}`;
+  editIcon.id = `editNote`;
   editIcon.src = "icons/pencil.svg";
   editIcon.alt = "Edit";
   editIcon.classList.add("nav-icon");
@@ -1178,7 +1178,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   });
 
   const deleteIcon = document.createElement("img");
-  deleteIcon.id = `deleteNote-${note.id}`;
+  deleteIcon.id = `deleteNote`;
   deleteIcon.src = "icons/trash-repo.svg";
   deleteIcon.alt = "Delete";
   deleteIcon.classList.add("nav-icon");
