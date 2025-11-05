@@ -42,7 +42,6 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  /* background: var(--white); */
   height: 60px;
   color: #000000;
   padding: 10px 20px 0 80px;
@@ -157,40 +156,6 @@ main.visibility {
   font-weight: 500;
 }
 
-/* nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 60px;
-  height: calc(100vh - 70px);
-  background: #var(--white);
-  padding: 20px 0;
-  z-index: 999;
-  overflow-y: auto;
-} */
-
-/* nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-nav li {
-  margin: 0;
-}
-
-nav a {
-  display: block;
-  text-decoration: none;
-  padding: 15px 20px;
-  border-bottom: 1px solid #444;
-} */
-
 .nav-top {
   width: 85%;
   margin-bottom: auto;
@@ -264,11 +229,13 @@ nav a {
   filter: invert(1) brightness(90%) !important;
 }
 
-.note-card.colorful.color-yellow #editNote.colorful {
+.note-card.colorful.color-yellow #editNote.colorful,
+.archive-card.colorful.color-yellow #editNote.colorful {
   filter: invert(1) brightness(40%) !important;
 }
 
-.note-card.colorful.color-yellow #deleteNote.colorful {
+.note-card.colorful.color-yellow #deleteNote.colorful,
+.archive-card.colorful.color-yellow #deleteNote.colorful {
   filter: invert(1) brightness(40%) !important;
 }
 
@@ -280,11 +247,13 @@ nav a {
   filter: invert(1) brightness(100%) !important;
 }
 
-.note-card.colorful.color-yellow #editNote.colorful:hover {
+.note-card.colorful.color-yellow #editNote.colorful:hover,
+.archive-card.colorful.color-yellow #editNote.colorful:hover {
   filter: invert(1) brightness(20%) !important;
 }
 
-.note-card.colorful.color-yellow #deleteNote.colorful:hover {
+.note-card.colorful.color-yellow #deleteNote.colorful:hover,
+.archive-card.colorful.color-yellow #deleteNote.colorful:hover {
   filter: invert(1) brightness(20%) !important;
 }
 
@@ -346,7 +315,8 @@ main::-webkit-scrollbar {
   overflow-y: auto;
 }
 
-#note-section {
+#note-section,
+#archive-section {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -357,7 +327,8 @@ main::-webkit-scrollbar {
   color: var(--gray50);
 }
 
-.note-title {
+.note-title,
+.archive-title {
   color: var(--gray50);
   margin: 15px 0 0 25px;
 }
@@ -381,7 +352,8 @@ main::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.note-grid {
+.note-grid,
+.archive-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
@@ -393,27 +365,32 @@ main::-webkit-scrollbar {
   transition: all 0.3s ease;
 }
 
-.note-grid::-webkit-scrollbar {
+.note-grid::-webkit-scrollbar,
+.archive-grid::-webkit-scrollbar {
   width: 6px;
   background: transparent;
 }
 
-.note-grid::-webkit-scrollbar-track {
+.note-grid::-webkit-scrollbar-track,
+.archive-grid::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.note-grid::-webkit-scrollbar-thumb {
+.note-grid::-webkit-scrollbar-thumb,
+.archive-grid::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.note-grid:hover::-webkit-scrollbar-thumb {
+.note-grid:hover::-webkit-scrollbar-thumb,
+.archive-grid:hover::-webkit-scrollbar-thumb {
   opacity: 1;
 }
 
-.note-grid::-webkit-scrollbar-thumb:hover {
+.note-grid::-webkit-scrollbar-thumb:hover,
+.archive-grid::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -454,7 +431,8 @@ main::-webkit-scrollbar {
   background: rgba(0, 0, 0, 0.4);
 }
 
-.note-card {
+.note-card,
+.archive-card {
   background: var(--white);
   border: 1px solid #e9ecef;
   border-radius: 15px;
@@ -464,7 +442,8 @@ main::-webkit-scrollbar {
     rgba(0, 0, 0, 0.2) 0px 10px 20px -5px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
 }
 
-.note-card.colorful {
+.note-card.colorful,
+.archive-card.colorful {
   background: var(--white);
   border: 1px solid var(--gray80);
   border-radius: 15px;
@@ -474,19 +453,23 @@ main::-webkit-scrollbar {
 }
 
 /* Farbige Hintergründe */
-.note-card.color-green {
+.note-card.color-green,
+.archive-card.color-green {
   background-color: var(--green) !important;
 }
 
-.note-card.color-yellow {
+.note-card.color-yellow,
+.archive-card.color-yellow {
   background-color: var(--yellow) !important;
 }
 
-.note-card.color-red {
+.note-card.color-red,
+.archive-card.color-red {
   background-color: var(--redvariant1) !important;
 }
 
-.note-card:hover {
+.note-card:hover,
+.archive-card:hover {
   box-shadow: rgba(100, 100, 100, 0.4) 0px 2px 4px,
     rgba(100, 100, 100, 0.3) 0px 7px 13px -3px,
     rgba(100, 100, 100, 0.2) 0px -3px 0px inset;
@@ -501,8 +484,24 @@ main::-webkit-scrollbar {
   opacity: 0.8;
   transition: all 0.3s ease;
 }
+.archive-grid:hover .archive-card:not(:hover) {
+  transform: scale(0.96);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
 
 .last-edited-grid:hover .note-card:not(:hover) {
+  transform: scale(0.96);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+/* .last-edited-grid:hover .note-card:not(:hover) {
+  transform: scale(0.96);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+} */
+.last-edited-grid:hover .archive-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
   transition: all 0.3s ease;
@@ -522,7 +521,8 @@ main::-webkit-scrollbar {
   padding: 5px;
 }
 
-.note-card h2 {
+.note-card h2,
+.archive-card h2 {
   margin: 0;
   color: var(--gray20);
   max-width: 135px;
@@ -531,7 +531,8 @@ main::-webkit-scrollbar {
   white-space: nowrap;
 }
 
-.note-card.colorful.color-red h2 {
+.note-card.colorful.color-red h2,
+.archive-card.colorful.color-red h2 {
   margin: 0;
   color: var(--white);
   max-width: 135px;
@@ -540,7 +541,8 @@ main::-webkit-scrollbar {
   white-space: nowrap;
 }
 
-.note-card p {
+.note-card p,
+.archive-card p {
   color: var(--gray40);
   line-height: 1;
   font-size: 1.1rem;
@@ -550,13 +552,15 @@ main::-webkit-scrollbar {
   white-space: nowrap;
 }
 
-.note-card.colorful p {
+.note-card.colorful p,
+.archive-card.colorful p {
   color: #323232;
   line-height: 1;
   font-size: 1.1rem;
 }
 
-.note-card.colorful.color-red p {
+.note-card.colorful.color-red p,
+.archive-card.colorful.color-red p {
   color: var(--white);
   line-height: 1;
 }
@@ -573,7 +577,8 @@ main::-webkit-scrollbar {
   color: rgb(75, 75, 75);
 }
 
-.note-card.colorful.color-red .footer-date.colorful {
+.note-card.colorful.color-red .footer-date.colorful,
+.archive-card.colorful.color-red .footer-date.colorful {
   white-space: pre;
   font-size: 1rem;
   color: var(--gray94);
@@ -595,7 +600,8 @@ main::-webkit-scrollbar {
   margin: 0 10px 5px 0;
   filter: invert(100%);
 }
-.note-card.colorful.color-yellow .priority-clock {
+.note-card.colorful.color-yellow .priority-clock,
+.archive-card.colorful.color-yellow .priority-clock {
   filter: invert(40%);
 }
 
@@ -910,7 +916,8 @@ body.modal-open {
     width: 150px;
   }
 
-  .note-grid {
+  .note-grid,
+  .archive-grid {
     margin-right: 2px;
   }
 
@@ -1160,35 +1167,42 @@ body.dark-mode main {
 
 /* Dark mode scrollbar styles */
 body.dark-mode .note-grid::-webkit-scrollbar-track,
+body.dark-mode .archive-grid::-webkit-scrollbar-track,
 body.dark-mode .last-edited-list::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .note-grid::-webkit-scrollbar-thumb,
+body.dark-mode .archive-grid::-webkit-scrollbar-thumb,
 body.dark-mode .last-edited-list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
 }
 
 body.dark-mode .note-grid::-webkit-scrollbar-thumb:hover,
+body.dark-mode .archive-grid::-webkit-scrollbar-thumb:hover,
 body.dark-mode .last-edited-list::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 
-body.dark-mode .note-card {
+body.dark-mode .note-card,
+body.dark-mode .archive-card {
   background: var(--darkgraygreen);
   border: 1px solid var(--blackolive);
   color: var(--gray88);
 }
 
-body.dark-mode .note-card h2 {
+body.dark-mode .note-card h2,
+body.dark-mode .archive-card h2 {
   color: var(--white);
 }
 
-body.dark-mode .note-card.note-card.colorful.color-yellow h2 {
+body.dark-mode .note-card.note-card.colorful.color-yellow h2,
+body.dark-mode .archive-card.colorful.color-yellow h2 {
   color: var(--gray20);
 }
 
-body.dark-mode .note-card p {
+body.dark-mode .note-card p,
+body.dark-mode .archive-card p {
   color: var(--gray69);
 }
 
@@ -1197,11 +1211,13 @@ body.dark-mode .footer-date {
   color: #888;
 }
 
-body.dark-mode .note-card.colorful p {
+body.dark-mode .note-card.colorful p,
+body.dark-mode .archive-card.colorful p {
   color: var(--gray94);
 }
 
-body.dark-mode .note-card.colorful.color-yellow p {
+body.dark-mode .note-card.colorful.color-yellow p,
+body.dark-mode .archive-card.colorful.color-yellow p {
   color: var(--gray50);
 }
 
@@ -1210,12 +1226,14 @@ body.dark-mode .footer-date.colorful {
   color: var(--gray94);
 }
 
-body.dark-mode .note-card.colorful.color-yellow .footer-date.colorful {
+body.dark-mode .note-card.colorful.color-yellow .footer-date.colorful,
+body.dark-mode .archive-card.colorful.color-yellow .footer-date.colorful {
   white-space: pre;
   color: var(--gray50);
 }
 
-body.dark-mode .note-card:hover {
+body.dark-mode .note-card:hover,
+body.dark-mode .archive-card:hover {
   box-shadow: rgba(100, 100, 100, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   transform: translateY(-8px) scale(1.05);
@@ -1224,15 +1242,21 @@ body.dark-mode .note-card:hover {
   position: relative;
 }
 
-/* Dark mode interaktív hover effekt a grid-re */
-body.dark-mode .note-grid:hover .note-card:not(:hover) {
+body.dark-mode .note-grid:hover .note-card:not(:hover),
+body.dark-mode .archive-grid:hover .archive-card:not(:hover) {
+  transform: scale(0.96);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+body.dark-mode .archive-grid:hover .note-card:not(:hover),
+body.dark-mode .archive-grid:hover .archive-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
   transition: all 0.3s ease;
 }
 
-/* Dark mode - ugyanez a last-edited grid-hez */
-body.dark-mode .last-edited-grid:hover .note-card:not(:hover) {
+body.dark-mode .last-edited-grid:hover .note-card:not(:hover),
+body.dark-mode .last-edited-grid:hover .archive-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
   transition: all 0.3s ease;
@@ -1305,7 +1329,8 @@ body.dark-mode .setting-item {
 }
 
 /* Compact Mode Styles */
-body.compact-mode .note-card {
+body.compact-mode .note-card,
+body.compact-mode .archive-card {
   padding: 2px 12px 12px 12px !important;
   margin-bottom: 10px !important;
 }
@@ -1315,11 +1340,13 @@ body.compact-mode .card-header {
   padding: 0 !important;
 }
 
-body.compact-mode .note-card h2 {
+body.compact-mode .note-card h2,
+body.compact-mode .archive-card h2 {
   font-size: 1.05rem;
 }
 
-body.compact-mode .note-card p {
+body.compact-mode .note-card p,
+body.compact-mode .archive-card p {
   font-size: 0.9rem;
   line-height: 1.2;
 }
