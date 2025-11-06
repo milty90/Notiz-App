@@ -255,7 +255,9 @@ function updateLastEditedSection() {
   const recentNotes = sortedNotes.slice(0, 4);
 
   recentNotes.forEach((note) => {
-    createLastEditedNoteCard(note);
+    if (!note.archived) {
+      createLastEditedNoteCard(note);
+    }
   });
 }
 function createLastEditedNoteCard(note) {
@@ -389,6 +391,7 @@ function createLastEditedNoteCard(note) {
 function createArchivedNoteCard(note) {
   const noteCard = document.createElement("div");
   noteCard.classList.add("note-card");
+  noteCard.classList.add("archived");
   noteCard.dataset.noteId = note.id;
   noteCard.id = `archived-${note.id}`;
 
@@ -740,7 +743,6 @@ function updateNote(noteElement, title, content, color, priority) {
 
   if (color !== "default") {
     noteElement.classList.add("colorful");
-    domCache.colorMap[color];
     if (domCache.colorMap[color]) {
       noteElement.classList.add(domCache.colorMap[color]);
     }
@@ -808,8 +810,8 @@ function updateNote(noteElement, title, content, color, priority) {
 
   // Notiz im Array aktualisieren
 
-  const noteId = noteElement.dataset.noteId;
-  const noteIndex = noteArray.findIndex((note) => note.id == noteId);
+  const noteId = parseInt(noteElement.dataset.noteId);
+  const noteIndex = noteArray.findIndex((note) => note.id === noteId);
 
   if (noteIndex > -1 && noteIndex < noteArray.length && noteArray[noteIndex]) {
     noteArray[noteIndex].title = title;
@@ -1106,8 +1108,7 @@ function noteCard(title, content, color, priority, noteId = null) {
     }
   }
 
-  // Datum aus noteArray holen für Konsistenz
-  const note = noteArray.find((n) => n.id == id);
+  const note = noteArray.find((n) => n.id === id);
   const createdDate = note ? new Date(note.createdAt) : new Date();
   const formatedDate = createdDate.toLocaleDateString("de-DE");
   const formatedTime = createdDate.toLocaleTimeString("de-DE", {
@@ -1189,9 +1190,9 @@ function deleteNote(noteElement) {
 }
 
 function findNoteIndex(noteElement) {
-  const noteId = noteElement.dataset.noteId;
+  const noteId = parseInt(noteElement.dataset.noteId);
   if (noteId) {
-    const index = noteArray.findIndex((note) => note.id == noteId);
+    const index = noteArray.findIndex((note) => note.id === noteId);
     if (index !== -1) return index;
   }
 
@@ -1274,7 +1275,6 @@ function getDemoNotes() {
 
     // Aktualisiere die Anzeige
     noteArray = [];
-    domCache.noteGrid;
     if (domCache.noteGrid) {
       domCache.noteGrid.innerHTML = "";
     }

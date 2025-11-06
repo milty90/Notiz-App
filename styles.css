@@ -229,6 +229,16 @@ main.visibility {
   filter: invert(1) brightness(90%) !important;
 }
 
+.note-card.archived {
+  filter: grayscale(90%);
+  opacity: 0.9;
+}
+
+.note-card.archived:hover {
+  filter: grayscale(30%);
+  opacity: 0.9;
+}
+
 .note-card.colorful.color-yellow #editNote.colorful,
 .archive-card.colorful.color-yellow #editNote.colorful {
   filter: invert(1) brightness(40%) !important;
@@ -640,7 +650,8 @@ body.modal-open {
 
 /* Utility klassen für die Anzeige */
 .show {
-  display: block !important;
+  display: flex !important;
+  align-items: center;
 }
 
 .hidden {
@@ -656,6 +667,7 @@ body.modal-open {
   margin: 1% auto;
   padding: 0;
   border-radius: 15px;
+  margin: 3% auto;
   width: 90%;
   max-width: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
