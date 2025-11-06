@@ -2,6 +2,7 @@ let noteArray = [];
 let noteToDelete = null;
 let noteToArchive = null;
 let currentView = "note";
+let isNoteGridFiltered = false;
 
 const domCache = {
   noteGrid: null,
@@ -260,6 +261,7 @@ function updateLastEditedSection() {
     }
   });
 }
+
 function createLastEditedNoteCard(note) {
   const noteCard = document.createElement("div");
   noteCard.classList.add("note-card");
@@ -292,6 +294,8 @@ function createLastEditedNoteCard(note) {
 
     if (isColorAndPriorityMatch) {
       priorityIcon.src = `icons/clock.svg`;
+      priorityIcon.alt = "Priority";
+      priorityIcon.classList.add("priority-clock");
     } else {
       priorityIcon.src = `icons/${note.priority}.svg`;
     }
@@ -421,6 +425,8 @@ function createArchivedNoteCard(note) {
 
     if (isColorAndPriorityMatch) {
       priorityIcon.src = `icons/clock.svg`;
+      priorityIcon.alt = "Priority";
+      priorityIcon.classList.add("priority-clock");
     } else {
       priorityIcon.src = `icons/${note.priority}.svg`;
     }
@@ -709,6 +715,152 @@ function filterNotes(searchTerm) {
   });
 }
 
+function initNoteFilterButtons() {
+  const showDate = document.querySelector(".filter-button.note.date");
+  const showColor = document.querySelector(".filter-button.note.color");
+  const showPriority = document.querySelector(".filter-button.note.priority");
+
+  showDate.addEventListener("click", function () {
+    console.log("Show notes by date");
+    isNoteGridFiltered = true;
+    filteredNotesByDate();
+  });
+
+  showColor.addEventListener("click", function () {
+    console.log("Show notes by color");
+    isNoteGridFiltered = true;
+    filteredNotesByColor();
+  });
+
+  showPriority.addEventListener("click", function () {
+    console.log("Show notes by priority");
+    isNoteGridFiltered = true;
+    filteredNotesByPriority();
+  });
+}
+
+function initArchiveFilterButtons() {
+  const showDate = document.querySelector(".filter-button.archive.date");
+  const showColor = document.querySelector(".filter-button.archive.color");
+  const showPriority = document.querySelector(
+    ".filter-button.archive.priority"
+  );
+
+  showDate.addEventListener("click", function () {
+    console.log("Show archived notes by date");
+    isNoteGridFiltered = false;
+    filteredNotesByDate();
+  });
+
+  showColor.addEventListener("click", function () {
+    console.log("Show archived notes by color");
+    isNoteGridFiltered = false;
+    filteredNotesByColor();
+  });
+
+  showPriority.addEventListener("click", function () {
+    console.log("Show archived notes by priority");
+    isNoteGridFiltered = false;
+    filteredNotesByPriority();
+  });
+}
+
+function filteredNotesByDate() {
+  if (isNoteGridFiltered) {
+    const sortedNotes = [...noteArray].sort(
+      (a, b) => b.createdAt - a.createdAt && b.updatedAt - a.updatedAt
+    );
+    domCache.noteGrid.innerHTML = "";
+    sortedNotes.forEach((note) => {
+      if (!note.archived) {
+        noteCard(note.title, note.content, note.color, note.priority, note.id);
+      }
+    });
+  } else {
+    const archivedNotes = [...noteArray].sort(
+      (a, b) => b.archivedAt - a.archivedAt
+    );
+    domCache.archiveGrid.innerHTML = "";
+    archivedNotes.forEach((note) => {
+      if (note.archived == true) {
+        createArchivedNoteCard(note);
+      }
+      console.log("Sorted Notes by Date:", archivedNotes);
+    });
+  }
+}
+
+function filteredNotesByColor() {
+  const sortedNotes = [...noteArray].sort((a, b) => {
+    const getColorOrder = (note) => {
+      const isColorMatch =
+        domCache.priorityColorMap[note.color] === note.priority;
+
+      if (note.color === "#e11d44d2" && isColorMatch) return 1;
+      if (note.color === "#e11d44d2") return 2;
+      if (note.color === "#facc15da" && isColorMatch) return 3;
+      if (note.color === "#facc15da") return 4;
+      if (note.color === "#83cc16d3" && isColorMatch) return 5;
+      if (note.color === "#83cc16d3") return 6;
+      return 7;
+    };
+
+    return getColorOrder(a) - getColorOrder(b);
+  });
+
+  if (isNoteGridFiltered) {
+    domCache.noteGrid.innerHTML = "";
+    sortedNotes.forEach((note) => {
+      if (!note.archived) {
+        noteCard(note.title, note.content, note.color, note.priority, note.id);
+      }
+    });
+  } else {
+    domCache.archiveGrid.innerHTML = "";
+    sortedNotes.forEach((note) => {
+      if (note.archived) {
+        createArchivedNoteCard(note);
+      }
+    });
+  }
+  console.log("Sorted Notes by Color:", sortedNotes);
+}
+
+function filteredNotesByPriority() {
+  const sortedNotes = [...noteArray].sort((a, b) => {
+    const getPriorityOrder = (note) => {
+      const isColorMatch =
+        domCache.priorityColorMap[note.color] === note.priority;
+
+      if (note.priority === "red" && isColorMatch) return 1;
+      if (note.priority === "red") return 2;
+      if (note.priority === "yellow" && isColorMatch) return 3;
+      if (note.priority === "yellow") return 4;
+      if (note.priority === "green" && isColorMatch) return 5;
+      if (note.priority === "green") return 6;
+      return 7;
+    };
+
+    return getPriorityOrder(a) - getPriorityOrder(b);
+  });
+
+  if (isNoteGridFiltered) {
+    domCache.noteGrid.innerHTML = "";
+    sortedNotes.forEach((note) => {
+      if (!note.archived) {
+        noteCard(note.title, note.content, note.color, note.priority, note.id);
+      }
+    });
+  } else {
+    domCache.archiveGrid.innerHTML = "";
+    sortedNotes.forEach((note) => {
+      if (note.archived) {
+        createArchivedNoteCard(note);
+      }
+    });
+  }
+}
+
 function createNewNote(title, content, color, priority) {
   const noteId = Date.now();
   noteCard(title, content, color, priority, noteId);
@@ -732,6 +884,9 @@ function createNewNote(title, content, color, priority) {
 function updateNote(noteElement, title, content, color, priority) {
   noteElement.querySelector("h2").textContent = title;
   noteElement.querySelector("p").textContent = content;
+
+  const noteId = parseInt(noteElement.dataset.noteId);
+  const noteIndex = noteArray.findIndex((note) => note.id === noteId);
 
   // Farbe aktualisieren
   noteElement.classList.remove(
@@ -799,20 +954,6 @@ function updateNote(noteElement, title, content, color, priority) {
     cardHeaderIcons.insertBefore(priorityIcon, firstIcon);
   }
 
-  // Datum aktualisieren
-  const currentDate = new Date();
-  const formatedDate = currentDate.toLocaleDateString("de-DE");
-  const formatedTime = currentDate.toLocaleTimeString("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  footerDate.textContent = `Zuletzt aktualisiert: ${formatedTime}  ${formatedDate}`;
-
-  // Notiz im Array aktualisieren
-
-  const noteId = parseInt(noteElement.dataset.noteId);
-  const noteIndex = noteArray.findIndex((note) => note.id === noteId);
-
   if (noteIndex > -1 && noteIndex < noteArray.length && noteArray[noteIndex]) {
     noteArray[noteIndex].title = title;
     noteArray[noteIndex].content = content;
@@ -821,11 +962,31 @@ function updateNote(noteElement, title, content, color, priority) {
     noteArray[noteIndex].updatedAt = Date.now();
   }
 
+  // Datum aktualisieren
+  const updateDate = new Date(noteArray[noteIndex].updatedAt);
+  const formattedDate = updateDate.toLocaleDateString("de-DE");
+  const formattedTime = updateDate.toLocaleTimeString("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  if (noteArray[noteIndex].updatedAt !== noteArray[noteIndex].createdAt) {
+    footerDate.textContent = `Zuletzt bearbeitet: ${formattedTime}, ${formattedDate}`;
+  } else {
+    const createdDate = new Date(noteArray[noteIndex].createdAt);
+    const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
+    const createdFormattedTime = createdDate.toLocaleTimeString("de-DE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    footerDate.textContent = `Erstellt am: ${createdFormattedTime}, ${createdFormattedDate}`;
+  }
+
   setArrayInStorage();
   updateLastEditedSection();
+  showActiveNotes();
 }
 
-// Funktion zum Öffnen des Bearbeitungsmodals
 function openEditModal(noteElement) {
   const title = noteElement.querySelector("h2").textContent;
   const content = noteElement.querySelector("p").textContent;
@@ -844,21 +1005,25 @@ function openEditModal(noteElement) {
 
   // Aktuelle Priorität ermitteln
   let currentPriority = "none";
-  const priorityIcon = noteElement.querySelector(".priority-icon");
-  if (priorityIcon) {
-    const src = priorityIcon.src;
-    if (src.includes("green")) currentPriority = "green";
-    else if (src.includes("yellow")) currentPriority = "yellow";
-    else if (src.includes("red")) currentPriority = "red";
-    else if (src.includes("clock")) {
-      // Clock icon bedeutet, dass Farbe und Priorität übereinstimmen
-      // Ermittle die Priorität basierend auf der Farbe
-      if (noteElement.classList.contains("color-green"))
-        currentPriority = "green";
-      else if (noteElement.classList.contains("color-yellow"))
-        currentPriority = "yellow";
-      else if (noteElement.classList.contains("color-red"))
-        currentPriority = "red";
+  const noteId = parseInt(noteElement.dataset.noteId);
+  const note = noteArray.find((n) => n.id === noteId);
+
+  if (note) {
+    currentPriority = note.priority;
+  } else {
+    const priorityIcon = noteElement.querySelector(".priority-icon");
+    if (priorityIcon) {
+      const src = priorityIcon.src;
+      if (src.includes("green")) currentPriority = "green";
+      else if (src.includes("yellow")) currentPriority = "yellow";
+      else if (src.includes("red")) currentPriority = "red";
+      else if (src.includes("clock")) {
+        const noteId = parseInt(noteElement.dataset.noteId);
+        const note = noteArray.find((n) => n.id === noteId);
+        if (note) {
+          currentPriority = domCache.priorityColorMap[note.color] || "none";
+        }
+      }
     }
   }
 
@@ -1163,7 +1328,19 @@ function noteCard(title, content, color, priority, noteId = null) {
   const dateElem = document.createElement("span");
   dateElem.classList.add("footer-date");
   if (color !== "default") dateElem.classList.add("colorful");
-  dateElem.textContent = `Erstellt am: ${formatedTime},  ${formatedDate}`;
+
+  // Zeige "Zuletzt bearbeitet" nur wenn es sich vom Erstellungsdatum unterscheidet
+  if (note && note.updatedAt !== note.createdAt) {
+    const updateDate = new Date(note.updatedAt);
+    const updatedFormattedDate = updateDate.toLocaleDateString("de-DE");
+    const updatedFormattedTime = updateDate.toLocaleTimeString("de-DE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    dateElem.textContent = `Zuletzt bearbeitet: ${updatedFormattedTime}, ${updatedFormattedDate}`;
+  } else {
+    dateElem.textContent = `Erstellt am: ${formatedTime}, ${formatedDate}`;
+  }
 
   footer.appendChild(dateElem);
 
@@ -1392,6 +1569,10 @@ document.addEventListener("DOMContentLoaded", function () {
   initExistingNotes();
 
   initArchivedNotes();
+
+  initNoteFilterButtons();
+
+  initArchiveFilterButtons();
 
   // Event-Listener für Löschmodal initialisieren
   const confirmDeleteBtn = document.querySelector(".btn-confirm-delete");

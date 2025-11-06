@@ -60,20 +60,18 @@
         <section id="note-section">
           <h2 class="note-title">Notizen</h2>
           <div class="note-filters">
-            <button class="filter-button all">Alle Notizen</button>
-            <button class="filter-button date">Datum</button>
-            <button class="filter-button color">Farbe</button>
-            <button class="filter-button priority">Priorität</button>
+            <button class="filter-button note date">Datum</button>
+            <button class="filter-button note color">Farbe</button>
+            <button class="filter-button note priority">Priorität</button>
           </div>
           <div class="note-grid"></div>
         </section>
         <section id="archive-section">
           <h2 class="archive-title">Archiv</h2>
-          <div class="note-filters">
-            <button class="filter-button all">Alle Notizen</button>
-            <button class="filter-button date">Datum</button>
-            <button class="filter-button color">Farbe</button>
-            <button class="filter-button priority">Priorität</button>
+          <div class="archive-filters">
+            <button class="filter-button archive date">Datum</button>
+            <button class="filter-button archive color">Farbe</button>
+            <button class="filter-button archive priority">Priorität</button>
           </div>
           <div class="archive-grid"></div>
         </section>
@@ -378,24 +376,35 @@
           <span class="close-info-modal close-modal">&times;</span>
         </div>
         <div class="modal-body">
-          <p>My Notes ist eine einfache und benutzerfreundliche Notizen App.</p>
+          <p>My Notes ist eine einfache und benutzerfreundliche Notiz-App.</p>
           <p class="delete-warning">
-            Hinweis: My Notes App ist für alle Bildschirme über 390px optimiert.
+            Hinweis: Die My Notes-App ist für alle Bildschirme ab einer Breite
+            von 390 px optimiert.
           </p>
           <p>Funktionen:</p>
           <ul>
             <li>Notizen erstellen, bearbeiten, archivieren und löschen</li>
-            <li>Notizen nach Priorität und Farbe filtern</li>
+            <li>Notizen nach Datum, Farbe und Priorität filtern</li>
             <li>Responsive Design für mobile Geräte</li>
-            <li>Demo Notes für alle Funktionen präsentieren</li>
+            <li>Demo-Notizen zur Präsentation aller Funktionen</li>
           </ul>
           <p>Bedienung:</p>
-          <p>
-            Verwenden Sie die Schaltfläche "Hinzufügen", um eine neue Notiz zu
+          <p class="manual-text">
+            Verwenden Sie die Schaltfläche „Hinzufügen“, um eine neue Notiz zu
             erstellen. Klicken Sie auf eine Notiz, um sie zu bearbeiten oder zu
-            löschen. Nutzen Sie die Filteroptionen, um Ihre Notizen nach
-            Priorität oder Farbe zu sortieren. Wenn Sie die Notiz archivieren
-            möchten, können Sie dies vor dem Löschen tun.
+            löschen. 
+            </br>
+            Nutzen Sie die Filteroptionen, um Ihre Notizen nach
+            Priorität oder Farbe zu sortieren. Wenn Sie die Notiz archivieren möchten, 
+            können Sie dies vor dem Löschen tun.
+          </br>
+          Prioritäten werden durch Farbsymbole dargestellt: 
+          <img src="icons/green.svg" alt="Niedrig" style="width: 15px;" /> Grün für niedrig, 
+          <img src="icons/yellow.svg" alt="Mittel" style="width: 15px;" /> Gelb für mittel und 
+          <img src="icons/red.svg" alt="Hoch" style="width: 15px;" /> Rot für hoch.
+          </br>
+          Wenn eine Notiz die gleiche Farbe und die gleiche Priorität hat, wird ein Uhrsymbol 
+          <img src="icons/clock.svg" alt="Uhr" style="width: 15px;" /> angezeigt.
           </p>
           <p>
             Version: 1.0.0<br />

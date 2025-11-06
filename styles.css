@@ -343,7 +343,8 @@ main::-webkit-scrollbar {
   margin: 15px 0 15px 25px;
 }
 
-.note-filters {
+.note-filters,
+.archive-filters {
   display: flex;
   flex-direction: row;
   font-family: "Montserrat", sans-serif;
@@ -352,7 +353,6 @@ main::-webkit-scrollbar {
   margin: 0 0 5px 20px;
   filter: invert(50%);
 }
-.filter-button.all,
 .filter-button.date,
 .filter-button.color,
 .filter-button.priority {
@@ -366,7 +366,6 @@ main::-webkit-scrollbar {
   transition: transform 0.1s ease-in-out;
 }
 
-.filter-button.all:hover,
 .filter-button.date:hover,
 .filter-button.color:hover,
 .filter-button.priority:hover {
@@ -907,6 +906,12 @@ body.modal-open {
   margin: 10px 0;
   font-style: italic;
 }
+.manual-text {
+  color: var(--darkgraygreen);
+  font-size: 0.9rem;
+  margin: 10px 0;
+  font-style: italic;
+}
 /* Responsive Styles */
 
 @media (max-width: 768px) {
@@ -974,6 +979,22 @@ body.modal-open {
 
   header {
     padding: 15px 20px 0 20px;
+  }
+
+  .last-edited-grid {
+    grid-template-columns: 1fr !important;
+    margin-right: 2px;
+  }
+
+  .note-grid,
+  .archive-grid {
+    grid-template-columns: 1fr !important;
+    margin-right: 2px;
+  }
+
+  .note-filters,
+  .archive-filters {
+    gap: 20px;
   }
 }
 
@@ -1336,6 +1357,9 @@ body.dark-mode .setting-description {
 
 body.dark-mode .setting-item {
   border-bottom-color: var(--blackolive);
+}
+body.dark-mode .manual-text {
+  color: var(--gray69);
 }
 
 /* Compact Mode Styles */
