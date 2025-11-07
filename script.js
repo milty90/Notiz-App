@@ -66,200 +66,24 @@ const domCache = {
   },
 };
 
-let demoNotes = [
-  {
-    id: 1762349350,
-    title: "Einkaufsliste",
-    content: "Milch, Brot, Eier, Butter, Käse",
-    color: "#83cc16d3",
-    priority: "yellow",
-    createdAt: Date.now() - 1000000,
-    updatedAt: Date.now() - 500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349351,
-    title: "Projektideen",
-    content: "Notiz-App, Wetter-App, ToDo-Liste",
-    color: "#facc15da",
-    priority: "green",
-    createdAt: Date.now() - 2000000,
-    updatedAt: Date.now() - 1500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349352,
-    title: "Reiseplanung",
-    content: "Flüge buchen, Hotel reservieren",
-    color: "#e11d44d2",
-    priority: "green",
-    createdAt: Date.now() - 3000000,
-    updatedAt: Date.now() - 2500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349353,
-    title: "Fitness Ziele",
-    content: "3x die Woche ins Fitnessstudio, gesunde Ernährung",
-    color: "#83cc16d3",
-    priority: "yellow",
-    createdAt: Date.now() - 4000000,
-    updatedAt: Date.now() - 3500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349354,
-    title: "Lernziele",
-    content: "JavaScript, TypeScript, Webentwicklung",
-    color: "#facc15da",
-    priority: "yellow",
-    createdAt: Date.now() - 5000000,
-    updatedAt: Date.now() - 4500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349355,
-    title: "Bücherliste",
-    content: "Clean Code",
-    color: "#e11d44d2",
-    priority: "red",
-    createdAt: Date.now() - 6000000,
-    updatedAt: Date.now() - 5500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349356,
-    title: "Urlaubsplanung",
-    content: "Reiseziele, Budget, Aktivitäten",
-    color: "default",
-    priority: "green",
-    createdAt: Date.now() - 7000000,
-    updatedAt: Date.now() - 6500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349357,
-    title: "Hausarbeiten",
-    content: "Küche putzen, Staubsaugen, Wäsche waschen",
-    color: "#facc15da",
-    priority: "yellow",
-    createdAt: Date.now() - 8000000,
-    updatedAt: Date.now() - 7500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349358,
-    title: "Geburtstagsgeschenke",
-    content: "Geschenkideen für Familie und Freunde",
-    color: "#e11d44d2",
-    priority: "yellow",
-    createdAt: Date.now() - 9000000,
-    updatedAt: Date.now() - 8500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349359,
-    title: "Wochenplan",
-    content: "Montag: Einkaufen, Dienstag: Sport, Mittwoch: Kochen",
-    color: "default",
-    priority: "red",
-    createdAt: Date.now() - 10000000,
-    updatedAt: Date.now() - 9500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349360,
-    title: "Meditationsübungen",
-    content: "Täglich 10 Minuten Achtsamkeitspraxis",
-    color: "default",
-    priority: "none",
-    createdAt: Date.now() - 11000000,
-    updatedAt: Date.now() - 10500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349361,
-    title: "Sprachlernziele",
-    content: "Täglich 15 Minuten Vokabeln lernen",
-    color: "#83cc16d3",
-    priority: "green",
-    createdAt: Date.now() - 12000000,
-    updatedAt: Date.now() - 11500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349362,
-    title: "Gartenarbeit",
-    content: "Pflanzen gießen, Rasen mähen",
-    color: "#e11d44d2",
-    priority: "none",
-    createdAt: Date.now() - 13000000,
-    updatedAt: Date.now() - 12500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349363,
-    title: "Musikplaylist",
-    content: "Meine Lieblingssongs für gute Laune",
-    color: "#facc15da",
-    priority: "yellow",
-    createdAt: Date.now() - 14000000,
-    updatedAt: Date.now() - 13500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349364,
-    title: "Film- und Serienliste",
-    content: "Must-Watch Filme und Serien",
-    color: "default",
-    priority: "none",
-    createdAt: Date.now() - 15000000,
-    updatedAt: Date.now() - 14500000,
-    archived: false,
-    archivedAt: null,
-  },
-  {
-    id: 1762349365,
-    title: "Hobbyideen",
-    content: "Fotografie, Malen, Kochen",
-    color: "#83cc16d3",
-    priority: "green",
-    createdAt: Date.now() - 16000000,
-    updatedAt: Date.now() - 15500000,
-    archived: false,
-    archivedAt: null,
-  },
-];
+function createNewNote(title, content, color, priority) {
+  const noteId = Date.now();
+  noteCard(title, content, color, priority, noteId);
 
-// Zuletzt bearbeitet Sektion
-function updateLastEditedSection() {
-  domCache.lastEditedGrid.innerHTML = "";
-
-  // Notizen nach updatedAt sortieren (neueste zuerst)
-  const sortedNotes = [...noteArray].sort((a, b) => b.updatedAt - a.updatedAt);
-
-  // Nur die ersten 4 Notizen anzeigen
-  const recentNotes = sortedNotes.slice(0, 4);
-
-  recentNotes.forEach((note) => {
-    if (!note.archived) {
-      createLastEditedNoteCard(note);
-    }
+  noteArray.push({
+    id: noteId,
+    title: title,
+    content: content,
+    color: color,
+    priority: priority,
+    createdAt: noteId,
+    updatedAt: noteId,
+    archived: false,
+    archivedAt: null,
   });
+
+  setArrayInStorage();
+  updateLastEditedSection();
 }
 
 function createLastEditedNoteCard(note) {
@@ -313,13 +137,10 @@ function createLastEditedNoteCard(note) {
   editIcon.classList.add("nav-icon");
   if (note.color !== "default") editIcon.classList.add("colorful");
   editIcon.addEventListener("click", () => {
-    // Zuerst in aktiven Notizen suchen
     let originalNoteCard = document.querySelector(`#note-${note.id}`);
-    // Falls nicht gefunden, in archivierten Notizen suchen
     if (!originalNoteCard) {
       originalNoteCard = document.querySelector(`#archived-${note.id}`);
     }
-    // Falls immer noch nicht gefunden, das "recent" Element verwenden
     if (!originalNoteCard) {
       originalNoteCard = document.querySelector(`#recent-${note.id}`);
     }
@@ -335,13 +156,10 @@ function createLastEditedNoteCard(note) {
   deleteIcon.classList.add("nav-icon");
   if (note.color !== "default") deleteIcon.classList.add("colorful");
   deleteIcon.addEventListener("click", () => {
-    // Zuerst in aktiven Notizen suchen
     let originalNoteCard = document.querySelector(`#note-${note.id}`);
-    // Falls nicht gefunden, in archivierten Notizen suchen
     if (!originalNoteCard) {
       originalNoteCard = document.querySelector(`#archived-${note.id}`);
     }
-    // Falls immer noch nicht gefunden, in "Zuletzt bearbeitet" suchen
     if (!originalNoteCard) {
       originalNoteCard = document.querySelector(`#recent-${note.id}`);
     }
@@ -373,9 +191,8 @@ function createLastEditedNoteCard(note) {
     minute: "2-digit",
   });
 
-  // Zeige "Zuletzt bearbeitet" nur wenn es sich vom Erstellungsdatum unterscheidet
   if (note.updatedAt !== note.createdAt) {
-    dateElem.textContent = `Zuletzt bearbeitet: ${formattedTime}, ${formattedDate}`;
+    dateElem.textContent = `Zuletzt aktualisiert: ${formattedTime}, ${formattedDate}`;
   } else {
     const createdDate = new Date(note.createdAt);
     const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
@@ -491,7 +308,7 @@ function createArchivedNoteCard(note) {
     dateElem.textContent = `Archiviert am: ${archivedFormattedTime}, ${archivedFormattedDate}`;
   } else {
     // Zeige letztes Update-Datum
-    dateElem.textContent = `Zuletzt bearbeitet: ${formattedTime}, ${formattedDate}`;
+    dateElem.textContent = `Zuletzt aktualisiert: ${formattedTime}, ${formattedDate}`;
   }
 
   footer.appendChild(dateElem);
@@ -693,24 +510,72 @@ function initModal() {
   });
 }
 
-function filterNotes(searchTerm) {
-  const noteCards = document.querySelectorAll(".note-card");
+function initSettings() {
+  const closeSettingsModal = document.querySelector(".close-settings-modal");
+  const cancelSettingsBtn = document.querySelector(".btn-cancel-settings");
+  const resetSettingsBtn = document.querySelector(".btn-reset-settings");
 
-  noteCards.forEach((card) => {
-    const title = card.querySelector("h2").textContent.toLowerCase();
-    const content = card.querySelector("p").textContent.toLowerCase();
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  const compactModeToggle = document.getElementById("compactModeToggle");
+  const menuBarToggle = document.getElementById("menuBarToggle");
+  const confirmDeleteToggle = document.getElementById("confirmDeleteToggle");
 
-    if (title.includes(searchTerm) || content.includes(searchTerm)) {
-      card.classList.remove("hidden");
-      card.classList.add("visible");
-    } else {
-      if (searchTerm === "") {
-        card.classList.remove("hidden");
-        card.classList.add("visible");
-      } else {
-        card.classList.remove("visible");
-        card.classList.add("hidden");
-      }
+  loadSettings();
+
+  domCache.settingsBtn.addEventListener("click", function () {
+    domCache.settingsModal.classList.add("show");
+    document.body.classList.add("modal-open");
+  });
+
+  function closeSettingsModalWindow() {
+    domCache.settingsModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
+  }
+
+  closeSettingsModal.addEventListener("click", closeSettingsModalWindow);
+  cancelSettingsBtn.addEventListener("click", closeSettingsModalWindow);
+
+  window.addEventListener("click", function (event) {
+    if (event.target === domCache.settingsModal) {
+      closeSettingsModalWindow();
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (
+      event.key === "Escape" &&
+      domCache.settingsModal.classList.contains("show")
+    ) {
+      closeSettingsModalWindow();
+    }
+  });
+
+  darkModeToggle.addEventListener("change", function () {
+    toggleDarkMode(this.checked);
+    saveSettings();
+  });
+
+  compactModeToggle.addEventListener("change", function () {
+    toggleCompactMode(this.checked);
+    saveSettings();
+  });
+
+  menuBarToggle.addEventListener("change", function () {
+    toggleMenuBar(this.checked);
+    saveSettings();
+  });
+
+  confirmDeleteToggle.addEventListener("change", function () {
+    saveSettings();
+  });
+
+  resetSettingsBtn.addEventListener("click", function () {
+    if (
+      confirm(
+        "Möchten Sie die Einstellungen auf die Standardwerte zurücksetzen?"
+      )
+    ) {
+      resetSettings();
     }
   });
 }
@@ -765,120 +630,20 @@ function initArchiveFilterButtons() {
   });
 }
 
-function filteredNotesByDate() {
-  if (isNoteGridFiltered) {
-    const sortedNotes = [...noteArray].sort(
-      (a, b) => b.createdAt - a.createdAt && b.updatedAt - a.updatedAt
-    );
-    domCache.noteGrid.innerHTML = "";
-    sortedNotes.forEach((note) => {
-      if (!note.archived) {
-        noteCard(note.title, note.content, note.color, note.priority, note.id);
-      }
-    });
-  } else {
-    const archivedNotes = [...noteArray].sort(
-      (a, b) => b.archivedAt - a.archivedAt
-    );
-    domCache.archiveGrid.innerHTML = "";
-    archivedNotes.forEach((note) => {
-      if (note.archived == true) {
-        createArchivedNoteCard(note);
-      }
-      console.log("Sorted Notes by Date:", archivedNotes);
-    });
-  }
-}
+function updateLastEditedSection() {
+  domCache.lastEditedGrid.innerHTML = "";
 
-function filteredNotesByColor() {
-  const sortedNotes = [...noteArray].sort((a, b) => {
-    const getColorOrder = (note) => {
-      const isColorMatch =
-        domCache.priorityColorMap[note.color] === note.priority;
+  // Notizen nach updatedAt sortieren (neueste zuerst)
+  const sortedNotes = [...noteArray].sort((a, b) => b.updatedAt - a.updatedAt);
 
-      if (note.color === "#e11d44d2" && isColorMatch) return 1;
-      if (note.color === "#e11d44d2") return 2;
-      if (note.color === "#facc15da" && isColorMatch) return 3;
-      if (note.color === "#facc15da") return 4;
-      if (note.color === "#83cc16d3" && isColorMatch) return 5;
-      if (note.color === "#83cc16d3") return 6;
-      return 7;
-    };
+  // Nur die ersten 4 Notizen anzeigen
+  const recentNotes = sortedNotes.slice(0, 4);
 
-    return getColorOrder(a) - getColorOrder(b);
+  recentNotes.forEach((note) => {
+    if (!note.archived) {
+      createLastEditedNoteCard(note);
+    }
   });
-
-  if (isNoteGridFiltered) {
-    domCache.noteGrid.innerHTML = "";
-    sortedNotes.forEach((note) => {
-      if (!note.archived) {
-        noteCard(note.title, note.content, note.color, note.priority, note.id);
-      }
-    });
-  } else {
-    domCache.archiveGrid.innerHTML = "";
-    sortedNotes.forEach((note) => {
-      if (note.archived) {
-        createArchivedNoteCard(note);
-      }
-    });
-  }
-  console.log("Sorted Notes by Color:", sortedNotes);
-}
-
-function filteredNotesByPriority() {
-  const sortedNotes = [...noteArray].sort((a, b) => {
-    const getPriorityOrder = (note) => {
-      const isColorMatch =
-        domCache.priorityColorMap[note.color] === note.priority;
-
-      if (note.priority === "red" && isColorMatch) return 1;
-      if (note.priority === "red") return 2;
-      if (note.priority === "yellow" && isColorMatch) return 3;
-      if (note.priority === "yellow") return 4;
-      if (note.priority === "green" && isColorMatch) return 5;
-      if (note.priority === "green") return 6;
-      return 7;
-    };
-
-    return getPriorityOrder(a) - getPriorityOrder(b);
-  });
-
-  if (isNoteGridFiltered) {
-    domCache.noteGrid.innerHTML = "";
-    sortedNotes.forEach((note) => {
-      if (!note.archived) {
-        noteCard(note.title, note.content, note.color, note.priority, note.id);
-      }
-    });
-  } else {
-    domCache.archiveGrid.innerHTML = "";
-    sortedNotes.forEach((note) => {
-      if (note.archived) {
-        createArchivedNoteCard(note);
-      }
-    });
-  }
-}
-
-function createNewNote(title, content, color, priority) {
-  const noteId = Date.now();
-  noteCard(title, content, color, priority, noteId);
-
-  noteArray.push({
-    id: noteId,
-    title: title,
-    content: content,
-    color: color,
-    priority: priority,
-    createdAt: noteId,
-    updatedAt: noteId,
-    archived: false,
-    archivedAt: null,
-  });
-
-  setArrayInStorage();
-  updateLastEditedSection();
 }
 
 function updateNote(noteElement, title, content, color, priority) {
@@ -962,29 +727,43 @@ function updateNote(noteElement, title, content, color, priority) {
     noteArray[noteIndex].updatedAt = Date.now();
   }
 
-  // Datum aktualisieren
-  const updateDate = new Date(noteArray[noteIndex].updatedAt);
-  const formattedDate = updateDate.toLocaleDateString("de-DE");
-  const formattedTime = updateDate.toLocaleTimeString("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
-  if (noteArray[noteIndex].updatedAt !== noteArray[noteIndex].createdAt) {
-    footerDate.textContent = `Zuletzt bearbeitet: ${formattedTime}, ${formattedDate}`;
-  } else {
-    const createdDate = new Date(noteArray[noteIndex].createdAt);
-    const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
-    const createdFormattedTime = createdDate.toLocaleTimeString("de-DE", {
+  if (noteIndex > -1 && noteIndex < noteArray.length && noteArray[noteIndex]) {
+    // Datum aktualisieren
+    const updateDate = new Date(noteArray[noteIndex].updatedAt);
+    const formattedDate = updateDate.toLocaleDateString("de-DE");
+    const formattedTime = updateDate.toLocaleTimeString("de-DE", {
       hour: "2-digit",
       minute: "2-digit",
     });
-    footerDate.textContent = `Erstellt am: ${createdFormattedTime}, ${createdFormattedDate}`;
+
+    if (noteArray[noteIndex].updatedAt !== noteArray[noteIndex].createdAt) {
+      footerDate.textContent = `Zuletzt aktualisiert: ${formattedTime}, ${formattedDate}`;
+    } else {
+      const createdDate = new Date(noteArray[noteIndex].createdAt);
+      const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
+      const createdFormattedTime = createdDate.toLocaleTimeString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      footerDate.textContent = `Erstellt am: ${createdFormattedTime}, ${createdFormattedDate}`;
+    }
+  } else {
+    console.error("Note not found for update!");
   }
 
   setArrayInStorage();
   updateLastEditedSection();
   showActiveNotes();
+}
+
+function updateNavbarState(view) {
+  if (view === "archive") {
+    domCache.archiveBtn.classList.add("active");
+    domCache.notesBtn.classList.remove("active");
+  } else {
+    domCache.notesBtn.classList.add("active");
+    domCache.archiveBtn.classList.remove("active");
+  }
 }
 
 function openEditModal(noteElement) {
@@ -1044,76 +823,6 @@ function openEditModal(noteElement) {
   // Bearbeitungsmodal anzeigen
   domCache.editModal.classList.add("show");
   document.body.classList.add("modal-open");
-}
-
-function initSettings() {
-  const closeSettingsModal = document.querySelector(".close-settings-modal");
-  const cancelSettingsBtn = document.querySelector(".btn-cancel-settings");
-  const resetSettingsBtn = document.querySelector(".btn-reset-settings");
-
-  const darkModeToggle = document.getElementById("darkModeToggle");
-  const compactModeToggle = document.getElementById("compactModeToggle");
-  const menuBarToggle = document.getElementById("menuBarToggle");
-  const confirmDeleteToggle = document.getElementById("confirmDeleteToggle");
-
-  loadSettings();
-
-  domCache.settingsBtn.addEventListener("click", function () {
-    domCache.settingsModal.classList.add("show");
-    document.body.classList.add("modal-open");
-  });
-
-  function closeSettingsModalWindow() {
-    domCache.settingsModal.classList.remove("show");
-    document.body.classList.remove("modal-open");
-  }
-
-  closeSettingsModal.addEventListener("click", closeSettingsModalWindow);
-  cancelSettingsBtn.addEventListener("click", closeSettingsModalWindow);
-
-  window.addEventListener("click", function (event) {
-    if (event.target === domCache.settingsModal) {
-      closeSettingsModalWindow();
-    }
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if (
-      event.key === "Escape" &&
-      domCache.settingsModal.classList.contains("show")
-    ) {
-      closeSettingsModalWindow();
-    }
-  });
-
-  darkModeToggle.addEventListener("change", function () {
-    toggleDarkMode(this.checked);
-    saveSettings();
-  });
-
-  compactModeToggle.addEventListener("change", function () {
-    toggleCompactMode(this.checked);
-    saveSettings();
-  });
-
-  menuBarToggle.addEventListener("change", function () {
-    toggleMenuBar(this.checked);
-    saveSettings();
-  });
-
-  confirmDeleteToggle.addEventListener("change", function () {
-    saveSettings();
-  });
-
-  resetSettingsBtn.addEventListener("click", function () {
-    if (
-      confirm(
-        "Möchten Sie die Einstellungen auf die Standardwerte zurücksetzen?"
-      )
-    ) {
-      resetSettings();
-    }
-  });
 }
 
 function toggleDarkMode(enabled) {
@@ -1275,8 +984,8 @@ function noteCard(title, content, color, priority, noteId = null) {
 
   const note = noteArray.find((n) => n.id === id);
   const createdDate = note ? new Date(note.createdAt) : new Date();
-  const formatedDate = createdDate.toLocaleDateString("de-DE");
-  const formatedTime = createdDate.toLocaleTimeString("de-DE", {
+  const formattedDate = createdDate.toLocaleDateString("de-DE");
+  const formattedTime = createdDate.toLocaleTimeString("de-DE", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -1329,7 +1038,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   dateElem.classList.add("footer-date");
   if (color !== "default") dateElem.classList.add("colorful");
 
-  // Zeige "Zuletzt bearbeitet" nur wenn es sich vom Erstellungsdatum unterscheidet
+  // Zeige "Zuletzt aktualisiert" nur wenn es sich vom Erstellungsdatum unterscheidet
   if (note && note.updatedAt !== note.createdAt) {
     const updateDate = new Date(note.updatedAt);
     const updatedFormattedDate = updateDate.toLocaleDateString("de-DE");
@@ -1337,9 +1046,9 @@ function noteCard(title, content, color, priority, noteId = null) {
       hour: "2-digit",
       minute: "2-digit",
     });
-    dateElem.textContent = `Zuletzt bearbeitet: ${updatedFormattedTime}, ${updatedFormattedDate}`;
+    dateElem.textContent = `Zuletzt aktualisiert: ${updatedFormattedTime}, ${updatedFormattedDate}`;
   } else {
-    dateElem.textContent = `Erstellt am: ${formatedTime}, ${formatedDate}`;
+    dateElem.textContent = `Erstellt am: ${formattedTime}, ${formattedDate}`;
   }
 
   footer.appendChild(dateElem);
@@ -1364,16 +1073,6 @@ function deleteNote(noteElement) {
     deleteModal.classList.add("show");
     document.body.classList.add("modal-open");
   }
-}
-
-function findNoteIndex(noteElement) {
-  const noteId = parseInt(noteElement.dataset.noteId);
-  if (noteId) {
-    const index = noteArray.findIndex((note) => note.id === noteId);
-    if (index !== -1) return index;
-  }
-
-  return Array.from(noteElement.parentNode.children).indexOf(noteElement);
 }
 
 function archiveNote(noteElement) {
@@ -1410,57 +1109,6 @@ function confirmDelete() {
   }
 }
 
-function deletefromStorage(noteInd) {
-  if (noteInd > -1 && noteArray[noteInd]) {
-    noteArray.splice(noteInd, 1);
-    setArrayInStorage();
-  }
-}
-
-function setArrayInStorage() {
-  try {
-    localStorage.setItem("notes", JSON.stringify(noteArray));
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-function loadNotesFromStorage() {
-  const savedNotes = localStorage.getItem("notes");
-
-  if (savedNotes) {
-    noteArray = JSON.parse(savedNotes);
-    noteArray
-      .filter((note) => !note.archived)
-      .forEach((note) => {
-        noteCard(note.title, note.content, note.color, note.priority, note.id);
-      });
-
-    updateLastEditedSection();
-  }
-}
-
-function getDemoNotes() {
-  try {
-    const existingSettings = localStorage.getItem("notizAppSettings");
-
-    localStorage.setItem("notes", JSON.stringify(demoNotes));
-
-    if (existingSettings) {
-      localStorage.setItem("notizAppSettings", existingSettings);
-    }
-
-    // Aktualisiere die Anzeige
-    noteArray = [];
-    if (domCache.noteGrid) {
-      domCache.noteGrid.innerHTML = "";
-    }
-    loadNotesFromStorage();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 function showActiveNotes() {
   domCache.noteSection.style.display = "block";
   domCache.archiveSection.style.display = "none";
@@ -1483,16 +1131,6 @@ function showArchivedNotes() {
   noteArray
     .filter((note) => note.archived)
     .forEach((note) => createArchivedNoteCard(note));
-}
-
-function updateNavbarState(view) {
-  if (view === "archive") {
-    domCache.archiveBtn.classList.add("active");
-    domCache.notesBtn.classList.remove("active");
-  } else {
-    domCache.notesBtn.classList.add("active");
-    domCache.archiveBtn.classList.remove("active");
-  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

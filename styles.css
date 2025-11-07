@@ -16,12 +16,13 @@
   --redvariant2: #c41e3a;
   --green: #83cc16d3;
   --yellow: #facc15da;
+  --fontfamily: "Source Sans 3", sans-serif;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -68,7 +69,7 @@ header {
   border: none;
   background: transparent;
   font-size: 16px;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   color: var(--gray20);
   border-bottom: 2px solid transparent;
   outline: none;
@@ -196,7 +197,7 @@ main.visibility {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   cursor: pointer;
   gap: 5px;
   padding: 2px 0 2px 0;
@@ -353,6 +354,7 @@ main::-webkit-scrollbar {
   margin: 0 0 5px 20px;
   filter: invert(50%);
 }
+
 .filter-button.date,
 .filter-button.color,
 .filter-button.priority {
@@ -505,6 +507,7 @@ main::-webkit-scrollbar {
   opacity: 0.8;
   transition: all 0.3s ease;
 }
+
 .archive-grid:hover .archive-card:not(:hover) {
   transform: scale(0.96);
   opacity: 0.8;
@@ -665,8 +668,7 @@ body.modal-open {
   background-color: var(--white);
   margin: 1% auto;
   padding: 0;
-  border-radius: 15px;
-  margin: 3% auto;
+  border-radius: 16px;
   width: 90%;
   max-width: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -737,7 +739,7 @@ body.modal-open {
   border: 2px solid #eee;
   border-radius: 8px;
   font-size: 14px;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   transition: border-color 0.3s ease;
   box-sizing: border-box;
 }
@@ -824,7 +826,7 @@ body.modal-open {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
 }
 
 .btn-cancel,
@@ -858,7 +860,7 @@ body.modal-open {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   background-color: var(--redvariant1);
   color: var(--white);
 }
@@ -875,7 +877,7 @@ body.modal-open {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   background-color: whitesmoke;
   color: var(--gray40);
 }
@@ -883,6 +885,7 @@ body.modal-open {
 .btn-cancel-delete:hover {
   background-color: var(--gray94);
 }
+
 .btn-archive-delete {
   padding: 12px 25px;
   border: none;
@@ -891,7 +894,7 @@ body.modal-open {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   background-color: whitesmoke;
   color: var(--gray40);
 }
@@ -906,12 +909,14 @@ body.modal-open {
   margin: 10px 0;
   font-style: italic;
 }
+
 .manual-text {
   color: var(--darkgraygreen);
   font-size: 0.9rem;
   margin: 10px 0;
   font-style: italic;
 }
+
 /* Responsive Styles */
 
 @media (max-width: 768px) {
@@ -956,9 +961,11 @@ body.modal-open {
   .nav-text.visibility {
     display: none;
   }
+
   .nav-icons.visibility {
     width: 50px !important;
   }
+
   .nav-item.visibility {
     justify-content: center;
     align-items: center;
@@ -966,6 +973,7 @@ body.modal-open {
     margin: 0;
     width: 50px !important;
   }
+
   .nav-item svg,
   .nav-item .nav-icon.visibility {
     margin-left: 0px;
@@ -1031,7 +1039,7 @@ body.modal-open {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
   background-color: var(--redvariant1);
   color: var(--white);
 }
@@ -1063,6 +1071,7 @@ body.modal-open {
 }
 
 /* Toggle Switch Styles */
+
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -1125,7 +1134,7 @@ input:checked + .toggle-slider:before {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Source Sans 3", sans-serif;
+  font-family: var(--fontfamily);
 }
 
 .btn-cancel-settings {
@@ -1185,6 +1194,7 @@ body.dark-mode .nav-item:hover svg,
 body.dark-mode .nav-item:hover .nav-icon {
   filter: invert(1) brightness(80%);
 }
+
 body.dark-mode #editNote:hover,
 body.dark-mode #deleteNote:hover {
   filter: invert(1) brightness(100%);
@@ -1279,6 +1289,7 @@ body.dark-mode .archive-grid:hover .archive-card:not(:hover) {
   opacity: 0.8;
   transition: all 0.3s ease;
 }
+
 body.dark-mode .archive-grid:hover .note-card:not(:hover),
 body.dark-mode .archive-grid:hover .archive-card:not(:hover) {
   transform: scale(0.96);
@@ -1292,6 +1303,7 @@ body.dark-mode .last-edited-grid:hover .archive-card:not(:hover) {
   opacity: 0.8;
   transition: all 0.3s ease;
 }
+
 body.dark-mode .color-options input[type="radio"]:checked + .color-option {
   border-color: var(--gray80);
   transform: scale(1.1);
@@ -1358,11 +1370,13 @@ body.dark-mode .setting-description {
 body.dark-mode .setting-item {
   border-bottom-color: var(--blackolive);
 }
+
 body.dark-mode .manual-text {
   color: var(--gray69);
 }
 
 /* Compact Mode Styles */
+
 body.compact-mode .note-card,
 body.compact-mode .archive-card {
   padding: 2px 12px 12px 12px !important;
