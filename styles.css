@@ -388,6 +388,11 @@ main::-webkit-scrollbar {
   transition: all 0.3s ease;
 }
 
+.overlay::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+
 .note-grid::-webkit-scrollbar,
 .archive-grid::-webkit-scrollbar {
   width: 6px;
@@ -619,6 +624,7 @@ main::-webkit-scrollbar {
   margin: 0 10px 5px 0;
   filter: invert(100%);
 }
+
 .note-card.colorful.color-yellow .priority-clock,
 .archive-card.colorful.color-yellow .priority-clock {
   filter: invert(40%);
@@ -918,7 +924,6 @@ body.modal-open {
 }
 
 /* Responsive Styles */
-
 @media (max-width: 768px) {
   main {
     padding: 0;
@@ -1071,7 +1076,6 @@ body.modal-open {
 }
 
 /* Toggle Switch Styles */
-
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -1156,7 +1160,6 @@ input:checked + .toggle-slider:before {
 }
 
 /* Dark Mode Styles */
-
 body.dark-mode {
   background-color: var(--darkgraygreen);
   color: var(--gray88);
@@ -1207,6 +1210,10 @@ body.dark-mode main {
 }
 
 /* Dark mode scrollbar styles */
+body.dark-mode .overlay::-webkit-scrollbar {
+  background: transparent;
+}
+
 body.dark-mode .note-grid::-webkit-scrollbar-track,
 body.dark-mode .archive-grid::-webkit-scrollbar-track,
 body.dark-mode .last-edited-grid::-webkit-scrollbar-track {
@@ -1216,12 +1223,14 @@ body.dark-mode .last-edited-grid::-webkit-scrollbar-track {
 body.dark-mode .note-grid::-webkit-scrollbar-thumb,
 body.dark-mode .archive-grid::-webkit-scrollbar-thumb,
 body.dark-mode .last-edited-grid::-webkit-scrollbar-thumb {
+  display: none;
   background: rgba(255, 255, 255, 0.3);
 }
 
 body.dark-mode .note-grid::-webkit-scrollbar-thumb:hover,
 body.dark-mode .archive-grid::-webkit-scrollbar-thumb:hover,
 body.dark-mode .last-edited-grid::-webkit-scrollbar-thumb:hover {
+  display: none;
   background: rgba(255, 255, 255, 0.5);
 }
 
@@ -1376,7 +1385,6 @@ body.dark-mode .manual-text {
 }
 
 /* Compact Mode Styles */
-
 body.compact-mode .note-card,
 body.compact-mode .archive-card {
   padding: 2px 12px 12px 12px !important;

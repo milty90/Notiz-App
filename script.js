@@ -186,20 +186,14 @@ function createLastEditedNoteCard(note) {
 
   const updateDate = new Date(note.updatedAt);
   const formattedDate = updateDate.toLocaleDateString("de-DE");
-  const formattedTime = updateDate.toLocaleTimeString("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formattedTime = updateDate.toLocaleTimeString("de-DE");
 
   if (note.updatedAt !== note.createdAt) {
     dateElem.textContent = `Zuletzt aktualisiert: ${formattedTime}, ${formattedDate}`;
   } else {
     const createdDate = new Date(note.createdAt);
     const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
-    const createdFormattedTime = createdDate.toLocaleTimeString("de-DE", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const createdFormattedTime = createdDate.toLocaleTimeString("de-DE");
     dateElem.textContent = `Erstellt am: ${createdFormattedTime}, ${createdFormattedDate}`;
   }
 
@@ -292,19 +286,13 @@ function createArchivedNoteCard(note) {
 
   const updateDate = new Date(note.updatedAt);
   const formattedDate = updateDate.toLocaleDateString("de-DE");
-  const formattedTime = updateDate.toLocaleTimeString("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formattedTime = updateDate.toLocaleTimeString("de-DE");
 
   // Zeige Archivierungsdatum für archivierte Notizen
   if (note.archivedAt) {
     const archivedDate = new Date(note.archivedAt);
     const archivedFormattedDate = archivedDate.toLocaleDateString("de-DE");
-    const archivedFormattedTime = archivedDate.toLocaleTimeString("de-DE", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const archivedFormattedTime = archivedDate.toLocaleTimeString("de-DE");
     dateElem.textContent = `Archiviert am: ${archivedFormattedTime}, ${archivedFormattedDate}`;
   } else {
     // Zeige letztes Update-Datum
@@ -731,20 +719,14 @@ function updateNote(noteElement, title, content, color, priority) {
     // Datum aktualisieren
     const updateDate = new Date(noteArray[noteIndex].updatedAt);
     const formattedDate = updateDate.toLocaleDateString("de-DE");
-    const formattedTime = updateDate.toLocaleTimeString("de-DE", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const formattedTime = updateDate.toLocaleTimeString("de-DE");
 
     if (noteArray[noteIndex].updatedAt !== noteArray[noteIndex].createdAt) {
       footerDate.textContent = `Zuletzt aktualisiert: ${formattedTime}, ${formattedDate}`;
     } else {
       const createdDate = new Date(noteArray[noteIndex].createdAt);
       const createdFormattedDate = createdDate.toLocaleDateString("de-DE");
-      const createdFormattedTime = createdDate.toLocaleTimeString("de-DE", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      const createdFormattedTime = createdDate.toLocaleTimeString("de-DE");
       footerDate.textContent = `Erstellt am: ${createdFormattedTime}, ${createdFormattedDate}`;
     }
   } else {
@@ -985,10 +967,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   const note = noteArray.find((n) => n.id === id);
   const createdDate = note ? new Date(note.createdAt) : new Date();
   const formattedDate = createdDate.toLocaleDateString("de-DE");
-  const formattedTime = createdDate.toLocaleTimeString("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formattedTime = createdDate.toLocaleTimeString("de-DE");
 
   const header = document.createElement("div");
   header.classList.add("card-header");
@@ -1042,10 +1021,7 @@ function noteCard(title, content, color, priority, noteId = null) {
   if (note && note.updatedAt !== note.createdAt) {
     const updateDate = new Date(note.updatedAt);
     const updatedFormattedDate = updateDate.toLocaleDateString("de-DE");
-    const updatedFormattedTime = updateDate.toLocaleTimeString("de-DE", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const updatedFormattedTime = updateDate.toLocaleTimeString("de-DE");
     dateElem.textContent = `Zuletzt aktualisiert: ${updatedFormattedTime}, ${updatedFormattedDate}`;
   } else {
     dateElem.textContent = `Erstellt am: ${formattedTime}, ${formattedDate}`;
