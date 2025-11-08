@@ -392,6 +392,7 @@ function initModal() {
 
   function closeDeleteModalWindow() {
     domCache.deleteModal.classList.remove("show");
+    domCache.deleteModal.classList.remove("archived-note");
     document.body.classList.remove("modal-open");
   }
 
@@ -1036,6 +1037,9 @@ function noteCard(title, content, color, priority, noteId = null) {
 function deleteNote(noteElement) {
   const confirmDelete = document.getElementById("confirmDeleteToggle").checked;
   const deleteModal = document.getElementById("deleteNoteModal");
+  const archiveButton = deleteModal.querySelector(".btn-archive-delete");
+  const noteId = parseInt(noteElement.dataset.noteId);
+  const note = noteArray.find((n) => n.id === noteId);
 
   if (!confirmDelete) {
     // Wenn Bestätigung deaktiviert ist, sofort löschen
@@ -1046,6 +1050,13 @@ function deleteNote(noteElement) {
   } else {
     // Bestätigungsmodal anzeigen
     noteToDelete = noteElement;
+
+    if (note && note.archived) {
+      archiveButton.style.display = "none"; 
+    } else {
+      archiveButton.style.display = "inline-block"; 
+    }
+
     deleteModal.classList.add("show");
     document.body.classList.add("modal-open");
   }
@@ -1080,6 +1091,7 @@ function confirmDelete() {
     noteToDelete = null;
     document.getElementById("deleteNoteModal").classList.remove("show");
     document.body.classList.remove("modal-open");
+   
 
     updateLastEditedSection();
   }

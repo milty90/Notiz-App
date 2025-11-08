@@ -589,6 +589,10 @@ main::-webkit-scrollbar {
   line-height: 1;
 }
 
+.archived-note .btn-archive-delete {
+  display: none !important;
+}
+
 .footer-date {
   white-space: pre;
   font-size: 1rem;
